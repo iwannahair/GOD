@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameManager.instance.PlayerTran;
         
         if(player == null)
         {

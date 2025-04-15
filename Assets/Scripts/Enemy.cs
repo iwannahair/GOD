@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 30;
+    [SerializeField, Range(1,100)]private int health = 30;
     private GameManager gameManager;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameManager.instance;
     }
 
     public void TakeDamage(int damage)

@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     [Header("角色设置")]
     public GameObject playerPrefab;  // 保留Prefab引用但不使用
     public Transform playerSpawnPoint;  // 保留生成点但不使用
@@ -17,12 +20,28 @@ public class GameManager : MonoBehaviour
 
     [Header("跟随设置")]
     public GameObject humanFollowerPrefab;
+    private Transform humanFollowerTail;
+    private Transform playerTran;
     private int enemiesKilled = 0;
     private const int KILLS_TO_SPAWN_FOLLOWER = 3;
 
+    public Transform PlayerTran => playerTran;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
         // 移除了SpawnPlayer()调用
+        playerTran = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnInitialEnemies();
     }
 
@@ -72,23 +91,23 @@ public class GameManager : MonoBehaviour
         if(humanFollowerPrefab != null)
         {
             // 查找现有的跟随者
-            FollowerAI[] existingFollowers = FindObjectsOfType<FollowerAI>();
+            
             
             GameObject follower;
-            if(existingFollowers.Length == 0)
+            if(humanFollowerTail==null)
             {
                 // 第一个跟随者，跟随玩家
                 follower = Instantiate(humanFollowerPrefab);
-                follower.GetComponent<FollowerAI>().isFirstFollower = true;
+                follower.GetComponent<FollowerAI>().target = playerTran;
+                humanFollowerTail=follower.transform;
             }
             else
             {
                 // 后续跟随者，跟随最后一个跟随者
-                Transform lastFollower = existingFollowers[existingFollowers.Length - 1].transform;
-                Vector2 spawnPos = (Vector2)lastFollower.position - (Vector2)(lastFollower.up * 0.5f);
-                follower = Instantiate(humanFollowerPrefab, spawnPos, lastFollower.rotation);
-                follower.GetComponent<FollowerAI>().isFirstFollower = false;
-                follower.GetComponent<FollowerAI>().target = lastFollower;
+
+                follower = Instantiate(humanFollowerPrefab, humanFollowerTail.position, humanFollowerTail.rotation);
+                follower.GetComponent<FollowerAI>().target = humanFollowerTail;
+                humanFollowerTail = follower.transform;
             }
         }
     }
