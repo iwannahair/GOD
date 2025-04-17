@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private const int KILLS_TO_SPAWN_FOLLOWER = 3;
 
     public Transform PlayerTran => playerTran;
-
+    public Transform HumanFollowerTail{get=>humanFollowerTail;set=>humanFollowerTail=value;}
     private void Awake()
     {
         if (instance == null)
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
 
                 follower = Instantiate(humanFollowerPrefab, humanFollowerTail.position, humanFollowerTail.rotation);
                 follower.GetComponent<FollowerAI>().target = humanFollowerTail;
+                humanFollowerTail.GetComponent<FollowerAI>().nextFollower = follower.transform;
                 humanFollowerTail = follower.transform;
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FollowerAI : MonoBehaviour
@@ -5,7 +6,7 @@ public class FollowerAI : MonoBehaviour
     public Transform target;
     public float followSpeed = 3f;
     public float followDistance = 0.5f; // 修改为0.5像素的跟随距离
-
+    public Transform nextFollower { get; set; }
 
 
     void FixedUpdate()
@@ -28,6 +29,26 @@ public class FollowerAI : MonoBehaviour
             //    target.rotation,
             //    followSpeed * Time.deltaTime
             //);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            if (nextFollower != null)
+            {
+                nextFollower.GetComponent<FollowerAI>().target = target;
+                if (target.TryGetComponent(out FollowerAI targetFollower))
+                {
+                    targetFollower.nextFollower = nextFollower;
+                }
+            }
+            else
+            {
+                GameManager.instance.HumanFollowerTail = target.TryGetComponent(out FollowerAI follower) ? target : null;
+            }
+            Destroy(gameObject);
         }
     }
 }
