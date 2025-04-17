@@ -13,16 +13,19 @@ public class EnemyAI : MonoBehaviour
         
         if(player == null)
         {
-            Debug.LogError("找不到玩家对象！请确保玩家有'Player'标签");
+            Debug.LogError("找不到玩家对象！请确保GameManager里赋值了PlayerTran");
         }
     }
 
     void FixedUpdate()
     {
+        player = GameManager.instance.HumanFollowerTail is not null ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
         if(player != null)
         {
             Vector2 direction = (player.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
+            
         }
     }
+    
 }

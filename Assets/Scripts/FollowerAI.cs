@@ -48,6 +48,7 @@ public class FollowerAI : MonoBehaviour
             {
                 GameManager.instance.HumanFollowerTail = target.TryGetComponent(out FollowerAI follower) ? target : null;
             }
+            GameManager.instance.CurrentFollowerNumber--;
             Destroy(gameObject);
         }
     }

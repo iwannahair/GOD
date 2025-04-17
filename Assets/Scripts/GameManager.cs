@@ -1,5 +1,7 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -24,6 +26,26 @@ public class GameManager : MonoBehaviour
     private Transform playerTran;
     private int enemiesKilled = 0;
     private const int KILLS_TO_SPAWN_FOLLOWER = 3;
+    [SerializeField] private int currentFollowerNumber;
+    [SerializeField] private int targetFollowerNumber = 6;
+
+    [Header("UI设置")] 
+    [SerializeField] private TMP_Text currentFolNumText;
+    [SerializeField] private Slider curentFolNumSlider;
+    
+    public int CurrentFollowerNumber { get=>currentFollowerNumber;
+        set
+        {
+            currentFollowerNumber = value;
+            OnUIChange.Invoke();
+        }
+    }
+    private Action OnUIChange;
+    private void UpdateCurrentFollowerNumberUI()
+    {
+        currentFolNumText.text = currentFollowerNumber.ToString();
+        curentFolNumSlider.value = (float)currentFollowerNumber/targetFollowerNumber;
+    }
 
     public Transform PlayerTran => playerTran;
     public Transform HumanFollowerTail{get=>humanFollowerTail;set=>humanFollowerTail=value;}
@@ -37,6 +59,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+        OnUIChange+=UpdateCurrentFollowerNumberUI;
     }
     void Start()
     {
@@ -97,7 +120,7 @@ public class GameManager : MonoBehaviour
             if(humanFollowerTail==null)
             {
                 // 第一个跟随者，跟随玩家
-                follower = Instantiate(humanFollowerPrefab);
+                follower = Instantiate(humanFollowerPrefab, playerTran.position, playerTran.rotation);
                 follower.GetComponent<FollowerAI>().target = playerTran;
                 humanFollowerTail=follower.transform;
             }
@@ -110,6 +133,8 @@ public class GameManager : MonoBehaviour
                 humanFollowerTail.GetComponent<FollowerAI>().nextFollower = follower.transform;
                 humanFollowerTail = follower.transform;
             }
+
+            CurrentFollowerNumber++;
         }
     }
 }
