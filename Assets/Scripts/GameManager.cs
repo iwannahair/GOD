@@ -32,7 +32,9 @@ public class GameManager : MonoBehaviour
     [Header("UI设置")] 
     [SerializeField] private TMP_Text currentFolNumText;
     [SerializeField] private Slider curentFolNumSlider;
-    
+    [SerializeField] private Transform cardBuildingIndicator;
+    public Transform CardBuildingIndicator =>cardBuildingIndicator;
+
     public int CurrentFollowerNumber { get=>currentFollowerNumber;
         set
         {

@@ -11,4 +11,6 @@ public class Card : ScriptableObject
     public TypeEnum.AttributeType attributeType;
     public int cardCost;
     public int followersCapacity;
+    public int healthPoints;
+    public int width,height;
 }

@@ -24,7 +24,11 @@ public class EnemyAI : MonoBehaviour
         {
             Vector2 direction = (player.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
-            
+        }
+        else
+        {
+            Vector2 direction = (GameManager.instance.PlayerTran.position - transform.position).normalized;
+            rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
     }
     
