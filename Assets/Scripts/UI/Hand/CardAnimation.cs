@@ -13,6 +13,8 @@ public class CardAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private Vector2 originalPosition;
     private Coroutine animationCoroutine;
     public Vector2 cardPosition { get=>originalPosition; set=>originalPosition = value; }
+    private int originalSiblingIndex;
+    private bool firstIndexChange = true;
 
     void Awake()
     {
@@ -26,11 +28,18 @@ public class CardAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         
         Vector3 targetScale = originalScale * scaleMultiplier;
         Vector2 targetPosition = originalPosition + new Vector2(0, moveUpAmount);
+        if (firstIndexChange)
+        {
+            originalSiblingIndex = transform.GetSiblingIndex();
+            firstIndexChange = false;
+        }
+        transform.SetAsLastSibling();
         StartAnimation(targetScale, targetPosition);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        transform.SetSiblingIndex(originalSiblingIndex);
         StartAnimation(originalScale, originalPosition);
     }
     

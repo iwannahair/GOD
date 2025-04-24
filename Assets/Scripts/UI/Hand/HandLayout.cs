@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class HandLayout : MonoBehaviour
 {
     [SerializeField] private float yLevel = -250f;
@@ -13,12 +14,14 @@ public class HandLayout : MonoBehaviour
     [SerializeField] private float cardMoveDuration = 0.2f;
     private float middlePoint;
     private float offset;
-    [SerializeField]private int maxFlatCardsNum = 5;
-    [SerializeField] List<RectTransform> hands = new List<RectTransform>();
+    [SerializeField] private int maxFlatCardsNum = 5;
+    [SerializeField] private List<RectTransform> hands = new List<RectTransform>();
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         middlePoint = (xBegin + xEnd) / 2;
+        
     }
 
     public void UpdateHandPos()
