@@ -6,7 +6,12 @@ namespace CardEnum
     {
         public enum AttributeType
         {
-            Attack,Health,MoveSpeed, AttackSpeed
+            Attack,Health, AttackSpeed
+        }
+
+        public enum CardType
+        {
+            tree, turret, stuck
         }
     }
 }

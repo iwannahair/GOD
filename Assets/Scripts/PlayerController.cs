@@ -11,9 +11,12 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D rb;
     private Vector2 movement;
+    private SpriteRenderer renderer;
+    
 
     void Start()
     {
+        renderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;  // 初始化生命值
     }
@@ -28,12 +31,20 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // 移动角色
-        rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement.normalized * (moveSpeed * Time.fixedDeltaTime));
         
         // 可选：使角色朝向移动方向
         if(movement != Vector2.zero)
         {
-            transform.up = movement;
+            if ((movement.x < 0 || movement.y > 0) &&!renderer.flipX )
+            {
+                renderer.flipX = true;
+            }
+
+            if ((movement.x > 0 || movement.y < 0)&& renderer.flipX )
+            {
+                renderer.flipX = false;
+            }
         }
     }
 

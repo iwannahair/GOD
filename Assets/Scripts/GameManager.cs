@@ -20,19 +20,23 @@ public class GameManager : MonoBehaviour
     
     private float nextWaveTime;
 
-    [Header("跟随设置")]
+    [Header("人类设置")]
     public GameObject humanFollowerPrefab;
     private Transform humanFollowerTail;
     private Transform playerTran;
     private int enemiesKilled = 0;
     private const int KILLS_TO_SPAWN_FOLLOWER = 3;
     [SerializeField] private int currentFollowerNumber;
-    [SerializeField] private int targetFollowerNumber = 6;
+    [SerializeField] private int targetFollowerNumber = 10;
 
     [Header("UI设置")] 
-    [SerializeField] private TMP_Text currentFolNumText;
     [SerializeField] private Slider curentFolNumSlider;
     [SerializeField] private Transform cardBuildingIndicator;
+    [Header("Card prefab")]
+    [SerializeField] private GameObject cardUIPrefab;
+    [SerializeField] private GameObject cardInHand;
+    [SerializeField] private GameObject cardInWorld;
+    
     public Transform CardBuildingIndicator =>cardBuildingIndicator;
 
     public int CurrentFollowerNumber { get=>currentFollowerNumber;
@@ -45,7 +49,6 @@ public class GameManager : MonoBehaviour
     private Action OnUIChange;
     private void UpdateCurrentFollowerNumberUI()
     {
-        currentFolNumText.text = currentFollowerNumber.ToString();
         curentFolNumSlider.value = (float)currentFollowerNumber/targetFollowerNumber;
     }
 

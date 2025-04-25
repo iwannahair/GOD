@@ -1,13 +1,19 @@
+using System;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float moveSpeed = 2f;
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private int damage = 8;
     private Transform player;
     private Rigidbody2D rb;  // 添加刚体引用
 
+    [SerializeField] private Building targetBuilding;
+    private float timer;
     void Start()
     {
+        timer = attackCooldown;
         rb = GetComponent<Rigidbody2D>();
         player = GameManager.instance.PlayerTran;
         
@@ -17,11 +23,18 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent(out targetBuilding))
+        {
+            targetBuilding.TakeDamage(damage);
+        }
+    }
+
+    private void FixedUpdate()
     {
         player = GameManager.instance.HumanFollowerTail is not null ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
-        if(player != null)
-        {
+        if(player){
             Vector2 direction = (player.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
@@ -30,6 +43,14 @@ public class EnemyAI : MonoBehaviour
             Vector2 direction = (GameManager.instance.PlayerTran.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
+        if (targetBuilding)
+        {
+            timer -= Time.fixedDeltaTime;
+            if (timer<=0)
+            {
+                timer = attackCooldown;
+                targetBuilding.TakeDamage(damage);
+            }
+        }
     }
-    
 }

@@ -6,8 +6,15 @@ public class FollowerAI : MonoBehaviour
     public Transform target;
     public float followSpeed = 3f;
     public float followDistance = 0.5f; // 修改为0.5像素的跟随距离
-    public Transform nextFollower { get; set; }
-
+    private Transform _nextFollower;
+    bool hadFollower = false;
+    public Transform nextFollower{ get =>_nextFollower; set
+        {
+            _nextFollower = value;
+            hadFollower = true;
+        }
+    }
+    
 
     void FixedUpdate()
     {
@@ -29,6 +36,11 @@ public class FollowerAI : MonoBehaviour
             //    target.rotation,
             //    followSpeed * Time.deltaTime
             //);
+        }
+        else
+        {
+            if (nextFollower) target = GameManager.instance.PlayerTran;
+            target = GameManager.instance.HumanFollowerTail ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
         }
     }
 
