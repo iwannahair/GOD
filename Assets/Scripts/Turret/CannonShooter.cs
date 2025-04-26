@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CannonShooter : Building
 {
-    [SerializeField] private GameObject cannonballPrefab;
+    [SerializeField] private GameObject cannonballPrefab, explodePrefab;
     [SerializeField] private Transform firePoint;
     private float fireCooldown = 1.5f;
     [SerializeField]private float cannonballSpeed = 50f;
@@ -34,6 +35,7 @@ public class CannonShooter : Building
     {
         if(cardToUse==null) return;
         fireCooldown = cardToUse.attackCooldown;
+        GetComponent<SpriteRenderer>().sprite = cardData.cardSprite;
         damage = cardToUse.damage;
         health = cardData.healthPoints;
         maxHealth = cardData.healthPoints;
@@ -56,6 +58,7 @@ public class CannonShooter : Building
     private void FireAt(Transform target)
     {
         GameObject ball = Instantiate(cannonballPrefab, firePoint.position, Quaternion.identity);
+        Instantiate(explodePrefab, firePoint.position, Quaternion.identity);
         CannonBall temp =  ball.GetComponent<CannonBall>();
         temp.damage = damage;
         temp.target = target; 
