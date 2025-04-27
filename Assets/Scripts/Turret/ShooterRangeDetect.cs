@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class CannonShooterRangeDetect : MonoBehaviour
+public class ShooterRangeDetect : MonoBehaviour
 {
-    [SerializeField] CannonShooter shooter;
+    [SerializeField] Shooter shooter;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))

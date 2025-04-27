@@ -23,6 +23,7 @@ MonoBehaviour:
   healthPoints: 350
   width: 3
   height: 3
+  wholeCardSprite: {fileID: -1706102897105450085, guid: ab01d77c275cac8458f0cc18615b741e, type: 3}
   attackRange: 10
   attackCooldown: 0.5
   damageRadius: 0

@@ -14,4 +14,5 @@ public class Card : ScriptableObject
     public int followersCapacity;
     public int healthPoints;
     public int width,height;
+    public Sprite wholeCardSprite;
 }

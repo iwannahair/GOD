@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stonehenge
   m_EditorClassIdentifier: 
   cardName: "\u5DE8\u77F3\u9635"
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 8088553139712456105, guid: a2fe9064cfbdc394d8c559976e0d7f82, type: 3}
   cardDescription: "\u5F53\u654C\u4EBA\u8FDB\u6765\u540E\uFF0C\u65E0\u6CD5\u518D\u51FA\u53BB\uFF0C\u6700\u591A\u5BB9\u7EB32\u540D\u654C\u4EBA"
   cardBuildingPrefab: {fileID: 0}
   attributeType: 2
@@ -23,3 +23,4 @@ MonoBehaviour:
   healthPoints: 3000
   width: 5
   height: 5
+  wholeCardSprite: {fileID: 8168931133007722210, guid: a0973b6cc553947418036cd1a9e6e200, type: 3}

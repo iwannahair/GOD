@@ -3,43 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CannonShooter : Building
+public class CannonShooter : Shooter
 {
     [SerializeField] private GameObject cannonballPrefab, explodePrefab;
-    [SerializeField] private Transform firePoint;
-    private float fireCooldown = 1.5f;
     [SerializeField]private float cannonballSpeed = 50f;
-    private int damage = 1; 
-    
-    [SerializeField] private Turret cardData;
-    
-    public Turret cardToUse
-    {
-        set
-        {
-            cardData = value;
-            SetUp();
-        }
-        private get => cardData;
-    }
-
-    [SerializeField] private List<Transform> enemiesInRange = new List<Transform>();
-    [SerializeField] private float fireTimer;
-
+ 
     private void Start()
     {
         SetUp();
     }
 
-    private void SetUp()
-    {
-        if(cardToUse==null) return;
-        fireCooldown = cardToUse.attackCooldown;
-        GetComponent<SpriteRenderer>().sprite = cardData.cardSprite;
-        damage = cardToUse.damage;
-        health = cardData.healthPoints;
-        maxHealth = cardData.healthPoints;
-    }
+
     void FixedUpdate()
     {
         fireTimer -= Time.fixedDeltaTime;
@@ -59,10 +33,10 @@ public class CannonShooter : Building
     {
         GameObject ball = Instantiate(cannonballPrefab, firePoint.position, Quaternion.identity);
         Instantiate(explodePrefab, firePoint.position, Quaternion.identity);
-        CannonBall temp =  ball.GetComponent<CannonBall>();
-        temp.damage = damage;
-        temp.target = target; 
-        temp.cannonballSpeed = cannonballSpeed;
+        CannonBall cannonBall =  ball.GetComponent<CannonBall>();
+        cannonBall.damage = damage;
+        cannonBall.target = target; 
+        cannonBall.cannonballSpeed = cannonballSpeed;
     }
 
     private Transform GetFurthestEnemy()
@@ -83,14 +57,4 @@ public class CannonShooter : Building
 
         return furthest;
     }
-
-    public void AddEnemy(Transform target)
-    {
-        enemiesInRange.Add(target);
-    }
-    public void RemoveEnemy(Transform target)
-    {
-        enemiesInRange.Remove(target);
-    }
-    
 }

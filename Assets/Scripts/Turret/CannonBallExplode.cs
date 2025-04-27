@@ -15,7 +15,6 @@ public class CannonBallExplode : MonoBehaviour
             {
                 enemy.TakeDamage(damage);  
             }
-            
         }
     }
 

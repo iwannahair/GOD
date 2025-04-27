@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CannonTurret
   m_EditorClassIdentifier: 
   cardName: "\u70AE\u53F0"
-  cardSprite: {fileID: 8780733191442322644, guid: f5f86d0d405d5794fa2a56b8c57a01b4, type: 3}
+  cardSprite: {fileID: -7936786835941496320, guid: f573070e2586f1847a6f4fc231bdca7b, type: 3}
   cardDescription: "\u70AE\u5F39\u5BF9\u8DDD\u79BB\u6700\u8FDC\u7684\u654C\u4EBA\uFF0C\u9020\u6210\u8303\u56F4\u4F24\u5BB3\uFF0C\u5E76\u5BF9\u5176\u6301\u7EED\u653B\u51FB\uFF0C\u76F4\u5230\u5176\u6B7B\u4EA1"
-  cardBuildingPrefab: {fileID: 0}
+  cardBuildingPrefab: {fileID: 3886476557014549443, guid: af8e5e0a7d355b54ab1de9bc9d941b4b, type: 3}
   attributeType: 0
   cardType: 1
   cardCost: 4
@@ -23,6 +23,7 @@ MonoBehaviour:
   healthPoints: 470
   width: 3
   height: 3
+  wholeCardSprite: {fileID: 4454123925611883384, guid: 57773a15df8763b4ebdacea9ec3fd59e, type: 3}
   attackRange: 9
   attackCooldown: 0.8
   damageRadius: 1.5

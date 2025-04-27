@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +13,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer renderer;
-    
+
+    private void Awake()
+    {
+        if (GameManager.instance)
+        {
+            GameManager.instance.SetPlayerTran(transform);
+        }
+    }
 
     void Start()
     {
