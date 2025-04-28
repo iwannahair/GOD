@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: "\u5F29\u8F66"
   cardSprite: {fileID: 9119206570140488779, guid: cb95b92dc4924e04b8c8e7367a098697, type: 3}
   cardDescription: "\u5BF9\u8DDD\u79BB\u6700\u8FD1\u7684\u654C\u4EBA\uFF0C\u8FDB\u884C\u8FDC\u7A0B\u653B\u51FB"
-  cardBuildingPrefab: {fileID: 0}
+  cardBuildingPrefab: {fileID: 4747686761568972590, guid: 479a71b8244fbbc48a0000d678a232fd, type: 3}
   attributeType: 0
   cardType: 1
   cardCost: 2

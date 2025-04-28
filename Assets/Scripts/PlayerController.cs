@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance)
         {
             GameManager.instance.SetPlayerTran(transform);
+            Debug.Log("load playerTran");
         }
     }
 

@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D rb;  // 添加刚体引用
 
     [SerializeField] private Building targetBuilding;
+    public Building TargetBuilding=>targetBuilding;
+    public int Damage => damage;
     private float timer;
     void Start()
     {
@@ -23,13 +25,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent(out targetBuilding))
-        {
-            targetBuilding.TakeDamage(damage);
-        }
-    }
 
     private void FixedUpdate()
     {

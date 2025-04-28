@@ -1,8 +1,6 @@
-using System;
 using CardEnum;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardHolder : MonoBehaviour
@@ -37,9 +35,4 @@ public class CardHolder : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

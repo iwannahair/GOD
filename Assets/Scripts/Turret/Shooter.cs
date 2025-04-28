@@ -22,6 +22,7 @@ public class Shooter : Building
 
     private void Start()
     {
+        if (cardData == null) return;
         SetUp();
     }
 

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f39b8be38f6c3cd43907716c6c07d6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ad359aba4b4e24887dce12d011d401, type: 3}
   m_Name: GoldenTree
   m_EditorClassIdentifier: 
   cardName: "\u9EC4\u91D1\u6811"
@@ -24,3 +24,4 @@ MonoBehaviour:
   width: 1
   height: 1
   wholeCardSprite: {fileID: -1683611080944828196, guid: 696903fa85af7be4884fa347d6d94df5, type: 3}
+  speedUpSpawnFollower: 6

@@ -1,21 +1,33 @@
+using System;
 using NUnit.Framework;
 using UnityEngine;
 
 public class TreeBuilding : Building
 {
-    private Card buildingCard;
-    public Card BuildingCard
+    private TreeSO treeCard;
+    public TreeSO BuildingCard
     {
         set
         {
-            buildingCard = value;
+            treeCard = value;
             SetUp();
         }
     }
 
+    private void Start()
+    {
+        if (treeCard == null) return;
+        SetUp();
+    }
+
     private void SetUp()
     {
-        if (buildingCard == null) return;
-        
+        if (treeCard == null) return;
+        GameManager.instance.humanSpawnSpeedUp += treeCard.speedUpSpawnFollower;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.humanSpawnSpeedUp -= treeCard.speedUpSpawnFollower;
     }
 }

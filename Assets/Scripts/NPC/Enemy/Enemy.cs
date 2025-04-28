@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void TakeDamageByPercentage(int percentage)
+    {
+        health -= hps*percentage/100;
+    }
+
     void Die()
     {
         if(gameManager != null)

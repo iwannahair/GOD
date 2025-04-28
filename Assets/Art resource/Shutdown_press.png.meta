@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 375f289ac30d0c64eadd0694fd8a354f
+guid: 8d76ee02c9110e2478b54879ba797941
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 458722791386113735
-    second: kapai_shumiao_0
+      213: -1982207052024020462
+    second: Shutdown_press_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kapai_shumiao_0
+      name: Shutdown_press_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 134
-        height: 189
+        width: 33
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c6e1f6c2f5bd5600800000000000000
-      internalID: 458722791386113735
+      spriteID: 21285d83039cd74e0800000000000000
+      internalID: -1982207052024020462
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      kapai_shumiao_0: 458722791386113735
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
