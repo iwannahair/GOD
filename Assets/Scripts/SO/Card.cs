@@ -9,7 +9,6 @@ public class Card : ScriptableObject
     public string cardDescription;
     public GameObject cardBuildingPrefab;
     public TypeEnum.AttributeType attributeType;
-    public TypeEnum.CardType cardType;
     public int cardCost;
     public int followersCapacity;
     public int healthPoints;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TreeBuilding : Building
 {
-    private TreeSO treeCard;
-    public TreeSO BuildingCard
+    [SerializeField] private TreeSO treeCard;
+    public TreeSO TreeCard
     {
         set
         {

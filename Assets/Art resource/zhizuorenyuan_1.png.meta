@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: cd6a8513393e0834e8f232e8628d63b4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8994450664785878977
+    second: zhizuorenyuan_1_0
+  - first:
+      213: 7639159176625226839
+    second: zhizuorenyuan_1_1
+  - first:
+      213: 4721563082968498373
+    second: zhizuorenyuan_1_2
+  - first:
+      213: 4214066005300620839
+    second: zhizuorenyuan_1_3
+  - first:
+      213: -6736611978790957938
+    second: zhizuorenyuan_1_4
+  - first:
+      213: 706956138276947388
+    second: zhizuorenyuan_1_5
+  - first:
+      213: -8558943308399981056
+    second: zhizuorenyuan_1_6
+  - first:
+      213: 4699746113252549793
+    second: zhizuorenyuan_1_7
+  - first:
+      213: -3449065370930241832
+    second: zhizuorenyuan_1_8
+  - first:
+      213: 3089520529183773092
+    second: zhizuorenyuan_1_9
+  - first:
+      213: -1152103025246355249
+    second: zhizuorenyuan_1_10
+  - first:
+      213: -9201329229769567960
+    second: zhizuorenyuan_1_11
+  - first:
+      213: 2639399320422852684
+    second: zhizuorenyuan_1_12
+  - first:
+      213: -3629457265220090637
+    second: zhizuorenyuan_1_13
+  - first:
+      213: -2112742088348804561
+    second: zhizuorenyuan_1_14
+  - first:
+      213: 5848719412283169647
+    second: zhizuorenyuan_1_15
+  - first:
+      213: -8003954555083863767
+    second: zhizuorenyuan_1_16
+  - first:
+      213: 8820098658037353990
+    second: zhizuorenyuan_1_17
+  - first:
+      213: 1820563899275068615
+    second: zhizuorenyuan_1_18
+  - first:
+      213: 8737744511400905116
+    second: zhizuorenyuan_1_19
+  - first:
+      213: -8817470634499533693
+    second: zhizuorenyuan_1_20
+  - first:
+      213: 7318420441719424864
+    second: zhizuorenyuan_1_21
+  - first:
+      213: 2085228648684455539
+    second: zhizuorenyuan_1_22
+  - first:
+      213: -3354071082792978746
+    second: zhizuorenyuan_1_23
+  - first:
+      213: 1650399773402201371
+    second: zhizuorenyuan_1_24
+  - first:
+      213: -6397687080805294899
+    second: zhizuorenyuan_1_25
+  - first:
+      213: -1563851954748306085
+    second: zhizuorenyuan_1_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 122
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cf96589935b2dc70800000000000000
+      internalID: 8994450664785878977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 122
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75489611cceb30a60800000000000000
+      internalID: 7639159176625226839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 122
+        width: 8
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c08fe8ab9c568140800000000000000
+      internalID: 4721563082968498373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_3
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 135
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72e2ef964be5b7a30800000000000000
+      internalID: 4214066005300620839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_4
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 122
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c068ee81fb282a0800000000000000
+      internalID: -6736611978790957938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_5
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 122
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb587c5bcdc9fc900800000000000000
+      internalID: 706956138276947388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 123
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00ecc128866883980800000000000000
+      internalID: -8558943308399981056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 82
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a4e0fe803ad83140800000000000000
+      internalID: 4699746113252549793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_8
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 82
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8de1a9ea1557220d0800000000000000
+      internalID: -3449065370930241832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_9
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 95
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a196446d8e20ea20800000000000000
+      internalID: 3089520529183773092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_10
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 82
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0c9831768e200f0800000000000000
+      internalID: -1152103025246355249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_11
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 82
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8219a26f0df4e4080800000000000000
+      internalID: -9201329229769567960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_12
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 83
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c482632a2b701a420800000000000000
+      internalID: 2639399320422852684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_13
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 82
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f48813d8d391adc0800000000000000
+      internalID: -3629457265220090637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_14
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2ad3f1b3480ea2e0800000000000000
+      internalID: -2112742088348804561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6bd1105153da2150800000000000000
+      internalID: 5848719412283169647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_16
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 40
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9294bd92dbd3ce090800000000000000
+      internalID: -8003954555083863767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_17
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 53
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60e4734aff8476a70800000000000000
+      internalID: 8820098658037353990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_18
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 40
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c4c03b7831f34910800000000000000
+      internalID: 1820563899275068615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_19
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 40
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c998b2ca654b24970800000000000000
+      internalID: 8737744511400905116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_20
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3849735cc2d02a580800000000000000
+      internalID: -8817470634499533693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12
+        width: 24
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 067c4a9fd90409560800000000000000
+      internalID: 7318420441719424864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_22
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3760e40786830fc10800000000000000
+      internalID: 2085228648684455539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_23
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c6f6beee12f371d0800000000000000
+      internalID: -3354071082792978746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_24
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 12
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1df50789d567e610800000000000000
+      internalID: 1650399773402201371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_25
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcc9e741f79d637a0800000000000000
+      internalID: -6397687080805294899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zhizuorenyuan_1_26
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5d4debcee41c4ae0800000000000000
+      internalID: -1563851954748306085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      zhizuorenyuan_1_0: 8994450664785878977
+      zhizuorenyuan_1_1: 7639159176625226839
+      zhizuorenyuan_1_10: -1152103025246355249
+      zhizuorenyuan_1_11: -9201329229769567960
+      zhizuorenyuan_1_12: 2639399320422852684
+      zhizuorenyuan_1_13: -3629457265220090637
+      zhizuorenyuan_1_14: -2112742088348804561
+      zhizuorenyuan_1_15: 5848719412283169647
+      zhizuorenyuan_1_16: -8003954555083863767
+      zhizuorenyuan_1_17: 8820098658037353990
+      zhizuorenyuan_1_18: 1820563899275068615
+      zhizuorenyuan_1_19: 8737744511400905116
+      zhizuorenyuan_1_2: 4721563082968498373
+      zhizuorenyuan_1_20: -8817470634499533693
+      zhizuorenyuan_1_21: 7318420441719424864
+      zhizuorenyuan_1_22: 2085228648684455539
+      zhizuorenyuan_1_23: -3354071082792978746
+      zhizuorenyuan_1_24: 1650399773402201371
+      zhizuorenyuan_1_25: -6397687080805294899
+      zhizuorenyuan_1_26: -1563851954748306085
+      zhizuorenyuan_1_3: 4214066005300620839
+      zhizuorenyuan_1_4: -6736611978790957938
+      zhizuorenyuan_1_5: 706956138276947388
+      zhizuorenyuan_1_6: -8558943308399981056
+      zhizuorenyuan_1_7: 4699746113252549793
+      zhizuorenyuan_1_8: -3449065370930241832
+      zhizuorenyuan_1_9: 3089520529183773092
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
