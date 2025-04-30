@@ -24,6 +24,7 @@ public class AxeAttack : MonoBehaviour
         timer = 360f/rotateSpeed/tickNumber;
         col = GetComponent<Collider2D>();
         spriteRenderer = spriteRenderer!=null ? spriteRenderer :GetComponentInChildren<SpriteRenderer>();
+        _audioSource = _audioSource!=null ? _audioSource: GetComponentInChildren<AudioSource>();
         StartCoroutine(Spin());
         if (GameManager.instance)
         {

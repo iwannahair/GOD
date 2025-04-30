@@ -55,9 +55,9 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
          Vector3 startScale = transform.localScale;
          while (timer < scaleTime)
          {
-             timer += Time.fixedDeltaTime;
+             timer += 0.02f;
              transform.localScale = Vector3.Lerp(startScale, originalScale*scaleUp, timer / scaleTime);
-             yield return new WaitForFixedUpdate();
+             yield return new WaitForSecondsRealtime(0.02f);
          }
     }
     private IEnumerator AnimationDown()
@@ -66,9 +66,9 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
         Vector3 startScale = transform.localScale;
         while (timer < scaleTime)
         {
-            timer += Time.fixedDeltaTime;
+            timer += 0.02f;
             transform.localScale = Vector3.Lerp(startScale, originalScale, timer / scaleTime);
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(0.02f);
         }
     }
 }
