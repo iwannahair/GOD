@@ -11,6 +11,49 @@ public class GameManager : MonoBehaviour
     [Header("角色设置")]
     public GameObject playerPrefab;  // 保留Prefab引用但不使用
     public Transform playerSpawnPoint;  // 保留生成点但不使用
+    private int playerHealth, playerDamage, playerAttackSpeed;
+    [SerializeField] TMP_Text playerDamageText, playerHealthText,  playerAttackSpeedText;
+    public event Action OnPlayerHealthChanged, OnPlayerDamageChanged, OnPlayerAttackSpeedChanged;
+    
+    #region PlayerThreeAtributesSetter/Getter
+
+    
+
+    
+    public int PlayerHealth
+    {
+        get => playerHealth;
+        set
+        {
+            playerHealth = value;
+            OnPlayerHealthChanged?.Invoke();
+        }
+        
+    }
+    
+    public int PlayerDamage
+    {
+        get => playerDamage;
+        set
+        {
+            playerDamage = value;
+            OnPlayerDamageChanged?.Invoke();
+            
+        }
+    }
+
+    public int PlayerAttackSpeed
+    {
+        get => playerAttackSpeed;
+        set
+        {
+            playerAttackSpeed = value;
+            OnPlayerAttackSpeedChanged?.Invoke();
+        }
+    }
+    #endregion
+
+    
     
     [Header("敌人设置")] 
     public GameObject enemyPrefab;
@@ -38,13 +81,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform cardBuildingIndicator;
     [SerializeField] private float timeWaitToShowCards = 0.5f;
     [SerializeField] private GameObject cardSelectPanel;
+    [SerializeField] private CardSelectionHandler cardSelectionHandler;
+    [SerializeField] private HandLayout handLayout;
+    public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler;
+    
     [Header("Card prefab")]
     [SerializeField] private GameObject cardUIPrefab;
     [SerializeField] private GameObject cardInHand;
     [SerializeField] private GameObject cardInWorld;
     
     public Transform CardBuildingIndicator =>cardBuildingIndicator;
+    private Action OnFollowerUIChange;
 
+    #region FollowerSliderUI
+ 
     public int CurrentFollowerNumber { get=>currentFollowerNumber;
         set
         {
@@ -53,27 +103,59 @@ public class GameManager : MonoBehaviour
                 PopCardsSelect();//pop if adding and reach 10
             }
             currentFollowerNumber = value;
-            OnUIChange.Invoke();
+            OnFollowerUIChange.Invoke();
         }
     }
-    private Action OnUIChange;
+    
     private void UpdateCurrentFollowerNumberUI()
     {
-        float showingSliderValue = (float)currentFollowerNumber%targetFollowerNumber;
-        if (currentFollowerNumber > 0&&showingSliderValue==0) showingSliderValue = 1f;//if it's full, show full, maybe handle the reset in pop menu.
-        curentFolNumSlider.value = showingSliderValue;
+        float showingSliderValue = currentFollowerNumber%targetFollowerNumber; 
+        if (currentFollowerNumber > 0&&showingSliderValue==0f) showingSliderValue = 10f;//if it's full, show full, maybe handle the reset in pop menu.
+        curentFolNumSlider.value = showingSliderValue/targetFollowerNumber;
     }
-
+    #endregion
+    
+    #region CardUI
     public void PopCardsSelect()
     {
         //maybe sound go off first, then 0.5 sec -> pop UI 
-        throw new NotImplementedException();
+        StartCoroutine(ShowCardsUI()); 
     }
-
+    
     private IEnumerator ShowCardsUI()
     {
         yield return new WaitForSeconds(timeWaitToShowCards);
+        cardSelectPanel.SetActive(true);
     }
+
+    public void AddToHand(Card card)
+    {
+        if(!handLayout) return;
+        handLayout.AddCardToHand(card);
+    }
+    #endregion
+
+    #region PlayerAtributeUI
+
+    private void UpdateAttackDamageUI()
+    {
+        if (!playerDamageText) return;
+        playerDamageText.text = playerDamage.ToString();
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (!playerHealthText) return;
+        playerHealthText.text = playerHealth.ToString();
+    }
+
+    private void UpdateAttackSpeedUI()
+    {
+        if (!playerAttackSpeedText) return;
+        playerAttackSpeedText.text = playerAttackSpeed.ToString();
+    }
+
+    #endregion
     public Transform PlayerTran => playerTran;
     public void SetPlayerTran(Transform playerTran) => this.playerTran = playerTran;
     public Transform HumanFollowerTail{get=>humanFollowerTail;set=>humanFollowerTail=value;}
@@ -87,7 +169,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-        OnUIChange+=UpdateCurrentFollowerNumberUI;
+        OnFollowerUIChange+=UpdateCurrentFollowerNumberUI;
+        OnPlayerHealthChanged += UpdateHealthUI;
+        OnPlayerDamageChanged += UpdateAttackDamageUI;
+        OnPlayerAttackSpeedChanged+= UpdateAttackSpeedUI;
     }
     void Start()
     {
@@ -95,7 +180,8 @@ public class GameManager : MonoBehaviour
         playerTran = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnInitialEnemies();
     }
-
+    
+    #region HandleSpawn
 
     void SpawnInitialEnemies()
     {
@@ -116,6 +202,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+
+    
+
+    
     void SpawnEnemyWave()
     {
         for(int i = 0; i < enemiesPerWave; i++)
@@ -172,4 +263,5 @@ public class GameManager : MonoBehaviour
             CurrentFollowerNumber++;
         }
     }
+    #endregion
 }

@@ -28,8 +28,14 @@ public class PlayerController : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;  // 初始化生命值
+        if (GameManager.instance) GameManager.instance.OnPlayerHealthChanged += UpdateHealth;
     }
 
+    public void UpdateHealth()
+    {
+        currentHealth = GameManager.instance.PlayerHealth;
+        TakeDamage(0);
+    }
     void Update()
     {
         // WASD输入处理
@@ -57,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damageAmount)
+    private void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
         if(currentHealth <= 0)
@@ -71,5 +77,10 @@ public class PlayerController : MonoBehaviour
         // 游戏结束逻辑
         Debug.Log("玩家死亡");
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if(GameManager.instance) GameManager.instance.OnPlayerHealthChanged -= UpdateHealth;
     }
 }

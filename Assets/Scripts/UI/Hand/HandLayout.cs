@@ -56,6 +56,16 @@ public class HandLayout : MonoBehaviour
         
     }
 
+    public void AddCardToHand(Card cardData)
+    {
+        RectTransform newCardTran = Instantiate(cardPrefab, this.transform).GetComponent<RectTransform>();
+        if (newCardTran.TryGetComponent(out NewCardHolder cardHolder))
+        {
+            cardHolder.Setup(cardData);
+        }
+        hands.Add(newCardTran);
+        UpdateHandPos();
+    }
     private IEnumerator CardMove(RectTransform cardTran, Vector2 targetPos)
     {
         float elapsed = 0;

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour
     private int hps;
     private GameManager gameManager;
     [SerializeField] protected Slider healthSlider;
+    public Action<Enemy> OnDeath;
     void Start()
     {
         hps = health;
@@ -26,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamageByPercentage(int percentage)
     {
-        health -= hps*percentage/100;
+        TakeDamage(Mathf.FloorToInt(hps*percentage/100f));
     }
 
     void Die()
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour
         if(gameManager != null)
         {
             gameManager.OnEnemyKilled();
+            OnDeath?.Invoke(this);
         }
         Destroy(gameObject);
     }

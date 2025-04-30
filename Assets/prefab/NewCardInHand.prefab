@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808285471759289520}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdde10d6fda41f46bba69c38a1c11f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 25a630e70a56ce8458694de1b4cb11ce, type: 2}
-  cardWholeImage: {fileID: 0}
+  cardData: {fileID: 0}
+  cardWholeImage: {fileID: 3869057929420964590}
 --- !u!222 &2707662626610039167
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AxeAttack : MonoBehaviour
 {
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField, Range(0f, 3f)] private float attackCooldown = 1f;
     [SerializeField, Range(1, 100)]private int attackDamage = 45;
 
@@ -13,6 +14,10 @@ public class AxeAttack : MonoBehaviour
     private Collider2D col;
     [SerializeField] private float timer ;
     [SerializeField,Range(30,100)]private int tickNumber = 50;
+
+    private float _rotateFactor = 1f;
+
+    private int percentage = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -20,8 +25,22 @@ public class AxeAttack : MonoBehaviour
         col = GetComponent<Collider2D>();
         spriteRenderer = spriteRenderer!=null ? spriteRenderer :GetComponentInChildren<SpriteRenderer>();
         StartCoroutine(Spin());
+        if (GameManager.instance)
+        {
+            GameManager.instance.OnPlayerAttackSpeedChanged += UpdateRotateFactor;
+            GameManager.instance.OnPlayerDamageChanged += UpdateDamagePercentage;
+        }
     }
 
+    private void UpdateRotateFactor()
+    {
+        _rotateFactor = GameManager.instance.PlayerAttackSpeed / 100f;
+    }
+
+    private void UpdateDamagePercentage()
+    {
+        percentage = GameManager.instance.PlayerDamage;
+    }
     private IEnumerator Spin()
     {
         while (true)
@@ -30,11 +49,10 @@ public class AxeAttack : MonoBehaviour
             while (timer>0)
             {
                 timer -= Time.fixedDeltaTime;
-                transform.Rotate(Vector3.forward, rotateSpeed);
+                transform.Rotate(Vector3.forward, rotateSpeed*_rotateFactor);
                 yield return new WaitForFixedUpdate();
             }
-            Debug.Log("reset!");
-            timer = 360f/rotateSpeed/tickNumber;
+            timer = 360f/(rotateSpeed*_rotateFactor)/tickNumber;
             transform.rotation = Quaternion.identity;
             DisableGFXandCollider();
             yield return new WaitForSeconds(attackCooldown);
@@ -66,8 +84,18 @@ public class AxeAttack : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
             if(enemy != null)
             {
-                enemy.TakeDamage(attackDamage); // 现在这个方法存在了
+                _audioSource.Play();
+                enemy.TakeDamageByPercentage(percentage);
             }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance)
+        {
+            GameManager.instance.OnPlayerAttackSpeedChanged -= UpdateRotateFactor;
+            GameManager.instance.OnPlayerDamageChanged -= UpdateDamagePercentage;
         }
     }
 }
