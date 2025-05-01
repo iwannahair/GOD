@@ -73,6 +73,12 @@ MonoBehaviour:
   dropTargetLayer:
     serializedVersion: 2
     m_Bits: 64
+  hittingLayer:
+    serializedVersion: 2
+    m_Bits: 576
+  cardAnimation: {fileID: 0}
+  newCardHolder: {fileID: 0}
+  cardPrefab: {fileID: 6970025007570107435, guid: 8f59474d9ba936141a171d50de1de87e, type: 3}
 --- !u!114 &8420880146523969230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdde10d6fda41f46bba69c38a1c11f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
+  cardData: {fileID: 11400000, guid: c24133f5834fefc48ae120e8fa1a7997, type: 2}
   cardWholeImage: {fileID: 3869057929420964590}
 --- !u!222 &2707662626610039167
 CanvasRenderer:

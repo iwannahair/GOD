@@ -25,7 +25,7 @@ public class AxeAttack : MonoBehaviour
         col = GetComponent<Collider2D>();
         spriteRenderer = spriteRenderer!=null ? spriteRenderer :GetComponentInChildren<SpriteRenderer>();
         _audioSource = _audioSource!=null ? _audioSource: GetComponentInChildren<AudioSource>();
-        StartCoroutine(Spin());
+        //StartCoroutine(Spin());
         if (GameManager.instance)
         {
             GameManager.instance.OnPlayerAttackSpeedChanged += UpdateRotateFactor;
@@ -42,11 +42,17 @@ public class AxeAttack : MonoBehaviour
     {
         percentage = GameManager.instance.PlayerDamage;
     }
+
+    private void FixedUpdate()
+    {
+        transform.Rotate(Vector3.forward, rotateSpeed*_rotateFactor);
+    }
+    /*
     private IEnumerator Spin()
     {
         while (true)
         {
-            
+
             while (timer>0)
             {
                 timer -= Time.fixedDeltaTime;
@@ -55,17 +61,20 @@ public class AxeAttack : MonoBehaviour
             }
             timer = 360f/(rotateSpeed*_rotateFactor)/tickNumber;
             transform.rotation = Quaternion.identity;
+
             DisableGFXandCollider();
             yield return new WaitForSeconds(attackCooldown);
             EnableGFXandCollider();
+            
         }
         
-    }
-
+    }*/
+    /*
     private void OnDisable()
     {
-        StopCoroutine(Spin());
+        //StopCoroutine(Spin());
     }
+    
 
     private void DisableGFXandCollider()
     {
@@ -78,6 +87,7 @@ public class AxeAttack : MonoBehaviour
         col.enabled = true;
         spriteRenderer.enabled = true;
     }
+    */
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy"))

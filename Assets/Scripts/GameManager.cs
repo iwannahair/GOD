@@ -90,7 +90,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject cardInHand;
     [SerializeField] private GameObject cardInWorld;
     
-    public Transform CardBuildingIndicator =>cardBuildingIndicator;
+    public Transform CardBuildingIndicator
+    {
+        get
+        {
+            cardBuildingIndicator.gameObject.SetActive(true);
+            return cardBuildingIndicator;
+        }
+    }
+
     private Action OnFollowerUIChange;
 
     #region FollowerSliderUI

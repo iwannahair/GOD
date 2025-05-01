@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class Building : MonoBehaviour
     protected int width = 1,height = 1;
     [SerializeField] protected Slider healthSlider;
     protected int humanInside;
+    public Action<Card> LoadCardData;
+
     public void TakeDamage(int damage)
     {
         health -= damage;

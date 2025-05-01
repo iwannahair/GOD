@@ -11,7 +11,7 @@ public class CardAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private RectTransform rectTransform;
     private Vector3 originalScale; 
     private Vector2 originalPosition;
-    private Coroutine animationCoroutine;
+    private Coroutine animationCoroutine; 
     public Vector2 cardPosition { get=>originalPosition; set=>originalPosition = value; }
     private int originalSiblingIndex;
     private bool firstIndexChange = true;
@@ -45,7 +45,13 @@ public class CardAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     
     public void ScaleDown(float dragScale,Vector2 targetPos)
     {
-        StartAnimation(originalScale*dragScale, targetPos);
+         StartAnimation(originalScale*dragScale, targetPos);
+    }
+
+    public void StopAnimation()
+    {
+        if (animationCoroutine != null)
+            StopCoroutine(animationCoroutine);
     }
     void StartAnimation(Vector3 targetScale, Vector2 targetPosition)
     {

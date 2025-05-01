@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections; 
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,19 +8,22 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField]private float returnDuration = 0.2f;
     [SerializeField]private float yOffset = 100f;
     
-    [SerializeField]private LayerMask dropTargetLayer; // World map layer
+    [SerializeField]private LayerMask dropTargetLayer;// World map layer
+    [SerializeField] private LayerMask hittingLayer;
     private Canvas canvas;
-    private bool dragging = false;
+    private bool dragging;
     
     private RectTransform rectTransform;
     private Vector3 originalScale;
     private Vector2 originalAnchoredPosition;
-    private CardAnimation cardAnimation;
-    
+    [SerializeField]private CardAnimation cardAnimation;
+    [SerializeField]private NewCardHolder newCardHolder;
+    [SerializeField]private GameObject cardPrefab;
     void Awake()
     {
-        cardAnimation = GetComponent<CardAnimation>();
+        cardAnimation = cardAnimation?cardAnimation: GetComponent<CardAnimation>();
         rectTransform = GetComponent<RectTransform>();
+        newCardHolder = newCardHolder? newCardHolder: GetComponent<NewCardHolder>();
         canvas = GetComponentInParent<Canvas>();
         originalScale = rectTransform.localScale;
         originalAnchoredPosition = rectTransform.anchoredPosition;
@@ -56,28 +59,43 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        dragging = false;
-        rectTransform.localScale = originalScale;
-
+        dragging = false; 
+        GameManager.instance.CardBuildingIndicator.gameObject.SetActive(false);
         // Check if released over world map
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, dropTargetLayer))
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 0f, hittingLayer);
+        if (hit.collider != null)
         {
-            Debug.Log("Card dropped on world map at " + hit.point);
-            // You can instantiate a world object or handle placement here
-            Destroy(gameObject); // Optional: remove card from hand
+            int hitLayer = hit.collider.gameObject.layer;
+            if (hitLayer == LayerMask.NameToLayer("Building"))
+            {
+                
+                StartCoroutine(ReturnToOriginalPosition());
+                return;
+            }
+            if ((dropTargetLayer.value & (1 << hitLayer)) != 0 )
+            {
+                if (Instantiate(cardPrefab, hit.point, Quaternion.identity).TryGetComponent(out CardInWorld cardInWorld))
+                {
+                    cardInWorld.CardData = newCardHolder.CardData;
+                }
+                Destroy(gameObject);  
+                return;
+            }
+            
         }
-        else
-        {
+         
             // Return to hand
-            StartCoroutine(ReturnToOriginalPosition());
-            cardAnimation.enabled = true;
-        }
+        StartCoroutine(ReturnToOriginalPosition());
+        
         
     }
 
     IEnumerator ReturnToOriginalPosition()
     {
+        cardAnimation.StopAnimation();
+        cardAnimation.enabled = true;
+        rectTransform.localScale = originalScale;
         Vector2 startPos = rectTransform.anchoredPosition;
         float t = 0f;
 

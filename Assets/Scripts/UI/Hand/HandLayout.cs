@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,6 @@ public class HandLayout : MonoBehaviour
     void Start()
     {
         middlePoint = (xBegin + xEnd) / 2;
-        
     }
 
     public void UpdateHandPos()
@@ -50,6 +50,10 @@ public class HandLayout : MonoBehaviour
             {
                 Debug.Log("Temp Button Clicked!");
                 RectTransform newCardTran = Instantiate(cardPrefab, this.transform).GetComponent<RectTransform>();
+                if (newCardTran.TryGetComponent(out NewCardHolder cardHolder))
+                { 
+                    cardHolder.handLayout = this;
+                }
                 hands.Add(newCardTran);
                 UpdateHandPos();
             }
@@ -62,8 +66,15 @@ public class HandLayout : MonoBehaviour
         if (newCardTran.TryGetComponent(out NewCardHolder cardHolder))
         {
             cardHolder.Setup(cardData);
+            cardHolder.handLayout = this;
         }
         hands.Add(newCardTran);
+        UpdateHandPos();
+    }
+
+    public void RemoveCardFromHand(RectTransform cardTrans)
+    {
+        hands.Remove(cardTrans);
         UpdateHandPos();
     }
     private IEnumerator CardMove(RectTransform cardTran, Vector2 targetPos)
@@ -98,7 +109,8 @@ public class HandLayout : MonoBehaviour
                 tempMidPoint -= offset;
                 StartCoroutine(CardMove(hands[i],new Vector2(tempMidPoint, yLevel)));
             }
-            hands[hands.Count/2].anchoredPosition = new Vector2(middlePoint, yLevel);
+
+            StartCoroutine(CardMove(hands[hands.Count/2],new Vector2(middlePoint, yLevel))); 
             tempMidPoint = middlePoint;
             for (int i = hands.Count/2+1; i < hands.Count; i++)
             {

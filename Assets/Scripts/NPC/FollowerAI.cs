@@ -8,13 +8,33 @@ public class FollowerAI : MonoBehaviour
     public float followDistance = 0.5f; // 修改为0.5像素的跟随距离
     private Transform _nextFollower;
     bool hadFollower = false;
+    public Action OnDeath;
     public Transform nextFollower{ get =>_nextFollower; set
         {
             _nextFollower = value;
             hadFollower = true;
         }
     }
-    
+
+    public void DetachFollower()
+    {
+        if (target.TryGetComponent(out FollowerAI follower))
+        {
+            follower._nextFollower = _nextFollower; 
+        }
+
+        if (_nextFollower)
+        {
+            if (_nextFollower.TryGetComponent(out FollowerAI nextFollower))
+            {
+                nextFollower.target = target;
+            }
+        }
+        else
+        {
+            GameManager.instance.HumanFollowerTail = null;
+        }
+    }
 
     void FixedUpdate()
     {
@@ -39,8 +59,8 @@ public class FollowerAI : MonoBehaviour
         }
         else
         {
-            if (nextFollower) target = GameManager.instance.PlayerTran;
             target = GameManager.instance.HumanFollowerTail ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
+            if (nextFollower) target = GameManager.instance.PlayerTran;
         }
     }
 
@@ -61,6 +81,7 @@ public class FollowerAI : MonoBehaviour
                 GameManager.instance.HumanFollowerTail = target.TryGetComponent(out FollowerAI follower) ? target : null;
             }
             GameManager.instance.CurrentFollowerNumber--;
+            OnDeath?.Invoke();
             Destroy(gameObject);
         }
     }

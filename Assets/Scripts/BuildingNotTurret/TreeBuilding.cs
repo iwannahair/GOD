@@ -13,9 +13,13 @@ public class TreeBuilding : Building
             SetUp();
         }
     }
-
+    private void BuildingCard(Card card)
+    { 
+        treeCard = (TreeSO)card; 
+    }
     private void Start()
     {
+        LoadCardData += BuildingCard;
         if (treeCard == null) return;
         SetUp();
     }
