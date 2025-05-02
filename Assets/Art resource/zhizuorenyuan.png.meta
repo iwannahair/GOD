@@ -58,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      zhizuorenyuan_0: -830440697156021060
+      zhizuorenyuan_1: 7438367630838611074
+      zhizuorenyuan_2: -6176514847601286678
+      zhizuorenyuan_3: -7350764629634019990
+      zhizuorenyuan_4: -8818456353090515003
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

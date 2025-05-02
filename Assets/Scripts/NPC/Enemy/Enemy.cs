@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     private GameManager gameManager;
     [SerializeField] protected Slider healthSlider;
     public Action<Enemy> OnDeath;
+    protected Action OnHit;
+    [SerializeField] private GameObject splashPrefab;
     void Start()
     {
         hps = health;
@@ -19,6 +21,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        OnHit?.Invoke();
         healthSlider.value = (float)health/hps;
         if(health <= 0)
         {
@@ -38,6 +41,7 @@ public class Enemy : MonoBehaviour
             gameManager.OnEnemyKilled();
             OnDeath?.Invoke(this);
         }
+        Instantiate(splashPrefab,transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

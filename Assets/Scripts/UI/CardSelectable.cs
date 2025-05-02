@@ -7,6 +7,7 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField,Range(1f, 2f)] private float scaleUp;
     [SerializeField, Range(0.1f, 2f)] private float scaleTime;
+    [SerializeField] private AudioSource cardSound;
     private Vector3 originalScale;
     private Coroutine animationCoroutine;
     private bool IsSelected { get; set; }
@@ -15,6 +16,7 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         originalScale = transform.localScale;
+        cardSound = cardSound?cardSound : GetComponent<AudioSource>();
     }
 
     // Called when this object is clicked
@@ -33,7 +35,7 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
     private void Select()
     {
         IsSelected = true;
-        Debug.Log("select");
+        cardSound?.Play(); 
         GameManager.instance.GetCardSelectionHandler.SelectCard(CardData, this);
         if (animationCoroutine != null) StopCoroutine(animationCoroutine);
         animationCoroutine = StartCoroutine(AnimationUp());
@@ -41,7 +43,6 @@ public class CardSelectable : MonoBehaviour, IPointerClickHandler
 
     public void Deselect()
     {
-        Debug.Log("deselect");
         IsSelected = false;
         GameManager.instance.GetCardSelectionHandler.DeselectCurrentCard(this);
         if (animationCoroutine != null) StopCoroutine(animationCoroutine);

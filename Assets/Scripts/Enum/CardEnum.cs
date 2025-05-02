@@ -11,7 +11,7 @@ namespace CardEnum
 
         public enum CardType
         {
-            tree, turret, stuck
+            tree, cannon, ballista, stuck
         }
     }
 }

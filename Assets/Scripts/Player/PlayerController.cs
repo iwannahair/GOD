@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D rb;
     private Vector2 movement;
-    private SpriteRenderer renderer;
+    private SpriteRenderer _renderer;
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;  // 初始化生命值
         if (GameManager.instance) GameManager.instance.OnPlayerHealthChanged += UpdateHealth;
@@ -51,14 +51,14 @@ public class PlayerController : MonoBehaviour
         // 可选：使角色朝向移动方向
         if(movement != Vector2.zero)
         {
-            if ((movement.x < 0 || movement.y > 0) &&!renderer.flipX )
+            if ((movement.x < 0 || movement.y > 0) &&!_renderer.flipX )
             {
-                renderer.flipX = true;
+                _renderer.flipX = true;
             }
 
-            if ((movement.x > 0 || movement.y < 0)&& renderer.flipX )
+            if ((movement.x > 0 || movement.y < 0)&& _renderer.flipX )
             {
-                renderer.flipX = false;
+                _renderer.flipX = false;
             }
         }
     }

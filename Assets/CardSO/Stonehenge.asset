@@ -17,6 +17,7 @@ MonoBehaviour:
   cardDescription: "\u5F53\u654C\u4EBA\u8FDB\u6765\u540E\uFF0C\u65E0\u6CD5\u518D\u51FA\u53BB\uFF0C\u6700\u591A\u5BB9\u7EB32\u540D\u654C\u4EBA"
   cardBuildingPrefab: {fileID: 3576504292585846705, guid: 42b293dd119e3de4690c41ca7b45940d, type: 3}
   attributeType: 2
+  cardType: 3
   cardCost: 5
   followersCapacity: 10
   healthPoints: 3000

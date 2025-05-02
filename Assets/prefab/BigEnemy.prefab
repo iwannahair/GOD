@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4664574590903931222}
   - component: {fileID: 4357412141288344123}
   - component: {fileID: 2176543154615682328}
+  - component: {fileID: 5869972111946535722}
   m_Layer: 10
   m_Name: BigEnemy
   m_TagString: Enemy
@@ -155,7 +156,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1843485939
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2424553518018739129, guid: c464f18287bb95646a111685dac5dd04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 300
   healthSlider: {fileID: 2747060264882158149}
+  splashPrefab: {fileID: 3404287580300874039, guid: 24e9ac8dbb33eb44d890884f667f8a4a, type: 3}
 --- !u!114 &4357412141288344123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +354,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &5869972111946535722
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3434101345022915699}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 517092ec06e5b9040a38a3605c0925bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3549847084094248273
 GameObject:
   m_ObjectHideFlags: 0

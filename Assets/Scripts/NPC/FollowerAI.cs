@@ -7,14 +7,9 @@ public class FollowerAI : MonoBehaviour
     public float followSpeed = 3f;
     public float followDistance = 0.5f; // 修改为0.5像素的跟随距离
     private Transform _nextFollower;
-    bool hadFollower = false;
+    //bool hadFollower = false;
     public Action OnDeath;
-    public Transform nextFollower{ get =>_nextFollower; set
-        {
-            _nextFollower = value;
-            hadFollower = true;
-        }
-    }
+    public Transform nextFollower{ get =>_nextFollower; set => _nextFollower = value; }
 
     public void DetachFollower()
     {

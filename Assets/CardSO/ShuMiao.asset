@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShuMiao
   m_EditorClassIdentifier: 
   cardName: "\u6811\u82D7"
-  cardSprite: {fileID: -7033038588179515593, guid: f9679c0f43b0bc5468f8d4ab9d814099, type: 3}
+  cardSprite: {fileID: 5096651573609440777, guid: a8440dbe1eb87134fae8df8ffa2999f9, type: 3}
   cardDescription: "\u6BCF\u8BDE\u751F\u4E00\u4E2A\u4EBA\uFF0C\u4EBA\u53E3\u589E\u957F\u901F\u5EA6\u589E\u52A02%"
   cardBuildingPrefab: {fileID: 2856847528764110168, guid: bafa8fada10f78646be28a54226eec13, type: 3}
   attributeType: 1

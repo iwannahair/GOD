@@ -19,15 +19,10 @@ public class Shooter : Building
         }
         private get => cardData;
     }
-
-    private void BuildingCard(Card card)
-    { 
-        cardToUse=(Turret)card; 
-    }
+    
     private void Start()
     {
         if (cardData == null) return;
-        LoadCardData += BuildingCard;
         SetUp();
     }
 

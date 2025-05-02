@@ -15,7 +15,7 @@ public class HandLayout : MonoBehaviour
     [SerializeField] private float cardMoveDuration = 0.2f;
     private float middlePoint;
     private float offset;
-    [SerializeField] private int maxFlatCardsNum = 5;
+    private int maxFlatCardsNum = 5;
     [SerializeField] private List<RectTransform> hands = new List<RectTransform>();
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,7 +27,7 @@ public class HandLayout : MonoBehaviour
     public void UpdateHandPos()
     {
         if (hands.Count == 0) return;
-        if (hands.Count > 5)
+        if (hands.Count > maxFlatCardsNum)
         {
             float length = xEnd - xBegin;
             float offset = length/hands.Count;

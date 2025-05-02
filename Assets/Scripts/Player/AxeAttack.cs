@@ -5,8 +5,8 @@ using UnityEngine;
 public class AxeAttack : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField, Range(0f, 3f)] private float attackCooldown = 1f;
-    [SerializeField, Range(1, 100)]private int attackDamage = 45;
+    //[SerializeField, Range(0f, 3f)] private float attackCooldown = 1f;
+    //[SerializeField, Range(1, 100)]private int attackDamage = 45;
 
     [SerializeField, Range(1f, 45f)] private float rotateSpeed = 15;
     [SerializeField] private SpriteRenderer spriteRenderer;

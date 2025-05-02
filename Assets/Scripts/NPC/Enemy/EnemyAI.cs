@@ -7,8 +7,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int damage = 8;
     private Transform player;
-    private Rigidbody2D rb;  // 添加刚体引用
-
+    protected Rigidbody2D rb;  // 添加刚体引用
+    
     [SerializeField] private Building targetBuilding;
     public Building TargetBuilding=>targetBuilding;
     public int Damage => damage;
@@ -38,6 +38,7 @@ public class EnemyAI : MonoBehaviour
             Vector2 direction = (GameManager.instance.PlayerTran.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
+        
         if (targetBuilding)
         {
             timer -= Time.fixedDeltaTime;

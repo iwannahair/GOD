@@ -4,10 +4,10 @@ using UnityEngine;
 public class StoneHengeRangeDetect : MonoBehaviour
 {
     [SerializeField] private StoneHenge stoneHenge;
-    private Collider2D collider2D;
+    private Collider2D _collider2D;
     private void Start()
     {
-        collider2D = GetComponent<Collider2D>();
+        _collider2D = GetComponent<Collider2D>();
         stoneHenge.OnChange += Refresh;
     }
 
@@ -43,8 +43,8 @@ public class StoneHengeRangeDetect : MonoBehaviour
 
     private IEnumerator RefreshCollider()
     {
-        collider2D.enabled = false;
+        _collider2D.enabled = false;
         yield return new WaitForFixedUpdate();
-        collider2D.enabled = true;
+        _collider2D.enabled = true;
     }
 }

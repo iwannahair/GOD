@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using CardEnum;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,14 +12,35 @@ public class GameManager : MonoBehaviour
     [Header("角色设置")]
     public GameObject playerPrefab;  // 保留Prefab引用但不使用
     public Transform playerSpawnPoint;  // 保留生成点但不使用
-    private int playerHealth, playerDamage, playerAttackSpeed;
-    [SerializeField] TMP_Text playerDamageText, playerHealthText,  playerAttackSpeedText;
+    private int playerHealth=100, playerDamage=100, playerAttackSpeed=100;
+    [SerializeField] private TMP_Text playerDamageText, playerHealthText,  playerAttackSpeedText, popText;
+    [SerializeField] private GameObject popTextGameObject;
     public event Action OnPlayerHealthChanged, OnPlayerDamageChanged, OnPlayerAttackSpeedChanged;
     
     #region PlayerThreeAtributesSetter/Getter
 
+    [SerializeField] private float popOffset = 10f;
+    public void Pop(TypeEnum.AttributeType attributeType, int value)
+    {
+        switch (attributeType)
+        {
+            case TypeEnum.AttributeType.Health:
+                popTextGameObject.transform.position = playerHealthText.transform.position+Vector3.right;
+                break;
+            case TypeEnum.AttributeType.Attack:
+                popTextGameObject.transform.position = playerDamageText.transform.position+Vector3.right;
+                break; 
+            case TypeEnum.AttributeType.AttackSpeed:
+                popTextGameObject.transform.position = playerAttackSpeedText.transform.position+Vector3.right;
+                break;
+            default:
+                Debug.LogError("Unknown attribute type");
+                break;
+        }
+        popText.text = value.ToString();
+        popTextGameObject.SetActive(true);
+    }
     
-
     
     public int PlayerHealth
     {
@@ -57,6 +79,7 @@ public class GameManager : MonoBehaviour
     
     [Header("敌人设置")] 
     public GameObject enemyPrefab;
+    public GameObject bigEnemyPrefab;
     public int initialEnemyCount = 5;
     public int enemiesPerWave = 5;
     public float spawnRadius = 10f;
@@ -85,11 +108,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandLayout handLayout;
     public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler;
     
-    [Header("Card prefab")]
-    [SerializeField] private GameObject cardUIPrefab;
-    [SerializeField] private GameObject cardInHand;
-    [SerializeField] private GameObject cardInWorld;
-    
+    [Header("场景管理")] 
+    [SerializeField] private GameObject pausePanel;
     public Transform CardBuildingIndicator
     {
         get
@@ -177,7 +197,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-        OnFollowerUIChange+=UpdateCurrentFollowerNumberUI;
+        OnFollowerUIChange+= UpdateCurrentFollowerNumberUI;
         OnPlayerHealthChanged += UpdateHealthUI;
         OnPlayerDamageChanged += UpdateAttackDamageUI;
         OnPlayerAttackSpeedChanged+= UpdateAttackSpeedUI;
@@ -197,7 +217,11 @@ public class GameManager : MonoBehaviour
         {
             Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
-            Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+            if (Random.Range(0,100)>90)
+            {
+                Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+            }
         }
     }
 
@@ -208,9 +232,17 @@ public class GameManager : MonoBehaviour
             SpawnEnemyWave();
             nextWaveTime = Time.time + waveInterval;
         }
+
+        InputPauseGame();
     }
 
-    
+    private void InputPauseGame()
+    {
+        if (Input.GetButton("Cancel"))
+        {
+            pausePanel.SetActive(true);
+        }
+    }
 
     
 
@@ -222,6 +254,10 @@ public class GameManager : MonoBehaviour
             Vector2 spawnPos = (Vector2)transform.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
             Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            if (Random.Range(0,100)>90)
+            {
+                Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+            }
         }
     }
 

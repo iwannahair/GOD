@@ -19,8 +19,10 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField]private CardAnimation cardAnimation;
     [SerializeField]private NewCardHolder newCardHolder;
     [SerializeField]private GameObject cardPrefab;
+    [SerializeField]private AudioSource cardSound;
     void Awake()
     {
+        cardSound = cardSound?cardSound : GetComponent<AudioSource>();
         cardAnimation = cardAnimation?cardAnimation: GetComponent<CardAnimation>();
         rectTransform = GetComponent<RectTransform>();
         newCardHolder = newCardHolder? newCardHolder: GetComponent<NewCardHolder>();
@@ -38,7 +40,8 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             canvas.worldCamera,
             out var pos
         );
-        cardAnimation.ScaleDown(dragScale,pos+new Vector2(0, yOffset));
+        cardSound?.Play();
+        cardAnimation?.ScaleDown(dragScale,pos+new Vector2(0, yOffset));
         originalAnchoredPosition = cardAnimation.cardPosition;
         cardAnimation.enabled = false;
     }
@@ -79,6 +82,7 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                 {
                     cardInWorld.CardData = newCardHolder.CardData;
                 }
+                cardSound?.Play();
                 Destroy(gameObject);  
                 return;
             }

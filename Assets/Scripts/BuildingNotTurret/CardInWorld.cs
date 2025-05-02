@@ -1,6 +1,5 @@
-using System;
-using Unity.VisualScripting;
-using UnityEngine;
+using UnityEngine; 
+using CardEnum;
 
 public class CardInWorld : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class CardInWorld : MonoBehaviour
                cardData = value;
                spriteRenderer.sprite = cardData.wholeCardSprite;
                folCapacity = cardData.followersCapacity;
+               SetUpSound();
           }
      }
 
@@ -22,19 +22,48 @@ public class CardInWorld : MonoBehaviour
      private int folCount;
      private int inCount;
      [SerializeField]private Collider2D triggerCollider;
-
+     [SerializeField]private AudioSource audioSource;
+     [SerializeField]private AudioClip tree,cannon, ballista, stoneHenge;
      private void Start()
-     {
-           
+     { 
           spriteRenderer = spriteRenderer ? spriteRenderer : GetComponent<SpriteRenderer>();
           triggerCollider = triggerCollider ? triggerCollider : GetComponent<Collider2D>();
           ChooseFollower();
+          
      }
 
+     private void SetUpSound()
+     {
+          if (!cardData)
+          {
+               Debug.LogError("Card Data Not Found");
+               return;
+          }
+          switch (cardData.cardType)
+          {
+               case TypeEnum.CardType.tree:
+                    audioSource.clip = tree;
+                    break;
+               case TypeEnum.CardType.ballista:
+                    audioSource.clip = ballista;
+                    break;
+               case TypeEnum.CardType.cannon:
+                    audioSource.clip = cannon;
+                    break;
+               case TypeEnum.CardType.stuck:
+                    audioSource.clip = stoneHenge;
+                    break;
+               default:
+                    Debug.LogError("Unknown card type");
+                    break;
+          }
+          audioSource.Play();
+     }
      
      private void GetFollowerToCome(FollowerAI follower)
      {
-          if (folCount >= folCapacity) {SpawnBuilding();return;} 
+          if (folCount >= folCapacity) {SpawnBuilding();return;}
+          if (!follower.target) return;
           if (follower.target == transform) return;
           folCount++;
           follower.DetachFollower();
@@ -47,7 +76,23 @@ public class CardInWorld : MonoBehaviour
           if (Instantiate(cardData.cardBuildingPrefab, transform.position, Quaternion.identity)
                 .TryGetComponent(out Building tempBuilding))
             {
-                tempBuilding.LoadCardData?.Invoke(cardData);
+                switch(cardData.attributeType) 
+                {
+                     case TypeEnum.AttributeType.Attack:
+                          GameManager.instance.PlayerDamage -= cardData.cardCost;
+                          break;
+                     case TypeEnum.AttributeType.Health:
+                          tempBuilding.GetComponent<TreeBuilding>().BuildingCard(cardData);
+                          GameManager.instance.PlayerHealth -= cardData.cardCost;
+                          break;
+                     case TypeEnum.AttributeType.AttackSpeed:
+                          GameManager.instance.PlayerAttackSpeed -= cardData.cardCost;
+                          break;
+                     default:
+                          Debug.LogError("Unknown attribute type");
+                          break;
+                }
+                GameManager.instance.Pop(cardData.attributeType,cardData.cardCost);
             }
           Destroy(gameObject);
      }
@@ -114,6 +159,10 @@ public class CardInWorld : MonoBehaviour
 
           foreach (var follower in followers)
           {
+               if (!follower)
+               {
+                    continue;
+               }
                GetFollowerToCome(follower);
           }
      }

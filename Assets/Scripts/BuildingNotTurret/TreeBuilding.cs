@@ -13,13 +13,15 @@ public class TreeBuilding : Building
             SetUp();
         }
     }
-    private void BuildingCard(Card card)
+    public void BuildingCard(Card card)
     { 
-        treeCard = (TreeSO)card; 
+        treeCard = (TreeSO)card;
+        GetComponent<SpriteRenderer>().sprite = treeCard.cardSprite;
+        maxHealth = treeCard.healthPoints;
+        health = maxHealth;
     }
     private void Start()
     {
-        LoadCardData += BuildingCard;
         if (treeCard == null) return;
         SetUp();
     }
