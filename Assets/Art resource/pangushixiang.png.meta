@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f857ea28089579145811df79c5e38372
+guid: bcab831408f1f114da5e612c583a8b1f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5059704723242036824
-    second: five_0
+      213: 6907152569980581171
+    second: pangushixiang_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: five_0
+      name: pangushixiang_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1125
-        height: 810
+        width: 58
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 85e253963aea73640800000000000000
-      internalID: 5059704723242036824
+      spriteID: 3357e1faaa22bdf50800000000000000
+      internalID: 6907152569980581171
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      five_0: 5059704723242036824
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
