@@ -86,11 +86,11 @@ public class HandLayout : MonoBehaviour
         }
         while (elapsed < cardMoveDuration)
         {
+            if (!cardTran) break;
             elapsed += 0.02f;
             cardTran.anchoredPosition = Vector2.Lerp(cardTran.anchoredPosition, targetPos, elapsed/cardMoveDuration);
             yield return new WaitForSecondsRealtime(0.02f);
         }
-        Debug.Log("CAN REACH HERE");
     }
     private void LayoutCardsUnderFive()
     {

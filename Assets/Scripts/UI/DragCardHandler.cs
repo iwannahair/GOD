@@ -36,16 +36,16 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerDown(PointerEventData eventData)
     {
         TypeEnum.AttributeType type = newCardHolder.CardData.attributeType;
-            switch (type)
+        switch (type)
             {
                 case TypeEnum.AttributeType.Attack:
-                    if (GameManager.instance.PlayerDamage < 0) return;
+                    if (GameManager.instance.PlayerDamage <= 0) return;
                     break;
                 case TypeEnum.AttributeType.Health:
-                    if (GameManager.instance.PlayerHealth < 0) return;
+                    if (GameManager.instance.PlayerHealth <= 0) return;
                     break;
                 case TypeEnum.AttributeType.AttackSpeed:
-                    if (GameManager.instance.PlayerAttackSpeed < 0) return;
+                    if (GameManager.instance.PlayerAttackSpeed <= 0) return;
                     break;
                 default:
                     Debug.LogError("Wrong Type");

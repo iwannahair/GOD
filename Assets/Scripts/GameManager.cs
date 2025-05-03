@@ -49,16 +49,16 @@ public class GameManager : MonoBehaviour
         get => playerHealth;
         set
         {
+            if (playerHealth <= 0) return;
             playerHealth = value;
-            
-            OnPlayerHealthChanged?.Invoke();
-            CheckEndGame(playerHealth);
             if (playerHealth <= 0)
             {
                 playerHealth = 0;
                 playerDamage = 0;
                 playerAttackSpeed = 0;
             }
+            OnPlayerHealthChanged?.Invoke();
+            CheckEndGame(playerHealth);
         }
         
     }
@@ -70,15 +70,16 @@ public class GameManager : MonoBehaviour
         get => playerDamage;
         set
         {
+            if (playerDamage <= 0) return;
             playerDamage = value;
-            OnPlayerDamageChanged?.Invoke();
-            CheckEndGame(playerDamage);
             if (playerDamage <= 0)
             {
                 playerDamage = 0;
                 playerHealth = 0;
                 playerAttackSpeed = 0;
             }
+            OnPlayerDamageChanged?.Invoke();
+            CheckEndGame(playerDamage); 
         }
     }
 

@@ -72,6 +72,7 @@ public class FollowerAI : MonoBehaviour
         }
         else
         {
+            OnDeath = null;
             target = GameManager.instance.HumanFollowerTail ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
             if (nextFollower) target = GameManager.instance.PlayerTran;
         }
