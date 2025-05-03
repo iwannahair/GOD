@@ -20,9 +20,9 @@ TagManager:
   - Enemy
   - Projectile
   - UIIndicator
-  - TriggerColliderHolder
-  - 
-  - 
+  - BuildingTriggerColliderHolder
+  - BuildingFriend
+  - EnemyTriggerColliderHolder
   - 
   - 
   - 

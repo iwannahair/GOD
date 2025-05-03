@@ -12,6 +12,12 @@ public class BigEnemyAI : EnemyAI
 
     private void FixedUpdate()
     {
-         animator.SetFloat("VelocityX",  rb.linearVelocity.x);
+        Move();
+        animator.SetFloat("VelocityX",  rb.linearVelocity.x);
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance) GameManager.instance.BigMonsterKilledAmount++;
     }
 }

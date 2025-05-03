@@ -69,13 +69,13 @@ public class CardAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         while (time < duration)
         {
-            time += Time.deltaTime;
+            time += 0.02f;
             float t = time / duration;
 
             rectTransform.localScale = Vector3.Lerp(startScale, targetScale, t);
             rectTransform.anchoredPosition = Vector2.Lerp(startPos, targetPos, t);
 
-            yield return null;
+            yield return new WaitForSecondsRealtime(0.02f);
         }
 
         rectTransform.localScale = targetScale;

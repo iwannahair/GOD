@@ -86,8 +86,8 @@ GameObject:
   - component: {fileID: 771503541872300288}
   - component: {fileID: 5801210001403986957}
   - component: {fileID: 3804115298575392829}
-  - component: {fileID: 4664574590903931222}
-  - component: {fileID: 4357412141288344123}
+  - component: {fileID: 8740790143483324275}
+  - component: {fileID: 3438659732121817984}
   - component: {fileID: 2176543154615682328}
   - component: {fileID: 5869972111946535722}
   m_Layer: 10
@@ -296,7 +296,7 @@ PolygonCollider2D:
       - {x: 0.16499999, y: -0.11}
       - {x: 0.145, y: -0.11}
   m_UseDelaunayMesh: 0
---- !u!114 &4664574590903931222
+--- !u!114 &8740790143483324275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,13 +305,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3434101345022915699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef59c308813ff0f4eaf03b54fb2eb92d, type: 3}
+  m_Script: {fileID: 11500000, guid: fbfabcd51895fd240a5bcf07e4b53dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 300
   healthSlider: {fileID: 2747060264882158149}
   splashPrefab: {fileID: 3404287580300874039, guid: 24e9ac8dbb33eb44d890884f667f8a4a, type: 3}
---- !u!114 &4357412141288344123
+  animator: {fileID: 5869972111946535722}
+--- !u!114 &3438659732121817984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,13 +321,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3434101345022915699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c913114a05e1ea349a134ab68b19be74, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a6c007c78129e44ea4e2dba292d68bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
   attackCooldown: 2
   damage: 22
   targetBuilding: {fileID: 0}
+  animator: {fileID: 5869972111946535722}
 --- !u!50 &2176543154615682328
 Rigidbody2D:
   serializedVersion: 5
@@ -387,7 +389,7 @@ GameObject:
   - component: {fileID: 3039616535055029628}
   - component: {fileID: 8938901121487067064}
   - component: {fileID: 8176574277836262813}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: ColliderHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetBuilding: {fileID: 0}
   damage: 0
-  enemyAI: {fileID: 4357412141288344123}
+  enemyAI: {fileID: 3438659732121817984}
 --- !u!58 &8176574277836262813
 CircleCollider2D:
   m_ObjectHideFlags: 0

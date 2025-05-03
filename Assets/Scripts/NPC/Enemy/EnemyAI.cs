@@ -28,6 +28,11 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
+    }
+
+    protected void Move()
+    {
         player = GameManager.instance.HumanFollowerTail is not null ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
         if(player){
             Vector2 direction = (player.position - transform.position).normalized;

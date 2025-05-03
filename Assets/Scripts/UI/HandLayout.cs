@@ -151,4 +151,9 @@ public class HandLayout : MonoBehaviour
             }
         }
     }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 }

@@ -36,8 +36,26 @@ public class FollowerAI : MonoBehaviour
         if(target != null)
         {
             // 计算目标后方位置
-            Vector2 targetBackPos = (Vector2)target.position - (Vector2)(target.up * followDistance);
-            
+            Vector2 targetBackPos = target.position;
+            int randomPos = UnityEngine.Random.Range(0, 4);
+            switch(randomPos)
+            {
+                case 0:
+                    targetBackPos = (Vector2)target.position - (Vector2)(target.up * followDistance);
+                    break;
+                case 1:
+                    targetBackPos = (Vector2)target.position - (Vector2)(target.right * followDistance);
+                    break;
+                case 2:
+                    targetBackPos = (Vector2)target.position + (Vector2)(target.up * followDistance);
+                    break;
+                case 3:
+                    targetBackPos = (Vector2)target.position + (Vector2)(target.right * followDistance);
+                    break;
+                default:
+                    Debug.LogError("how did I get here? Random number out of bound");
+                    break; 
+            }
             // 平滑移动到后方位置
             transform.position = Vector2.Lerp(
                 (Vector2)transform.position,

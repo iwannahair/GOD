@@ -15,4 +15,12 @@ public class BigEnemy : Enemy
     {
         animator.SetTrigger("Hit");
     }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance)
+        {
+            GameManager.instance.BigMonsterKilledAmount++;
+        }
+    }
 }

@@ -1,4 +1,5 @@
-using System.Collections; 
+using System.Collections;
+using CardEnum;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,6 +21,7 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField]private NewCardHolder newCardHolder;
     [SerializeField]private GameObject cardPrefab;
     [SerializeField]private AudioSource cardSound;
+
     void Awake()
     {
         cardSound = cardSound?cardSound : GetComponent<AudioSource>();
@@ -33,6 +35,22 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        TypeEnum.AttributeType type = newCardHolder.CardData.attributeType;
+            switch (type)
+            {
+                case TypeEnum.AttributeType.Attack:
+                    if (GameManager.instance.PlayerDamage < 0) return;
+                    break;
+                case TypeEnum.AttributeType.Health:
+                    if (GameManager.instance.PlayerHealth < 0) return;
+                    break;
+                case TypeEnum.AttributeType.AttackSpeed:
+                    if (GameManager.instance.PlayerAttackSpeed < 0) return;
+                    break;
+                default:
+                    Debug.LogError("Wrong Type");
+                    break;
+            }
         dragging = true;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
@@ -49,6 +67,7 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnDrag(PointerEventData eventData)
     {
         if (!dragging) return;
+        
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
             eventData.position,
@@ -57,7 +76,9 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         );
         rectTransform.anchoredPosition = pos+new Vector2(0, yOffset);
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        GameManager.instance.CardBuildingIndicator.position = new Vector3(worldPos.x, worldPos.y, 0);
+        Transform cardIndicator = GameManager.instance.CardBuildingIndicator;
+        cardIndicator.position = new Vector3(worldPos.x, worldPos.y, 0);
+        cardIndicator.localScale = new Vector2(newCardHolder.CardData.width, newCardHolder.CardData.height);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -66,10 +87,14 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         GameManager.instance.CardBuildingIndicator.gameObject.SetActive(false);
         // Check if released over world map
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 0f, hittingLayer);
-        if (hit.collider != null)
+         
+        int width = newCardHolder.CardData.width;
+        int height = newCardHolder.CardData.height;
+        Collider2D hit = Physics2D.OverlapBox(mouseWorldPos, new Vector2(width, height), 0f, hittingLayer); 
+        if (CheckAvailable(hit)) return;
+        if (hit  != null)
         {
-            int hitLayer = hit.collider.gameObject.layer;
+            int hitLayer = hit .gameObject.layer;
             if (hitLayer == LayerMask.NameToLayer("Building"))
             {
                 
@@ -78,11 +103,12 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             }
             if ((dropTargetLayer.value & (1 << hitLayer)) != 0 )
             {
-                if (Instantiate(cardPrefab, hit.point, Quaternion.identity).TryGetComponent(out CardInWorld cardInWorld))
+                if (Instantiate(cardPrefab, mouseWorldPos, Quaternion.identity).TryGetComponent(out CardInWorld cardInWorld))
                 {
                     cardInWorld.CardData = newCardHolder.CardData;
                 }
                 cardSound?.Play();
+                newCardHolder.RemoveThisCard();
                 Destroy(gameObject);  
                 return;
             }
@@ -93,6 +119,17 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         StartCoroutine(ReturnToOriginalPosition());
         
         
+    }
+
+    private bool CheckAvailable(Collider2D collider)
+    {
+        if (collider != null && collider.gameObject.layer == LayerMask.NameToLayer("Building"))
+        {
+            StartCoroutine(ReturnToOriginalPosition());
+            return true;
+        }
+
+        return false;
     }
 
     IEnumerator ReturnToOriginalPosition()

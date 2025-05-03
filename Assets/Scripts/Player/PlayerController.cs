@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,14 +15,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private SpriteRenderer _renderer;
 
-    private void Awake()
-    {
-        if (GameManager.instance)
-        {
-            GameManager.instance.SetPlayerTran(transform);
-            Debug.Log("load playerTran");
-        }
-    }
+ 
 
     void Start()
     {
@@ -72,11 +66,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         // 游戏结束逻辑
-        Debug.Log("玩家死亡");
-        Destroy(gameObject);
+        Debug.Log("玩家死亡"); 
+        StartCoroutine(TurnToStone()); 
+    }
+
+    private IEnumerator TurnToStone()
+    {
+        Color temp = _renderer.color;
+        Color targetColor = new Color(85 / 255f, 85 / 255f, 85 / 255f);
+        float timer = 0f;
+        while (timer<1f)
+        {
+            timer+=Time.fixedDeltaTime;
+            _renderer.color = Color.Lerp(temp, targetColor, timer / 1f);
+            yield return new WaitForFixedUpdate();
+        }
+        enabled = false;
     }
 
     private void OnDestroy()

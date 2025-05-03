@@ -93,6 +93,7 @@ public class CardInWorld : MonoBehaviour
                           break;
                 }
                 GameManager.instance.Pop(cardData.attributeType,cardData.cardCost);
+                GameManager.instance.BuildingBuilt++;
             }
           Destroy(gameObject);
      }
@@ -119,8 +120,17 @@ public class CardInWorld : MonoBehaviour
           FollowerAI followerTail = GameManager.instance.HumanFollowerTail?.GetComponent<FollowerAI>();
           bool foundNext = false;
           if (!followerTail) return;
+          int loopCounter = 0;
           while(followerTail)
           {
+               loopCounter++;
+               if (loopCounter >= 1000)
+               {
+                    Debug.LogError("Over 1000 loops for choose follower");
+                    break;
+               }
+               
+               
                for (int i = 0; i < folCapacity-folCount; i++)
                {
                     if (distances[i] > Vector2.SqrMagnitude(followerTail.transform.position - transform.position))

@@ -25,8 +25,10 @@ public class NewCardHolder : MonoBehaviour
         cardWholeImage.sprite = cardData.wholeCardSprite;
     }
 
-    private void OnDestroy()
+    public void RemoveThisCard()
     {
-        handLayout?.RemoveCardFromHand(GetComponent<RectTransform>());
+        if (!handLayout) return;
+        if (handLayout.enabled) handLayout?.RemoveCardFromHand(GetComponent<RectTransform>());
     }
+ 
 }
