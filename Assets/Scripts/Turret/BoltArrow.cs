@@ -44,6 +44,22 @@ public class BoltArrow : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
+            if(GameManager.instance) 
+                switch (Random.Range(0, 3))
+                {
+                    case 0:
+                        GameManager.instance.AudioPlayerManager.PlayArrow1Sound();
+                        break;
+                    case 1:
+                        GameManager.instance.AudioPlayerManager.PlayArrow2Sound();
+                        break;
+                    case 2:
+                        GameManager.instance.AudioPlayerManager.PlayArrow3Sound();
+                        break;
+                    default:
+                        Debug.LogError("BallistaShooter: Invalid value");
+                        break;
+                }
             Enemy enemy = collision.GetComponent<Enemy>();
             if(enemy != null)
             {

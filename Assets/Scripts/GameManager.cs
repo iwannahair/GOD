@@ -3,7 +3,6 @@ using System.Collections;
 using CardEnum;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -108,6 +107,7 @@ public class GameManager : MonoBehaviour
         {
             playerController.Die();
             _endGame = true;
+            endGameText.SetActive(true);
         }
     }
     #endregion
@@ -160,8 +160,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandLayout handLayout;
     public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler; 
     [Header("场景管理")] 
+    [SerializeField] private AudioPlayerManager audioPlayerManager;
     [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject winText,loseText;
+    [SerializeField] private GameObject winText,loseText,endGameText;
+    public AudioPlayerManager AudioPlayerManager=>audioPlayerManager;
     public Transform CardBuildingIndicator
     {
         get
@@ -245,6 +247,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            Time.timeScale = 1;
         }
         else
         {
@@ -298,8 +301,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private float timeBeforeSpeedUp = 10f;
+    [SerializeField] private float timeSpeedUpScale = 3f;
     private IEnumerator CheckIfThereIsEnemies()
-    { 
+    {
+        float timer=0;
         while (true)
         {
             if (!GameObject.FindWithTag("Enemy"))
@@ -308,17 +314,24 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
-            if (!GameObject.FindWithTag("Human")&&!GameObject.FindWithTag("Human"))
+            if (!GameObject.FindWithTag("Human"))
             {
                 EndGameUI(false);
                 break;
             }
+
+            timer += endGameTimeToWait;
             yield return new WaitForSeconds(endGameTimeToWait);
+            if (timer > timeBeforeSpeedUp)
+            {
+                Time.timeScale = timeSpeedUpScale;
+            }
         }
     }
 
     private void EndGameUI(bool Win)
     {
+        Time.timeScale = 0;
         endGame_HumanSpawned.text = humanSpawnAmount.ToString();
         endGame_HumanKilled.text = (humanSpawnAmount - currentFollowerNumber).ToString();
         endGame_TotalEnemyKilled.text =  totalEnemiesKilled.ToString();

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878241c8c5467674f8dec1b2bdbc216a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonballSpeed: 0
+  cannonballSpeed: 11
   damage: 8
   explodePrefab: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!50 &5099577358327796145

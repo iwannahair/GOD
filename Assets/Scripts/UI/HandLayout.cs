@@ -42,23 +42,6 @@ public class HandLayout : MonoBehaviour
         LayoutCardsUnderFive();
     }
     
-    void OnGUI()
-    {
-            Rect buttonRect = new Rect(10, 10, 120, 40);
-            // Draw the button and check if it's clicked
-            if (GUI.Button(buttonRect, "Click Me"))
-            {
-                Debug.Log("Temp Button Clicked!");
-                RectTransform newCardTran = Instantiate(cardPrefab, this.transform).GetComponent<RectTransform>();
-                if (newCardTran.TryGetComponent(out NewCardHolder cardHolder))
-                { 
-                    cardHolder.handLayout = this;
-                }
-                hands.Add(newCardTran);
-                UpdateHandPos();
-            }
-        
-    }
 
     public void AddCardToHand(Card cardData)
     {

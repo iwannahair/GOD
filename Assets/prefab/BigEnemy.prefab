@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 3438659732121817984}
   - component: {fileID: 2176543154615682328}
   - component: {fileID: 5869972111946535722}
+  - component: {fileID: -7513796169692799461}
   m_Layer: 10
   m_Name: BigEnemy
   m_TagString: Enemy
@@ -378,6 +379,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-7513796169692799461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3434101345022915699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ff7608227d602469e5bae708677bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3549847084094248273
 GameObject:
   m_ObjectHideFlags: 0

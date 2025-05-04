@@ -298,7 +298,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8773837306409330782}
   - component: {fileID: 6835208548292181188}
-  - component: {fileID: 2374282302495400628}
   m_Layer: 13
   m_Name: RangeDetector
   m_TagString: Untagged
@@ -334,42 +333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: {fileID: 8032191046947587286}
---- !u!58 &2374282302495400628
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6078438325005446692}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
+  enemyMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 7.333334
+    m_Bits: 1024
+  range: 10
+  _collider2Ds: []
 --- !u!1 &6345508395281707828
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +422,7 @@ GameObject:
   - component: {fileID: -5801086581949466906}
   m_Layer: 9
   m_Name: Ballista Building
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,9 +560,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 552413567722290150}
-  fireCooldown: 1.5
+  fireCooldown: 0.5
   firePoint: {fileID: 8161365764029906635}
-  damage: 11
+  damage: 19
   cardData: {fileID: 11400000, guid: 911317e4fb8b29946834b93f6e9388ff, type: 2}
   enemiesInRange: []
   fireTimer: 0
@@ -636,7 +604,7 @@ AudioSource:
   m_GameObject: {fileID: 7385070383217086303}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4318500545106447784, guid: c4ad008f8d4d83945ada6c6d0f038f6d, type: 2}
   m_audioClip: {fileID: 8300000, guid: cbbb188218539ad43be30aba3669a908, type: 3}
   m_Resource: {fileID: 8300000, guid: cbbb188218539ad43be30aba3669a908, type: 3}
   m_PlayOnAwake: 1

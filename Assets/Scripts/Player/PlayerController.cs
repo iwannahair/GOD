@@ -14,11 +14,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer _renderer;
-
- 
+    [SerializeField]private AudioSource _audio;
+    [SerializeField] private GameObject axe;
 
     void Start()
     {
+        _audio = _audio ? _audio : gameObject.GetComponent<AudioSource>();
         _renderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;  // 初始化生命值
@@ -75,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator TurnToStone()
     {
+        _audio.Play();
+        axe.SetActive(false);
         Color temp = _renderer.color;
         Color targetColor = new Color(85 / 255f, 85 / 255f, 85 / 255f);
         float timer = 0f;

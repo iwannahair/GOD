@@ -67,7 +67,12 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnDrag(PointerEventData eventData)
     {
         if (!dragging) return;
-        
+        if (Input.GetMouseButtonDown(1))
+        {
+            dragging = false;
+            StartCoroutine(ReturnToOriginalPosition());
+            return;
+        }
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
             eventData.position,
@@ -142,10 +147,9 @@ public class DragCardHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         while (t < returnDuration)
         {
-            t += Time.deltaTime;
-            float progress = t / returnDuration;
-            rectTransform.anchoredPosition = Vector2.Lerp(startPos, originalAnchoredPosition, progress);
-            yield return null;
+            t += 0.02f; 
+            rectTransform.anchoredPosition = Vector2.Lerp(startPos, originalAnchoredPosition, t / returnDuration);
+            yield return new WaitForSecondsRealtime(0.02f);
         }
 
         rectTransform.anchoredPosition = originalAnchoredPosition;

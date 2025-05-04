@@ -1,21 +1,39 @@
+using System.Collections; 
 using UnityEngine;
 
 public class ShooterRangeDetect : MonoBehaviour
 {
-    [SerializeField] Shooter shooter;
-    private void OnTriggerEnter2D(Collider2D other)
+    [SerializeField] private Shooter shooter;
+    [SerializeField] private LayerMask enemyMask;
+    [SerializeField] private float range;
+    [SerializeField] private Collider2D[] _collider2Ds;
+    private void Start()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            shooter.AddEnemy(other.transform);
-        }
+        StartCoroutine(Detect());
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private IEnumerator Detect()
     {
-        if (other.CompareTag("Enemy"))
+        while (true)
         {
-            shooter.RemoveEnemy(other.transform);
+            _collider2Ds = Physics2D.OverlapCircleAll(transform.position,range, enemyMask);
+            shooter.ResetList();
+            foreach (var collider2D in _collider2Ds)
+            {
+                shooter.AddEnemy(collider2D.transform);
+            }
+            yield return new WaitForSeconds(shooter.Cooldown);
         }
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

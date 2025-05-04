@@ -5,6 +5,7 @@ public class CardInWorld : MonoBehaviour
 {
      private Card cardData;
      [SerializeField] private SpriteRenderer spriteRenderer;
+     private bool SpawnCheck;
      public Card CardData
      {
           get => cardData;
@@ -62,7 +63,8 @@ public class CardInWorld : MonoBehaviour
      
      private void GetFollowerToCome(FollowerAI follower)
      {
-          if (folCount >= folCapacity) {SpawnBuilding();return;}
+          if (SpawnCheck) return;
+          if (folCount >= folCapacity) {return;}
           if (!follower.target) return;
           if (follower.target == transform) return;
           folCount++;
@@ -101,9 +103,14 @@ public class CardInWorld : MonoBehaviour
      {
           if (collider2D.CompareTag("Human"))
           {
+               if (SpawnCheck) return;
                Destroy(collider2D.gameObject);
                inCount++;
-               if (inCount >= folCapacity) SpawnBuilding();
+               if (inCount >= folCapacity)
+               {
+                    SpawnCheck = true;
+                    SpawnBuilding();
+               }
           }
      }
 

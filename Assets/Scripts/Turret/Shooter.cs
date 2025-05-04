@@ -10,6 +10,11 @@ public class Shooter : Building
     [SerializeField] protected Turret cardData;
     [SerializeField] protected List<Transform> enemiesInRange = new List<Transform>();
     [SerializeField] protected float fireTimer;
+    public float Cooldown => fireCooldown; 
+    public void ResetList()
+    {
+        enemiesInRange = new List<Transform>();
+    }
     public Turret cardToUse
     {
         set
