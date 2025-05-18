@@ -151,24 +151,28 @@ public class GameManager : MonoBehaviour
     public int BuildingBuilt { get; set; }
 
     [Header("UI设置")] 
-    [SerializeField] private Slider currentFolNumSlider;
-    [SerializeField] private Transform cardBuildingIndicator;
-    [SerializeField] private float timeWaitToShowCards = 0.5f;
-    [SerializeField] private GameObject cardSelectPanel;
-    [SerializeField] private CardSelectionHandler cardSelectionHandler;
-    [SerializeField] private HandLayout handLayout;
-    public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler; 
+    [SerializeField] private Slider currentFolNumSlider;  // 删除所有Card相关的变量和方法
+    // 删除与CardInWorld相关的变量
+    // [SerializeField] private Transform cardBuildingIndicator;
+    // [SerializeField] private float timeWaitToShowCards = 0.5f;
+    // [SerializeField] private GameObject cardSelectPanel;
+    // [SerializeField] private CardSelectionHandler cardSelectionHandler;
+    // [SerializeField] private HandLayout handLayout;
+    // public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler; 
+    
     [Header("场景管理")] 
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject winText,loseText;
-    public Transform CardBuildingIndicator
-    {
-        get
-        {
-            cardBuildingIndicator.gameObject.SetActive(true);
-            return cardBuildingIndicator;
-        }
-    }
+    
+    // 删除与CardInWorld相关的属性
+    // public Transform CardBuildingIndicator
+    // {
+    //     get
+    //     {
+    //         cardBuildingIndicator.gameObject.SetActive(true);
+    //         return cardBuildingIndicator;
+    //     }
+    // }
 
     private Action OnFollowerUIChange;
 
@@ -177,10 +181,11 @@ public class GameManager : MonoBehaviour
     public int CurrentFollowerNumber { get=>currentFollowerNumber;
         set
         {
-            if (currentFollowerNumber < value&&value%targetFollowerNumber==0)
-            {
-                PopCardsSelect();//pop if adding and reach 10
-            }
+            // 删除与CardInWorld相关的代码
+            // if (currentFollowerNumber < value&&value%targetFollowerNumber==0)
+            // {
+            //     PopCardsSelect();//pop if adding and reach 10
+            // }
             currentFollowerNumber = value;
             OnFollowerUIChange.Invoke();
         }
@@ -194,26 +199,27 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    #region CardUI
-    public void PopCardsSelect()
-    {
-        //maybe sound go off first, then 0.5 sec -> pop UI 
-        if (_endGame) return;
-        StartCoroutine(ShowCardsUI()); 
-    }
-    
-    private IEnumerator ShowCardsUI()
-    {
-        yield return new WaitForSeconds(timeWaitToShowCards);
-        cardSelectPanel.SetActive(true);
-    }
-
-    public void AddToHand(Card card)
-    {
-        if(!handLayout) return;
-        handLayout.AddCardToHand(card);
-    }
-    #endregion
+    // 删除与CardInWorld相关的区域
+    // #region CardUI
+    // public void PopCardsSelect()
+    // {
+    //     //maybe sound go off first, then 0.5 sec -> pop UI 
+    //     if (_endGame) return;
+    //     StartCoroutine(ShowCardsUI()); 
+    // }
+    // 
+    // private IEnumerator ShowCardsUI()
+    // {
+    //     yield return new WaitForSeconds(timeWaitToShowCards);
+    //     cardSelectPanel.SetActive(true);
+    // }
+    //
+    // public void AddToHand(Card card)
+    // {
+    //     if(!handLayout) return;
+    //     handLayout.AddCardToHand(card);
+    // }
+    // #endregion
 
     #region PlayerAtributeUI
 
@@ -383,44 +389,11 @@ public class GameManager : MonoBehaviour
         if(enemiesKilled >= KILLS_TO_SPAWN_FOLLOWER)
         {
             
-            SpawnFollower();
+            
             enemiesKilled = 0; // 重置计数
         }
     }
 
-    void SpawnFollower()
-    {
-        speedUpContainer += humanSpawnSpeedUp;
-        humanSpawnAmount++;
-        if (speedUpContainer >= SPEED_UP_CONTAINER_MAX)
-        {
-            speedUpContainer-= SPEED_UP_CONTAINER_MAX + humanSpawnSpeedUp;
-            SpawnFollower();
-        }
-            
-        if(humanFollowerPrefab != null)
-        {
-            
-            GameObject follower;
-            if(humanFollowerTail==null)
-            {
-                // 第一个跟随者，跟随玩家
-                follower = Instantiate(humanFollowerPrefab, playerTran.position, playerTran.rotation);
-                follower.GetComponent<FollowerAI>().target = playerTran;
-                humanFollowerTail=follower.transform;
-            }
-            else
-            {
-                // 后续跟随者，跟随最后一个跟随者
-
-                follower = Instantiate(humanFollowerPrefab, humanFollowerTail.position, humanFollowerTail.rotation);
-                follower.GetComponent<FollowerAI>().target = humanFollowerTail;
-                humanFollowerTail.GetComponent<FollowerAI>().nextFollower = follower.transform;
-                humanFollowerTail = follower.transform;
-            }
-
-            CurrentFollowerNumber++;
-        }
-    }
+   
     #endregion
 }

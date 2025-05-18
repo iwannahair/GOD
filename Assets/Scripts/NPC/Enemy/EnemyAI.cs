@@ -9,8 +9,9 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     protected Rigidbody2D rb;  // 添加刚体引用
     
-    [SerializeField] private Building targetBuilding;
-    public Building TargetBuilding=>targetBuilding;
+    // 删除 Building 相关变量
+    // [SerializeField] private Building targetBuilding;
+    // public Building TargetBuilding=>targetBuilding;
     public int Damage => damage;
     private float timer;
     void Start()
@@ -33,7 +34,8 @@ public class EnemyAI : MonoBehaviour
 
     protected void Move()
     {
-        player = GameManager.instance.HumanFollowerTail is not null ? GameManager.instance.HumanFollowerTail : GameManager.instance.PlayerTran;
+        // 删除对 HumanFollowerTail 的引用，直接使用 PlayerTran
+        player = GameManager.instance.PlayerTran;
         if(player){
             Vector2 direction = (player.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
@@ -44,6 +46,8 @@ public class EnemyAI : MonoBehaviour
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
         
+        // 删除 Building 相关代码
+        /*
         if (targetBuilding)
         {
             timer -= Time.fixedDeltaTime;
@@ -53,5 +57,6 @@ public class EnemyAI : MonoBehaviour
                 targetBuilding.TakeDamage(damage);
             }
         }
+        */
     }
 }

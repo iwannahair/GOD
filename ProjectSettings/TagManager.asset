@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Human
+  - Createhuman
   layers:
   - Default
   - TransparentFX

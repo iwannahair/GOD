@@ -4,7 +4,8 @@ using UnityEngine;
 public class EnemyColliderHolder : MonoBehaviour
 {
      
-    [SerializeField] private Building targetBuilding;
+    // 删除 Building 相关变量
+    // [SerializeField] private Building targetBuilding;
     [SerializeField] private int damage;
     [SerializeField] private EnemyAI enemyAI;
 
@@ -13,7 +14,8 @@ public class EnemyColliderHolder : MonoBehaviour
         if (enemyAI)
         {
             damage = enemyAI.Damage;
-            targetBuilding = enemyAI.TargetBuilding;
+            // 删除 Building 相关代码
+            // targetBuilding = enemyAI.TargetBuilding;
         }
         else
         {
@@ -23,9 +25,12 @@ public class EnemyColliderHolder : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // 删除 Building 相关代码
+        /*
         if (other.TryGetComponent(out targetBuilding))
         {
             targetBuilding.TakeDamage(damage);
         }
+        */
     }
 }
