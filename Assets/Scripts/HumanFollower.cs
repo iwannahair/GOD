@@ -16,6 +16,7 @@ public class HumanFollower : MonoBehaviour
     private Vector3 playerVelocity; // 玩家的速度向量，用于确定移动方向
     private float playerSpeed; // 玩家的移动速度大小，用于判断是否在移动
     private Vector3 lastPlayerDirection = Vector3.down; // 默认朝向，初始为向下，保存最后有效的移动方向
+    private bool isInvincible = false; // 是否处于无敌状态
     
     // 队列跟随相关变量
     private HumanFollower nextInQueue = null; // 队列中的下一个对象，指向后面跟随的人类
@@ -150,5 +151,24 @@ public class HumanFollower : MonoBehaviour
                 lastInQueue = previousInQueue;
             }
         }
+    }
+    
+    /// <summary>
+    /// 设置人类的无敌状态
+    /// </summary>
+    /// <param name="invincible">是否无敌</param>
+    public void SetInvincible(bool invincible)
+    {
+        isInvincible = invincible;
+        Debug.Log($"人类{gameObject.name}设置无敌状态: {invincible}");
+    }
+
+    /// <summary>
+    /// 检查人类是否正在跟随玩家
+    /// </summary>
+    /// <returns>是否正在跟随</returns>
+    public bool IsFollowing()
+    {
+        return isFollowing && playerTransform != null;
     }
 }
