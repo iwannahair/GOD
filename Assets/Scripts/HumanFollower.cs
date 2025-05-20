@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI; // 添加UI命名空间
 
 /// <summary>
 /// 人类跟随者类：控制人类跟随玩家的行为
@@ -7,6 +8,12 @@ using System.Collections.Generic;
 /// </summary>
 public class HumanFollower : MonoBehaviour
 {
+    [Header("生命值设置")]
+    [SerializeField] private float maxHealth = 100f; // 最大生命值
+    [SerializeField] private float currentHealth; // 当前生命值
+    [SerializeField] private Slider healthBar; // 血量滑动条
+    [SerializeField] private Canvas healthCanvas; // 血量UI的Canvas
+    
     private bool isFollowing = false; // 是否正在跟随玩家，由碰撞触发设置
     private Transform playerTransform; // 玩家的Transform，用于获取位置和计算跟随位置
     [SerializeField] private float followSpeed = 3f; // 跟随速度，控制移动的快慢
@@ -33,6 +40,18 @@ public class HumanFollower : MonoBehaviour
         {
             gameObject.AddComponent<CircleCollider2D>().isTrigger = true;
         }
+        
+        // 初始化生命值
+        currentHealth = maxHealth;
+        
+        // 如果没有指定血量条，尝试在子对象中查找
+        if (healthBar == null)
+        {
+            healthBar = GetComponentInChildren<Slider>();
+        }
+        
+        // 初始化血量UI
+        UpdateHealthBar();
     }
     
     /// <summary>
@@ -163,6 +182,61 @@ public class HumanFollower : MonoBehaviour
         Debug.Log($"人类{gameObject.name}设置无敌状态: {invincible}");
     }
 
+    /// <summary>
+    /// 更新血量滑动条
+    /// </summary>
+    private void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth / maxHealth;
+        }
+    }
+    
+    /// <summary>
+    /// 受到伤害
+    /// </summary>
+    /// <param name="damage">伤害值</param>
+    public void TakeDamage(float damage)
+    {
+        if (isInvincible) return; // 如果处于无敌状态，不受伤害
+        
+        currentHealth -= damage;
+        Debug.Log($"人类受到{damage}点伤害，剩余生命值：{currentHealth}");
+        
+        // 更新血量UI
+        UpdateHealthBar();
+        
+        // 检查是否死亡
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    
+    /// <summary>
+    /// 死亡处理
+    /// </summary>
+    private void Die()
+    {
+        Debug.Log("人类死亡");
+        
+        // 查找StatsForGod组件并减少生命值
+        StatsForGod statsForGod = FindObjectOfType<StatsForGod>();
+        if (statsForGod != null)
+        {
+            // 减少神的生命值百分比
+            statsForGod.AddHealthPercent(-1f);
+            Debug.Log("人类死亡，神的生命值减少1%");
+        }
+        else
+        {
+            Debug.LogWarning("未找到StatsForGod组件，无法减少神的生命值");
+        }
+        
+        Destroy(gameObject);
+    }
+    
     /// <summary>
     /// 检查人类是否正在跟随玩家
     /// </summary>

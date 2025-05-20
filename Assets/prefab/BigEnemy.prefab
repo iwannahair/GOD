@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 3804115298575392829}
   - component: {fileID: 8740790143483324275}
   - component: {fileID: 3438659732121817984}
+  - component: {fileID: 4278335886199535632}
   - component: {fileID: 2176543154615682328}
   - component: {fileID: 5869972111946535722}
   m_Layer: 10
@@ -199,7 +200,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -327,8 +328,20 @@ MonoBehaviour:
   moveSpeed: 1.5
   attackCooldown: 2
   damage: 22
-  targetBuilding: {fileID: 0}
   animator: {fileID: 5869972111946535722}
+--- !u!114 &4278335886199535632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3434101345022915699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2d4870faeb6eb4db56ecedf0fbeacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
 --- !u!50 &2176543154615682328
 Rigidbody2D:
   serializedVersion: 5
@@ -423,7 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0d1ea77a263284ea138d805d009216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetBuilding: {fileID: 0}
   damage: 0
   enemyAI: {fileID: 3438659732121817984}
 --- !u!58 &8176574277836262813

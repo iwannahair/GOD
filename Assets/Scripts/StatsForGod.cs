@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement; // 添加场景管理命名空间
 
 /// <summary>
 /// 神的属性类：管理神的各种属性
@@ -32,6 +33,9 @@ public class StatsForGod : MonoBehaviour
         
         // 更新UI显示
         UpdateHealthDisplay();
+        
+        // 检查生命值是否小于等于0
+        CheckGameOver();
     }
     
     /// <summary>
@@ -48,5 +52,29 @@ public class StatsForGod : MonoBehaviour
         {
             Debug.LogWarning("TMP文本组件未设置！");
         }
+    }
+    
+    /// <summary>
+    /// 检查游戏是否结束
+    /// </summary>
+    private void CheckGameOver()
+    {
+        if (health.percent <= 0)
+        {
+            Debug.LogWarning("神的生命值降至0，游戏结束！");
+            // 延迟一帧加载开始场景，以便显示最终状态
+            StartCoroutine(GameOverCoroutine());
+        }
+    }
+    
+    /// <summary>
+    /// 游戏结束协程
+    /// </summary>
+    private System.Collections.IEnumerator GameOverCoroutine()
+    {
+        // 等待1秒，让玩家看到生命值为0的状态
+        yield return new WaitForSeconds(1f);
+        // 加载开始场景
+        SceneManager.LoadScene("StartScene");
     }
 }
