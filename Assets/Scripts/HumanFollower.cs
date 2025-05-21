@@ -104,46 +104,38 @@ public class HumanFollower : MonoBehaviour
     }
     
     /// <summary>
-    /// 碰撞触发器：检测与玩家的碰撞并开始跟随
+    /// 碰撞检测：当玩家碰到人类时触发跟随行为
     /// </summary>
-    /// <param name="other">碰撞到的对象</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 检查碰撞的是否是玩家且当前未在跟随状态
+        // 检查碰撞的是否是玩家
         if (other.CompareTag("Player") && !isFollowing)
         {
-            Debug.Log("碰到人类");
-            
-            // 开始跟随玩家，设置跟随状态和玩家引用
-            isFollowing = true;
+            // 获取玩家的Transform
             playerTransform = other.transform;
-            previousPlayerPosition = playerTransform.position; // 初始化玩家位置记录
+            // 设置为跟随状态
+            isFollowing = true;
+            // 记录玩家当前位置，用于计算速度
+            previousPlayerPosition = playerTransform.position;
             
-            // 初始化朝向为玩家当前朝向的反方向，基于玩家的移动
-            if (playerTransform.GetComponent<Rigidbody2D>() != null)
-            {
-                Vector2 velocity = playerTransform.GetComponent<Rigidbody2D>().linearVelocity;
-                if (velocity.magnitude > 0.01f)
-                {
-                    lastPlayerDirection = velocity.normalized;
-                }
-            }
+            Debug.Log("人类与玩家碰撞，开始跟随");
             
-            // 将此对象添加到队列中，维护跟随队列
+            // 如果队列中没有最后一个，说明这是第一个跟随的人类
             if (lastInQueue == null)
             {
-                // 如果队列为空，此对象为队列中的第一个
+                // 设置为队列中的第一个，直接跟随玩家
+                previousInQueue = null;
                 lastInQueue = this;
             }
             else
             {
-                // 否则，将此对象添加到队列末尾，更新引用关系
-                previousInQueue = lastInQueue;
-                lastInQueue.nextInQueue = this;
+                // 将自己添加到队列末尾
+                HumanFollower previousLast = lastInQueue;
+                previousLast.nextInQueue = this;
+                previousInQueue = previousLast;
+                nextInQueue = null;
                 lastInQueue = this;
             }
-            
-            Debug.Log("人类开始跟随玩家，加入队列");
         }
     }
     

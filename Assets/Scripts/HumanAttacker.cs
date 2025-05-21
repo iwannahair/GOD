@@ -8,7 +8,8 @@ public class HumanAttacker : MonoBehaviour
     {
         // 检查碰撞的是否是人类
         HumanFollower human = collision.gameObject.GetComponent<HumanFollower>();
-        if (human != null)
+        // 如果是人类且正在跟随，则造成伤害
+        if (human != null && human.IsFollowing())
         {
             // 对人类造成伤害
             human.TakeDamage(damage);
@@ -20,7 +21,8 @@ public class HumanAttacker : MonoBehaviour
     {
         // 检查碰撞的是否是人类
         HumanFollower human = other.GetComponent<HumanFollower>();
-        if (human != null)
+        // 如果是人类且正在跟随，则造成伤害
+        if (human != null && human.IsFollowing())
         {
             // 对人类造成伤害
             human.TakeDamage(damage);
