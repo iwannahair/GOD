@@ -125,7 +125,6 @@ public class HumanFollower : MonoBehaviour
             {
                 // 设置为队列中的第一个，直接跟随玩家
                 previousInQueue = null;
-                lastInQueue = this;
             }
             else
             {
@@ -134,8 +133,9 @@ public class HumanFollower : MonoBehaviour
                 previousLast.nextInQueue = this;
                 previousInQueue = previousLast;
                 nextInQueue = null;
-                lastInQueue = this;
             }
+
+            lastInQueue = this;
         }
     }
     
