@@ -193,10 +193,13 @@ public class GoldenTree : MonoBehaviour
     [SerializeField] private GameObject axePrefab; // 斧子预制体
     [SerializeField] private float rotationSpeed = 200f; // 旋转速度
     [SerializeField] private float rotationRadius = 2f; // 旋转半径
-    
+    [SerializeField] private float angleOffsetPerAxe = 30f; // 每把斧子之间的角度偏移量
+
     private List<GameObject> activeAxes = new List<GameObject>(); // 活跃的斧子列表
     private bool axesRotating = false; // 斧子是否正在旋转
-    
+    // 用于记录每个人类当前拥有多少斧子，以便计算角度偏移
+    private Dictionary<HumanFollower, int> humanAxeCount = new Dictionary<HumanFollower, int>();
+
     /// <summary>
     /// 继续按钮点击事件
     /// </summary>
@@ -211,8 +214,8 @@ public class GoldenTree : MonoBehaviour
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
-        // 切换斧子旋转状态
-        ToggleAxesRotation();
+        // 为当前跟随的人类添加斧子
+        AddAxesToFollowingHumans();
 
         // 触发完成面板按钮点击事件（用于UI更新）
         onCompletionPanelButtonClicked.Invoke();
@@ -232,8 +235,8 @@ public class GoldenTree : MonoBehaviour
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
-        // 切换斧子旋转状态
-        ToggleAxesRotation();
+        // 为当前跟随的人类添加斧子
+        AddAxesToFollowingHumans();
 
         // 触发完成面板按钮点击事件（用于UI更新）
         onCompletionPanelButtonClicked.Invoke();
@@ -253,8 +256,8 @@ public class GoldenTree : MonoBehaviour
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
-        // 切换斧子旋转状态
-        ToggleAxesRotation();
+        // 为当前跟随的人类添加斧子
+        AddAxesToFollowingHumans();
 
         // 触发完成面板按钮点击事件（用于UI更新）
         onCompletionPanelButtonClicked.Invoke();
@@ -273,24 +276,16 @@ public class GoldenTree : MonoBehaviour
     /// <summary>
     /// 切换斧子旋转状态
     /// </summary>
-    private void ToggleAxesRotation()
+    private void ToggleAxesRotation() // 这个方法现在实际上总是添加斧子
     {
-        if (axesRotating)
-        {
-            // 如果斧子正在旋转，停止旋转并销毁斧子
-            StopAxesRotation();
-        }
-        else
-        {
-            // 如果斧子没有旋转，开始旋转
-            StartAxesRotation();
-        }
+        // 移除旧的逻辑，直接调用添加斧子的方法
+        StartAxesRotation(); 
     }
 
     /// <summary>
-    /// 开始斧子旋转
+    /// 为所有当前跟随的人类添加斧子旋转效果
     /// </summary>
-    private void StartAxesRotation()
+    private void AddAxesToFollowingHumans()
     {
         if (axePrefab == null)
         {
@@ -298,7 +293,6 @@ public class GoldenTree : MonoBehaviour
             return;
         }
 
-        // 查找所有人类
         HumanFollower[] humans = FindObjectsOfType<HumanFollower>();
         if (humans.Length == 0)
         {
@@ -306,48 +300,57 @@ public class GoldenTree : MonoBehaviour
             return;
         }
 
-        // 为每个人类创建一个斧子
         foreach (HumanFollower human in humans)
         {
-            if (human != null && human.gameObject.activeSelf)
+            if (human != null && human.gameObject.activeSelf && human.IsFollowing())
             {
-                // 创建斧子
-                GameObject axe = Instantiate(axePrefab, human.transform.position, Quaternion.identity);
-                // 设置斧子的父对象为人类，这样斧子会跟随人类移动
-                axe.transform.SetParent(human.transform);
-                // 设置初始位置（在人类右侧）
-                axe.transform.localPosition = new Vector3(rotationRadius, 0, 0);
-                // 添加到活跃斧子列表
-                activeAxes.Add(axe);
-
-                // 添加旋转组件
-                AxeRotator rotator = axe.AddComponent<AxeRotator>();
-                rotator.Initialize(rotationSpeed, rotationRadius);
+                AddAxeToSpecificHuman(human);
             }
         }
-
-        axesRotating = true;
-        Debug.Log("斧子开始围绕人类旋转");
+        axesRotating = activeAxes.Count > 0; // 更新斧子旋转状态
+        Debug.Log("为所有跟随的人类添加了斧子");
     }
 
     /// <summary>
-    /// 停止斧子旋转
+    /// 开始斧子旋转（现在这个方法主要被 AddAxesToFollowingHumans 和 AddAxeToHuman 调用）
     /// </summary>
-    private void StopAxesRotation()
+    private void StartAxesRotation() // 修改：这个方法现在更像一个通用的添加斧子的逻辑
+    {
+        // 这个方法的功能已经大部分被 AddAxesToFollowingHumans 替代
+        // 保留这个方法是为了 AddAxeToHuman 仍然可以工作，或者未来可能有其他地方直接调用
+        // 但按钮点击现在应该调用 AddAxesToFollowingHumans
+        AddAxesToFollowingHumans(); 
+    }
+
+    /// <summary>
+    /// 停止斧子旋转并清除所有斧子
+    /// </summary>
+    private void StopAxesRotation() // 修改：这个方法现在只负责清除斧子
     {
         // 销毁所有活跃的斧子
         foreach (GameObject axe in activeAxes)
         {
             if (axe != null)
             {
+                // 在销毁斧子前，获取其父对象（人类）
+                HumanFollower human = axe.transform.parent.GetComponent<HumanFollower>();
+                if (human != null && humanAxeCount.ContainsKey(human))
+                {
+                    humanAxeCount[human]--; // 减少该人类的斧子计数
+                    if (humanAxeCount[human] <= 0)
+                    {
+                        humanAxeCount.Remove(human); // 如果计数为0，则移除记录
+                    }
+                }
                 Destroy(axe);
             }
         }
 
         // 清空列表
         activeAxes.Clear();
-        axesRotating = false;
-        Debug.Log("斧子停止旋转");
+        humanAxeCount.Clear(); // 同时清空斧子计数记录，因为所有斧子都没了
+        axesRotating = false; // 当所有斧子被清除时，更新状态
+        Debug.Log("所有斧子已停止旋转并被销毁");
     }
 
     /// <summary>
@@ -358,7 +361,67 @@ public class GoldenTree : MonoBehaviour
     {
         return (float)absorbedHumanCount / targetHumanCount;
     }
-}
+
+    // 添加公共属性，用于检查斧子是否正在旋转
+    public bool AxesRotating => axesRotating;
+    
+    /// <summary>
+    /// 为单个人类添加斧子效果
+    /// </summary>
+    /// <param name="human">要添加斧子的人类</param>
+    public void AddAxeToHuman(HumanFollower human) // 修改：确保这个方法能独立运作或配合新的逻辑
+    {
+        if (axePrefab == null || human == null || !human.gameObject.activeSelf)
+        {
+            return;
+        }
+        
+        AddAxeToSpecificHuman(human);
+        axesRotating = true; // 只要有斧子被添加，就设置状态为true
+    }
+
+    /// <summary>
+    /// 为指定的人类添加斧子（内部辅助方法）
+    /// </summary>
+    private void AddAxeToSpecificHuman(HumanFollower human)
+    {
+        if (axePrefab == null || human == null || !human.gameObject.activeSelf) return;
+
+        // 获取当前人类已有的斧子数量，用于计算角度偏移
+        int currentAxeNum = 0;
+        if (humanAxeCount.ContainsKey(human))
+        {
+            currentAxeNum = humanAxeCount[human];
+        }
+        else
+        {
+            humanAxeCount[human] = 0;
+        }
+
+        GameObject axe = Instantiate(axePrefab, human.transform.position, Quaternion.identity);
+        axe.transform.SetParent(human.transform);
+        
+        // 计算初始角度偏移
+        float initialAngleOffset = currentAxeNum * angleOffsetPerAxe;
+        // 设置初始位置和旋转，应用偏移
+        float initialX = Mathf.Cos(initialAngleOffset * Mathf.Deg2Rad) * rotationRadius;
+        float initialY = Mathf.Sin(initialAngleOffset * Mathf.Deg2Rad) * rotationRadius;
+        axe.transform.localPosition = new Vector3(initialX, initialY, 0);
+        // 初始斧子的朝向也可以根据这个偏移角度设置
+        axe.transform.localRotation = Quaternion.Euler(0, 0, initialAngleOffset);
+
+        activeAxes.Add(axe);
+
+        AxeRotator rotator = axe.AddComponent<AxeRotator>();
+        // 将初始角度偏移传递给 AxeRotator，以便它从正确的角度开始旋转
+        rotator.Initialize(rotationSpeed, rotationRadius, initialAngleOffset);
+        
+        // 更新该人类的斧子数量
+        humanAxeCount[human]++;
+        
+        Debug.Log($"为人类 {human.name} 创建了第 {humanAxeCount[human]} 把斧子，初始偏移角度: {initialAngleOffset}");
+    }
+} // This is the closing brace for the GoldenTree class
 
 /// <summary>
 /// 斧子旋转器：控制斧子围绕中心点旋转
@@ -367,17 +430,19 @@ public class AxeRotator : MonoBehaviour
 {
     private float rotationSpeed; // 旋转速度
     private float radius; // 旋转半径
-    private float currentAngle = 0f; // 当前角度
+    private float currentAngle = 0f; // 当前角度，会加上初始偏移
 
     /// <summary>
     /// 初始化旋转器
     /// </summary>
     /// <param name="speed">旋转速度</param>
     /// <param name="rotationRadius">旋转半径</param>
-    public void Initialize(float speed, float rotationRadius)
+    /// <param name="initialAngleOffset">初始角度偏移</param>
+    public void Initialize(float speed, float rotationRadius, float initialAngleOffset = 0f)
     {
         rotationSpeed = speed;
         radius = rotationRadius;
+        currentAngle = initialAngleOffset; // 设置初始角度
     }
 
     /// <summary>
