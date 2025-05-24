@@ -44,7 +44,7 @@ public class CreateHumanSpawner : MonoBehaviour
 
         // 随机确定本次要生成的human数量，在最小和最大值之间随机
         targetHumansToSpawn = Random.Range(minHumansToSpawn, maxHumansToSpawn + 1);
-        Debug.Log($"本次将生成{targetHumansToSpawn}个human");
+        //Debug.Log($"本次将生成{targetHumansToSpawn}个human");
 
         // 生成CreateHuman实体
         SpawnCreateHuman();
@@ -133,7 +133,7 @@ public class CreateHumanSpawner : MonoBehaviour
     // 实例化createhuman预制体
     createHumanInstance = Instantiate(createHumanPrefab, spawnPos, Quaternion.identity);
     createHumanSpawnCount++;
-    Debug.Log($"生成createhuman成功，当前是第{createHumanSpawnCount}次生成");
+    //Debug.Log($"生成createhuman成功，当前是第{createHumanSpawnCount}次生成");
 }
 
     /// <summary>
@@ -166,13 +166,13 @@ public class CreateHumanSpawner : MonoBehaviour
             spawnedHumans.Add(human); // 添加到跟踪列表
             humansSpawnedCount++; // 增加已生成计数
             hasGeneratedHumans = true; // 标记已生成过人类
-            Debug.Log($"注册human成功，当前human数量: {spawnedHumans.Count}，总共生成: {humansSpawnedCount}/{targetHumansToSpawn}");
+            //Debug.Log($"注册human成功，当前human数量: {spawnedHumans.Count}，总共生成: {humansSpawnedCount}/{targetHumansToSpawn}");
 
             // 如果已达到目标生成数量，禁止再生成
             if (humansSpawnedCount >= targetHumansToSpawn)
             {
                 canGenerateMore = false;
-                Debug.Log($"已生成{humansSpawnedCount}个人类，达到目标数量{targetHumansToSpawn}，停止生成更多human");
+                //Debug.Log($"已生成{humansSpawnedCount}个人类，达到目标数量{targetHumansToSpawn}，停止生成更多human");
             }
         }
         else
