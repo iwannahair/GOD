@@ -16,7 +16,7 @@ public class HumanFollower : MonoBehaviour
     
     private bool isFollowing = false; // 是否正在跟随玩家，由碰撞触发设置
     private Transform playerTransform; // 玩家的Transform，用于获取位置和计算跟随位置
-    [SerializeField] private float followSpeed = 3f; // 跟随速度，控制移动的快慢
+    [SerializeField] private float followSpeed = 10f; // 跟随速度，控制移动的快慢
     [SerializeField] private float followDistance = 0.5f; // 跟随距离，保持0.5像素，控制与前一个对象的间距
     
     private Vector3 previousPlayerPosition; // 记录玩家上一帧的位置，用于计算速度

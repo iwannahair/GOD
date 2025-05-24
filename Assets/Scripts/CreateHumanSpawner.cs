@@ -8,10 +8,10 @@ using System.Collections.Generic;
 public class CreateHumanSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject createHumanPrefab; // createhuman预制体，用于实例化
-    [SerializeField] private float spawnRadius = 20f; // 生成半径，决定createhuman的生成范围
-    [SerializeField] private float influenceRadius = 10f; // createhuman的影响半径，超出此范围的人类将被移除跟踪
-    [SerializeField] private int maxHumansToSpawn = 5; // 最大生成人类数量，设为5，限制单个createhuman可生成的最大人类数
-    [SerializeField] private int minHumansToSpawn = 2; // 最小生成人类数量，设为2，确保至少生成的人类数
+    [SerializeField] public float spawnRadius; // 生成半径，决定createhuman的生成范围
+    [SerializeField] public float influenceRadius; // createhuman的影响半径，超出此范围的人类将被移除跟踪
+    [SerializeField] public int maxHumansToSpawn=10 ; // 最大生成人类数量，设为5，限制单个createhuman可生成的最大人类数
+    [SerializeField] public int minHumansToSpawn=5 ; // 最小生成人类数量，设为2，确保至少生成的人类数
     private int targetHumansToSpawn; // 本次实际要生成的human数量，在minHumansToSpawn和maxHumansToSpawn之间随机
     
     private GameObject createHumanInstance; // 当前生成的createhuman实例引用
@@ -21,15 +21,31 @@ public class CreateHumanSpawner : MonoBehaviour
     private bool canGenerateMore = true; // 是否还能生成更多人类，达到目标数量后设为false
     private int createHumanSpawnCount = 0; // createhuman的生成次数计数器，限制只生成一次
 
+    private Transform goldenTreeTransform; // 新增：用于存储黄金树的Transform
+
     /// <summary>
     /// 初始化方法：设置目标生成数量并生成CreateHuman
     /// </summary>
     private void Start()
     {
+        // 查找黄金树对象并获取其Transform
+        GameObject goldenTreeObject = GameObject.FindWithTag("GoldenTree"); // 假设黄金树的标签是 "GoldenTree"
+        if (goldenTreeObject != null)
+        {
+            goldenTreeTransform = goldenTreeObject.transform;
+        }
+        else
+        {
+            Debug.LogError("未找到标签为 'GoldenTree' 的黄金树对象！请确保场景中存在黄金树且标签正确。");
+            // 如果找不到黄金树，可能需要禁用此脚本或采取其他处理
+            enabled = false; // 禁用脚本以避免进一步错误
+            return;
+        }
+
         // 随机确定本次要生成的human数量，在最小和最大值之间随机
         targetHumansToSpawn = Random.Range(minHumansToSpawn, maxHumansToSpawn + 1);
         Debug.Log($"本次将生成{targetHumansToSpawn}个human");
-        
+
         // 生成CreateHuman实体
         SpawnCreateHuman();
     }
@@ -59,7 +75,7 @@ public class CreateHumanSpawner : MonoBehaviour
 
                 // 计算human与createhuman之间的距离
                 float distance = Vector3.Distance(human.transform.position, createHumanInstance.transform.position);
-                Debug.Log("Human距离: " + distance + ", 影响半径: " + influenceRadius);
+               // Debug.Log("Human距离: " + distance + ", 影响半径: " + influenceRadius);
 
                 // 如果距离超出影响半径，添加到移除列表
                 if (distance > influenceRadius)
@@ -93,19 +109,32 @@ public class CreateHumanSpawner : MonoBehaviour
     /// 生成CreateHuman：在指定范围内随机位置生成CreateHuman实体
     /// </summary>
     private void SpawnCreateHuman()
-    {
-        // 检查是否已经生成过一次createhuman，确保只生成一次
-        if (createHumanPrefab == null || !canGenerateMore || createHumanSpawnCount >= 1) return;
+{
+    if (createHumanPrefab == null || !canGenerateMore || createHumanSpawnCount >= 1 || goldenTreeTransform == null) return;
 
-        // 在圆形区域内随机生成位置
-        Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPos = new Vector3(randomCircle.x, randomCircle.y, 0);
-
-        // 实例化createhuman预制体
-        createHumanInstance = Instantiate(createHumanPrefab, spawnPos, Quaternion.identity);
-        createHumanSpawnCount++; // 增加createhuman生成次数
-        Debug.Log($"生成createhuman成功，当前是第{createHumanSpawnCount}次生成");
+    // 确保生成的人类之间的距离在5到10像素之间
+    float minDistance = 5f;
+    float maxDistance = 8f;
+    bool isValidPosition = false;
+    Vector3 spawnPos = Vector3.zero;
+    while (!isValidPosition) {
+        float randomDistance = Random.Range(20f, 140f);
+        Vector2 randomCircle = Random.insideUnitCircle.normalized * randomDistance;
+        spawnPos = goldenTreeTransform.position + new Vector3(randomCircle.x, randomCircle.y, 0);
+        isValidPosition = true;
+        foreach (var human in spawnedHumans) {
+            if (Vector3.Distance(spawnPos, human.transform.position) < minDistance || Vector3.Distance(spawnPos, human.transform.position) > maxDistance) {
+                isValidPosition = false;
+                break;
+            }
+        }
     }
+
+    // 实例化createhuman预制体
+    createHumanInstance = Instantiate(createHumanPrefab, spawnPos, Quaternion.identity);
+    createHumanSpawnCount++;
+    Debug.Log($"生成createhuman成功，当前是第{createHumanSpawnCount}次生成");
+}
 
     /// <summary>
     /// 获取CreateHuman的Transform：供外部类获取生成位置
@@ -125,6 +154,15 @@ public class CreateHumanSpawner : MonoBehaviour
         // 检查是否可以注册更多人类（未达到目标数量且允许生成）
         if (human != null && canGenerateMore && humansSpawnedCount < targetHumansToSpawn)
         {
+            // 检查当前场上剩余的人类生成点数量
+            int remainingSpawnPoints = spawnedHumans.Count;
+            int totalSpawnPoints = targetHumansToSpawn;
+            if (remainingSpawnPoints < totalSpawnPoints / 2) {
+            int spawnPointsToCreate = totalSpawnPoints - remainingSpawnPoints;
+            for (int i = 0; i < spawnPointsToCreate; i++) {
+            SpawnCreateHuman();
+            }
+            }
             spawnedHumans.Add(human); // 添加到跟踪列表
             humansSpawnedCount++; // 增加已生成计数
             hasGeneratedHumans = true; // 标记已生成过人类
@@ -142,7 +180,7 @@ public class CreateHumanSpawner : MonoBehaviour
             // 如果不能注册更多人类，销毁多余的human
             if (human != null)
             {
-                Debug.Log("无法生成更多human，销毁多余的human");
+                //Debug.Log("无法生成更多human，销毁多余的human");
                 Destroy(human);
             }
         }

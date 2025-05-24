@@ -44,7 +44,7 @@ public class CreateHumanManager : MonoBehaviour
         // 实例化CreateHumanSpawner
         GameObject spawner = Instantiate(createHumanSpawnerPrefab, spawnPosition, Quaternion.identity);
         createHumanSpawners.Add(spawner);
-        Debug.Log($"在位置{spawnPosition}生成了CreateHuman，当前总数：{createHumanSpawners.Count}");
+        //Debug.Log($"在位置{spawnPosition}生成了CreateHuman，当前总数：{createHumanSpawners.Count}");
     }
     
     /// <summary>
