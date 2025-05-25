@@ -122,7 +122,9 @@ public class GameManager : MonoBehaviour
     public float waveInterval = 5f;
     [SerializeField] private TMP_Text spawnWaveText;
     private int spawnWave;
-
+    [SerializeField] private int enemyIncreasePerWave = 1;
+    [SerializeField] private float waveIntervalIncreasePerWave = 0.3f;
+    
     private int SpawnWave
     {
         get => spawnWave;
@@ -377,8 +379,8 @@ public class GameManager : MonoBehaviour
         }
 
         SpawnWave++;
-        waveInterval += 0.5f;
-        enemiesPerWave += 2;
+        waveInterval += waveIntervalIncreasePerWave;
+        enemiesPerWave += enemyIncreasePerWave;
         spawnBigChanceInver--;
     }
 

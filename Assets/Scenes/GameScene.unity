@@ -1686,7 +1686,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 13.37115
+  orthographic size: 45.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1789,7 +1789,7 @@ MonoBehaviour:
   popOffset: 10
   enemyPrefab: {fileID: 3677293296965980231, guid: b1c1d387a5f9e6e4385d390e944a796e, type: 3}
   bigEnemyPrefab: {fileID: 3434101345022915699, guid: 17d9e0c7786a38948b4b3129ef6837f7, type: 3}
-  initialEnemyCount: 5
+  initialEnemyCount: 1
   enemiesPerWave: 5
   spawnRadius: 25
   waveInterval: 5
@@ -6224,7 +6224,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 13.37115
+    OrthographicSize: 45.7
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
