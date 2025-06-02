@@ -2304,7 +2304,7 @@ MonoBehaviour:
   goldenTreeIconPrefab: {fileID: 6227679347124202501, guid: 266d03bab203f4e409796550741a07ae, type: 3}
   viewRadius: 50
   minimapSize: {x: 400, y: 200}
-  updateInterval: 0.5
+  updateInterval: 0.1
   enablePlayerCenter: 1
   showDebugInfo: 1
 --- !u!1 &619394800
