@@ -262,11 +262,24 @@ public class GameManager : MonoBehaviour
         OnPlayerDamageChanged += UpdateAttackDamageUI;
         OnPlayerAttackSpeedChanged+= UpdateAttackSpeedUI;
     }
-    void Start()
+    [Header("UI References")]
+    [SerializeField] private MinimapUI minimapUI; // 小地图UI引用
+    
+    private void Start()
     {
         // 移除了SpawnPlayer()调用
         playerTran = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnInitialEnemies();
+        
+        // 初始化小地图
+        if (minimapUI != null)
+        {
+            // 移除SetMapBounds调用，新的小地图系统使用以玩家为中心的显示方式
+            // minimapUI.SetMapBounds(50f, 50f); // 不再需要
+            
+            // 可选：设置小地图显示半径
+            minimapUI.SetViewRadius(50f);
+        }
     }
     
     #region HandleSpawn

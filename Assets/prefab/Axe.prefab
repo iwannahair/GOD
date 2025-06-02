@@ -82,7 +82,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.3974198, y: -0.13509494}
+    - - {x: 3.4813807, y: 0.18059407}
+      - {x: 1.50391, y: 0.31250846}
+      - {x: 1.4646611, y: -0.14350012}
+      - {x: 3.2896066, y: -0.6701463}
+      - {x: 3.8127518, y: -1.1031771}
       - {x: 5.287217, y: -0.58412194}
       - {x: 4.532264, y: 0.16763878}
   m_UseDelaunayMesh: 0
@@ -110,7 +114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2293181214676931160}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 809e9ad8cbaaf2a448575356c575b269, type: 3}
   m_Name: 

@@ -556,6 +556,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118118367}
   m_CullTransparentMesh: 1
+--- !u!1 &130880748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 130880749}
+  m_Layer: 5
+  m_Name: MinimapUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &130880749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130880748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 425082643}
+  m_Father: {fileID: 617522249}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 776.2541, y: 358.69754}
+  m_SizeDelta: {x: 300, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &135068574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,6 +1306,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388346869}
   m_CullTransparentMesh: 1
+--- !u!1 &425082642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425082643}
+  - component: {fileID: 425082645}
+  - component: {fileID: 425082644}
+  m_Layer: 5
+  m_Name: MinimapContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &425082643
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425082642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 130880749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &425082644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425082642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.03773582, g: 0.035955824, b: 0.035955824, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &425082645
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425082642}
+  m_CullTransparentMesh: 1
 --- !u!1 &442262472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,7 +1797,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 45.7
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1794,6 +1905,8 @@ MonoBehaviour:
   spawnRadius: 25
   waveInterval: 5
   spawnWaveText: {fileID: 1814595178}
+  enemyIncreasePerWave: 1
+  waveIntervalIncreasePerWave: 0.3
   humanFollowerPrefab: {fileID: 6641467650391295846, guid: 9a95d537536444540afd7f8acf61a9b9, type: 3}
   currentFollowerNumber: 0
   targetFollowerNumber: 10
@@ -1801,6 +1914,7 @@ MonoBehaviour:
   pausePanel: {fileID: 1518208808}
   winText: {fileID: 947554162}
   loseText: {fileID: 671147137}
+  minimapUI: {fileID: 0}
   endGameTimeToWait: 3
   endGamePanel: {fileID: 2111298583}
   endGame_HumanSpawned: {fileID: 442262474}
@@ -2058,6 +2172,7 @@ GameObject:
   - component: {fileID: 617522247}
   - component: {fileID: 617522246}
   - component: {fileID: 617522250}
+  - component: {fileID: 617522251}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2147,6 +2262,7 @@ RectTransform:
   - {fileID: 1639205571}
   - {fileID: 1518208809}
   - {fileID: 2111298584}
+  - {fileID: 130880749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2169,6 +2285,28 @@ MonoBehaviour:
   progressSlider: {fileID: 91848299}
   progressText: {fileID: 0}
   goldenTree: {fileID: 0}
+--- !u!114 &617522251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617522245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f257c384c69ec42ae714b0e66ffc23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapContainer: {fileID: 425082643}
+  minimapBackground: {fileID: 425082644}
+  playerIconPrefab: {fileID: 817473893520958321, guid: 819a9146edeb12f47992ab160f00e39c, type: 3}
+  spawnerIconPrefab: {fileID: 2611057073625468126, guid: b207eb230c42a834aaba9449c816641b, type: 3}
+  goldenTreeIconPrefab: {fileID: 6227679347124202501, guid: 266d03bab203f4e409796550741a07ae, type: 3}
+  viewRadius: 50
+  minimapSize: {x: 400, y: 200}
+  updateInterval: 0.5
+  enablePlayerCenter: 1
+  showDebugInfo: 1
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5225,6 +5363,10 @@ PrefabInstance:
       propertyPath: completionPanel
       value: 
       objectReference: {fileID: 2089564836}
+    - target: {fileID: -1224038883420978758, guid: bafa8fada10f78646be28a54226eec13, type: 3}
+      propertyPath: targetHumanCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2856847528764110168, guid: bafa8fada10f78646be28a54226eec13, type: 3}
       propertyPath: m_Name
       value: Tree
@@ -6224,7 +6366,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 40
-    OrthographicSize: 45.7
+    OrthographicSize: 15
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
