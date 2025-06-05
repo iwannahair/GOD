@@ -5,8 +5,8 @@ public class BigEnemy : Enemy
 {
     [SerializeField] private Animator animator;
 
-    private void Awake()
-    {
+    private void Start()
+    { 
         OnHit += HitTrigger;
         animator = animator ? animator : GetComponent<Animator>();
     }
@@ -15,12 +15,16 @@ public class BigEnemy : Enemy
     {
         animator.SetTrigger("Hit");
     }
+    
 
-    private void OnDestroy()
+    protected override void Die()
     {
-        if (GameManager.instance)
+        if(gameManager != null)
         {
-            GameManager.instance.BigMonsterKilledAmount++;
+            gameManager.OnEnemyKilled();
+            OnDeath?.Invoke(this);
         }
+        gameManager.GetSplash(transform.position).GetComponent<Splash>().ScaleFactor = 1.5f;
+        gameManager.ReturnBigEnemy(gameObject);
     }
 }

@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: -1224038883420978758}
   m_Layer: 9
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: GoldenTree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 2856847528764110168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.65, y: -0.86, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -448,10 +448,17 @@ MonoBehaviour:
   onHumanAbsorbed:
     m_PersistentCalls:
       m_Calls: []
+  onCompletionPanelButtonClicked:
+    m_PersistentCalls:
+      m_Calls: []
   completionPanel: {fileID: 0}
   continueButton: {fileID: 0}
   restartButton: {fileID: 0}
   quitButton: {fileID: 0}
+  axePrefab: {fileID: 2293181214676931160, guid: bcc220368ff96b448aba0c6649d7113e, type: 3}
+  rotationSpeed: 1
+  rotationRadius: 0.01
+  angleOffsetPerAxe: 30
 --- !u!1 &3373100575978024643
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,8 +561,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.35
+  m_Offset: {x: 0, y: -0.08738136}
+  m_Radius: 0.6293337
 --- !u!1 &8193540920009870507
 GameObject:
   m_ObjectHideFlags: 0
