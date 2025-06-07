@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToScale: 0.15
-  timeToFade: 0.5
-  timeToShow: 0.2
+  timeToFade: 3
+  timeToShow: 3
   scaleFactor: 1
   rend: {fileID: 2162130656087455607}
 --- !u!1 &8007898270065532115

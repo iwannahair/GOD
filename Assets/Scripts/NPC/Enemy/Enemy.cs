@@ -6,16 +6,23 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]private int health = 45;
     private int hps;
-    private GameManager gameManager;
+    protected GameManager gameManager;
     [SerializeField] protected Slider healthSlider;
     public Action<Enemy> OnDeath;
     protected Action OnHit;
-    [SerializeField] private GameObject splashPrefab;
-    void Start()
+
+    void Awake()
     {
         hps = health;
+        healthSlider.value = (float)health/hps;
         gameManager = GameManager.instance;
         if (!healthSlider) healthSlider = GetComponentInChildren<Slider>();
+    }
+
+    private void OnEnable()
+    {
+        health = hps;
+        healthSlider.value = (float)health/hps;
     }
 
     public void TakeDamage(int damage)
@@ -34,14 +41,16 @@ public class Enemy : MonoBehaviour
         TakeDamage(Mathf.FloorToInt(hps*percentage/100f));
     }
 
-    void Die()
+    protected virtual void Die()
     {
         if(gameManager != null)
         {
             gameManager.OnEnemyKilled();
             OnDeath?.Invoke(this);
         }
-        Instantiate(splashPrefab,transform.position, Quaternion.identity);
-        Destroy(gameObject);
+
+        gameManager.GetSplash(transform.position);
+        gameManager.ReturnEnemy(gameObject);
     }
+
 }

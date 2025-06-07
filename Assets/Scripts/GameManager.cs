@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using CardEnum;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,26 +21,7 @@ public class GameManager : MonoBehaviour
     #region PlayerThreeAtributesSetter/Getter
 
     [SerializeField] private float popOffset = 10f;
-    public void Pop(TypeEnum.AttributeType attributeType, int value)
-    {
-        switch (attributeType)
-        {
-            case TypeEnum.AttributeType.Health:
-                popTextGameObject.transform.position = playerHealthText.transform.position+Vector3.right*popOffset;
-                break;
-            case TypeEnum.AttributeType.Attack:
-                popTextGameObject.transform.position = playerDamageText.transform.position+Vector3.right*popOffset;
-                break; 
-            case TypeEnum.AttributeType.AttackSpeed:
-                popTextGameObject.transform.position = playerAttackSpeedText.transform.position+Vector3.right*popOffset;
-                break;
-            default:
-                Debug.LogError("Unknown attribute type");
-                break;
-        }
-        popText.text = value.ToString();
-        popTextGameObject.SetActive(true);
-    }
+
     
     
     public int PlayerHealth
@@ -155,13 +136,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI设置")] 
     [SerializeField] private Slider currentFolNumSlider;  // 删除所有Card相关的变量和方法
-    // 删除与CardInWorld相关的变量
-    // [SerializeField] private Transform cardBuildingIndicator;
-    // [SerializeField] private float timeWaitToShowCards = 0.5f;
-    // [SerializeField] private GameObject cardSelectPanel;
-    // [SerializeField] private CardSelectionHandler cardSelectionHandler;
-    // [SerializeField] private HandLayout handLayout;
-    // public CardSelectionHandler GetCardSelectionHandler => cardSelectionHandler; 
+ 
     
     [Header("场景管理")] 
     [SerializeField] private AudioPlayerManager audioPlayerManager;
@@ -169,6 +144,7 @@ public class GameManager : MonoBehaviour
 <<<<<<< HEAD
     [SerializeField] private GameObject winText,loseText;
     
+<<<<<<< HEAD
     // 删除与CardInWorld相关的属性
     // public Transform CardBuildingIndicator
     // {
@@ -190,6 +166,9 @@ public class GameManager : MonoBehaviour
         }
     }
 >>>>>>> Kramer
+=======
+ 
+>>>>>>> origin/kramer_v2
 
     private Action OnFollowerUIChange;
 
@@ -198,11 +177,7 @@ public class GameManager : MonoBehaviour
     public int CurrentFollowerNumber { get=>currentFollowerNumber;
         set
         {
-            // 删除与CardInWorld相关的代码
-            // if (currentFollowerNumber < value&&value%targetFollowerNumber==0)
-            // {
-            //     PopCardsSelect();//pop if adding and reach 10
-            // }
+             
             currentFollowerNumber = value;
             OnFollowerUIChange.Invoke();
         }
@@ -216,27 +191,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    // 删除与CardInWorld相关的区域
-    // #region CardUI
-    // public void PopCardsSelect()
-    // {
-    //     //maybe sound go off first, then 0.5 sec -> pop UI 
-    //     if (_endGame) return;
-    //     StartCoroutine(ShowCardsUI()); 
-    // }
-    // 
-    // private IEnumerator ShowCardsUI()
-    // {
-    //     yield return new WaitForSeconds(timeWaitToShowCards);
-    //     cardSelectPanel.SetActive(true);
-    // }
-    //
-    // public void AddToHand(Card card)
-    // {
-    //     if(!handLayout) return;
-    //     handLayout.AddCardToHand(card);
-    // }
-    // #endregion
+    
 
     #region PlayerAtributeUI
 
@@ -287,16 +242,80 @@ public class GameManager : MonoBehaviour
     
     #region HandleSpawn
 
+    [Header("Pool Settings")] 
+    private Queue<GameObject> enemyPool = new Queue<GameObject>();
+    private Queue<GameObject> bigEnemyPool = new Queue<GameObject>();
+    public Queue<GameObject> splashPool = new Queue<GameObject>();
+    [SerializeField] protected GameObject splashPrefab;
+    public GameObject GetSplash(Vector2 _position)
+    {
+        if (splashPool.Count == 0)
+        {
+            GameObject newSplash = Instantiate(splashPrefab,_position, Quaternion.identity);
+            newSplash.SetActive(false);
+            splashPool.Enqueue(newSplash);
+        }
+
+        GameObject splash = splashPool.Dequeue();
+        splash.transform.position = _position;
+        splash.SetActive(true);
+        return splash;
+    }
+    public void ReturnSplash(GameObject splash)
+    {
+        splash.SetActive(false);
+        splashPool.Enqueue(splash);
+    }
+    //when spawnEnemy
+    private GameObject GetEnemy(Vector2 _position)
+    {
+        if (enemyPool.Count == 0)
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab,_position, Quaternion.identity);
+            newEnemy.SetActive(false);
+            enemyPool.Enqueue(newEnemy);
+        }
+
+        GameObject enemy = enemyPool.Dequeue();
+        enemy.transform.position = _position;
+        enemy.SetActive(true);
+        return enemy;
+    }
+    private GameObject GetBigEnemy(Vector2 _position)
+    {
+        if (bigEnemyPool.Count == 0)
+        {
+            GameObject newEnemy = Instantiate(bigEnemyPrefab, _position, Quaternion.identity);
+            newEnemy.SetActive(false);
+            bigEnemyPool.Enqueue(newEnemy);
+        }
+
+        GameObject enemy = bigEnemyPool.Dequeue();
+        enemy.transform.position = _position;
+        enemy.SetActive(true);
+        return enemy;
+    }
+    //when enemy killed
+    public void ReturnEnemy(GameObject enemy)
+    {
+        enemy.SetActive(false);
+        enemyPool.Enqueue(enemy);
+    }
+    public void ReturnBigEnemy(GameObject enemy)
+    {
+        enemy.SetActive(false);
+        bigEnemyPool.Enqueue(enemy);
+    }
     void SpawnInitialEnemies()
     {
         for(int i = 0; i < initialEnemyCount; i++)
         {
             Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
-            Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+            GetEnemy(spawnPos);
             if (Random.Range(0,100)>90)
             {
-                Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+                GetBigEnemy(spawnPos);
             }
         }
     }
@@ -397,10 +416,10 @@ public class GameManager : MonoBehaviour
         {
             Vector2 spawnPos = (Vector2)transform.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
-            Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            GetEnemy(spawnPos);
             if (Random.Range(0,100)>spawnBigChanceInver)
             {
-                Instantiate(bigEnemyPrefab, spawnPos, Quaternion.identity);
+                GetBigEnemy(spawnPos);
             }
         }
 

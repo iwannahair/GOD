@@ -18,9 +18,12 @@ public class AxeAttack : MonoBehaviour
     private float _rotateFactor = 1f;
 
     private int percentage = 100;
+
+    public static float InitAngle = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
-    {
+    {    
+        
         timer = 360f/rotateSpeed/tickNumber;
         col = GetComponent<Collider2D>();
         spriteRenderer = spriteRenderer!=null ? spriteRenderer :GetComponentInChildren<SpriteRenderer>();
@@ -33,6 +36,13 @@ public class AxeAttack : MonoBehaviour
         }
     }
 
+    public void InitAxe(float rotateFactor, float radius)
+    {
+        if (InitAngle > 360f) InitAngle %= 360f;
+        transform.Rotate(Vector3.forward, InitAngle);
+        _rotateFactor = rotateFactor;
+        spriteRenderer.transform.position = new Vector3(spriteRenderer.transform.position.x+radius,spriteRenderer.transform.position.y,spriteRenderer.transform.position.z );
+    }
     private void UpdateRotateFactor()
     {
         _rotateFactor = GameManager.instance.PlayerAttackSpeed / 100f;
@@ -42,12 +52,13 @@ public class AxeAttack : MonoBehaviour
     {
         percentage = GameManager.instance.PlayerDamage;
     }
+    
 
     private void FixedUpdate()
     {
         transform.Rotate(Vector3.forward, rotateSpeed*_rotateFactor);
     }
-    /*
+/*
     private IEnumerator Spin()
     {
         while (true)
@@ -65,9 +76,9 @@ public class AxeAttack : MonoBehaviour
             DisableGFXandCollider();
             yield return new WaitForSeconds(attackCooldown);
             EnableGFXandCollider();
-            
+
         }
-        
+
     }*/
     /*
     private void OnDisable()

@@ -16,7 +16,7 @@ public class BigEnemyAI : EnemyAI
         animator.SetFloat("VelocityX",  rb.linearVelocity.x);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (GameManager.instance) GameManager.instance.BigMonsterKilledAmount++;
     }

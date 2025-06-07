@@ -23,14 +23,5 @@ public class EnemyColliderHolder : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // 删除 Building 相关代码
-        /*
-        if (other.TryGetComponent(out targetBuilding))
-        {
-            targetBuilding.TakeDamage(damage);
-        }
-        */
-    }
+ 
 }

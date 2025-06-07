@@ -45,18 +45,5 @@ public class EnemyAI : MonoBehaviour
             Vector2 direction = (GameManager.instance.PlayerTran.position - transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed;  // 使用刚体移动更稳定
         }
-        
-        // 删除 Building 相关代码
-        /*
-        if (targetBuilding)
-        {
-            timer -= Time.fixedDeltaTime;
-            if (timer<=0)
-            {
-                timer = attackCooldown;
-                targetBuilding.TakeDamage(damage);
-            }
-        }
-        */
     }
 }

@@ -191,7 +191,7 @@ public class GoldenTree : MonoBehaviour
     
     [Header("斧子旋转设置")]
     [SerializeField] private GameObject axePrefab; // 斧子预制体
-    [SerializeField] private float rotationSpeed = 200f; // 旋转速度
+    [SerializeField] private float rotationSpeed = 1; // 旋转速度
     [SerializeField] private float rotationRadius = 2f; // 旋转半径
     [SerializeField] private float angleOffsetPerAxe = 30f; // 每把斧子之间的角度偏移量
 
@@ -210,7 +210,7 @@ public class GoldenTree : MonoBehaviour
         completionPanel.SetActive(false);
         // 恢复游戏
         Time.timeScale = 1f;
-
+        axesRotating = true; 
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
@@ -231,7 +231,7 @@ public class GoldenTree : MonoBehaviour
         completionPanel.SetActive(false); // 隐藏面板
         // 恢复时间缩放
         Time.timeScale = 1f;
-
+        axesRotating = true; 
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
@@ -252,7 +252,7 @@ public class GoldenTree : MonoBehaviour
         completionPanel.SetActive(false); // 隐藏面板
         // 恢复时间缩放
         Time.timeScale = 1f;
-
+        axesRotating = true; 
         // 重置游戏完成状态和计数
         ResetCompletionState();
 
@@ -377,7 +377,6 @@ public class GoldenTree : MonoBehaviour
         }
         
         AddAxeToSpecificHuman(human);
-        axesRotating = true; // 只要有斧子被添加，就设置状态为true
     }
 
     /// <summary>
@@ -398,70 +397,17 @@ public class GoldenTree : MonoBehaviour
             humanAxeCount[human] = 0;
         }
 
+        AxeAttack.InitAngle += angleOffsetPerAxe;
         GameObject axe = Instantiate(axePrefab, human.transform.position, Quaternion.identity);
+        axe.GetComponent<AxeAttack>().InitAxe(rotationSpeed,rotationRadius);
         axe.transform.SetParent(human.transform);
-        
-        // 计算初始角度偏移
-        float initialAngleOffset = currentAxeNum * angleOffsetPerAxe;
-        // 设置初始位置和旋转，应用偏移
-        float initialX = Mathf.Cos(initialAngleOffset * Mathf.Deg2Rad) * rotationRadius;
-        float initialY = Mathf.Sin(initialAngleOffset * Mathf.Deg2Rad) * rotationRadius;
-        axe.transform.localPosition = new Vector3(initialX, initialY, 0);
-        // 初始斧子的朝向也可以根据这个偏移角度设置
-        axe.transform.localRotation = Quaternion.Euler(0, 0, initialAngleOffset);
-
+ 
         activeAxes.Add(axe);
-
-        AxeRotator rotator = axe.AddComponent<AxeRotator>();
-        // 将初始角度偏移传递给 AxeRotator，以便它从正确的角度开始旋转
-        rotator.Initialize(rotationSpeed, rotationRadius, initialAngleOffset);
-        
+  
         // 更新该人类的斧子数量
         humanAxeCount[human]++;
         
-        Debug.Log($"为人类 {human.name} 创建了第 {humanAxeCount[human]} 把斧子，初始偏移角度: {initialAngleOffset}");
+        Debug.Log($"为人类 {human.name} 创建了第 {humanAxeCount[human]} 把斧子，初始偏移角度: {AxeAttack.InitAngle}");
     }
 } // This is the closing brace for the GoldenTree class
 
-/// <summary>
-/// 斧子旋转器：控制斧子围绕中心点旋转
-/// </summary>
-public class AxeRotator : MonoBehaviour
-{
-    private float rotationSpeed; // 旋转速度
-    private float radius; // 旋转半径
-    private float currentAngle = 0f; // 当前角度，会加上初始偏移
-
-    /// <summary>
-    /// 初始化旋转器
-    /// </summary>
-    /// <param name="speed">旋转速度</param>
-    /// <param name="rotationRadius">旋转半径</param>
-    /// <param name="initialAngleOffset">初始角度偏移</param>
-    public void Initialize(float speed, float rotationRadius, float initialAngleOffset = 0f)
-    {
-        rotationSpeed = speed;
-        radius = rotationRadius;
-        currentAngle = initialAngleOffset; // 设置初始角度
-    }
-
-    /// <summary>
-    /// 每帧更新：处理旋转逻辑
-    /// </summary>
-    private void Update()
-    {
-        // 更新角度
-        currentAngle += rotationSpeed * Time.deltaTime;
-
-        // 计算新位置
-        float x = Mathf.Cos(currentAngle * Mathf.Deg2Rad) * radius;
-        float y = Mathf.Sin(currentAngle * Mathf.Deg2Rad) * radius;
-
-        // 更新位置
-        transform.localPosition = new Vector3(x, y, 0);
-
-        // 更新旋转（斧子始终朝向旋转方向）
-        float angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-        transform.localRotation = Quaternion.Euler(0, 0, angle);
-    }
-}
