@@ -9,12 +9,15 @@ TagManager:
 <<<<<<< HEAD
   - Createhuman
   - GoldenTree
+<<<<<<< HEAD
   - BigSplash
   - Splash
   - BigEnemy
 =======
   - Building
 >>>>>>> Kramer
+=======
+>>>>>>> parent of e37da58 (摄像机,小地图)
   layers:
   - Default
   - TransparentFX
