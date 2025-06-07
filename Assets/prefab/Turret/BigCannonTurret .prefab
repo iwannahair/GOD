@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4547540902530285318}
   m_Layer: 9
   m_Name: 'BigCannonTurret '
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,9 +256,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 8234756370498552339}
-  fireCooldown: 1.5
+  fireCooldown: 0.8
   firePoint: {fileID: 7963541298826270402}
-  damage: 1
+  damage: 12
   cardData: {fileID: 11400000, guid: a10864eb506795e4ba0372ab1290af72, type: 2}
   enemiesInRange: []
   fireTimer: 0
@@ -301,7 +301,7 @@ AudioSource:
   m_GameObject: {fileID: 1943646193045412563}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4318500545106447784, guid: c4ad008f8d4d83945ada6c6d0f038f6d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 669c14dd0bdcc3e459b4b197cbed3f76, type: 3}
   m_Resource: {fileID: 8300000, guid: 669c14dd0bdcc3e459b4b197cbed3f76, type: 3}
   m_PlayOnAwake: 1
@@ -598,7 +598,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7906327860708145614}
-  - component: {fileID: 1616283888322424298}
   - component: {fileID: 2444686422856687267}
   m_Layer: 13
   m_Name: TriggerBox
@@ -622,42 +621,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5013983405093993211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1616283888322424298
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777607089278459981}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 6
 --- !u!114 &2444686422856687267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,6 +634,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: {fileID: 1062783179453803351}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  range: 9
+  _collider2Ds: []
 --- !u!1 &5168241481095626215
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CannonShooter : Shooter
 {
@@ -31,6 +32,19 @@ public class CannonShooter : Shooter
 
     private void FireAt(Transform target)
     {
+        if(GameManager.instance) 
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    GameManager.instance.AudioPlayerManager.PlayCannon1Sound();
+                    break;
+                case 1:
+                    GameManager.instance.AudioPlayerManager.PlayCannon2Sound();
+                    break;
+                default:
+                    Debug.LogError("CannonShooter: Invalid value");
+                    break;
+            }
         GameObject ball = Instantiate(cannonballPrefab, firePoint.position, Quaternion.identity);
         Instantiate(explodePrefab, firePoint.position, Quaternion.identity);
         CannonBall cannonBall =  ball.GetComponent<CannonBall>();

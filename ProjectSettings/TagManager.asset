@@ -6,11 +6,15 @@ TagManager:
   tags:
   - Enemy
   - Human
+<<<<<<< HEAD
   - Createhuman
   - GoldenTree
   - BigSplash
   - Splash
   - BigEnemy
+=======
+  - Building
+>>>>>>> Kramer
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] protected int damage = 1;
     [SerializeField] protected List<Transform> enemiesInRange = new List<Transform>();
     [SerializeField] protected float fireTimer;
+<<<<<<< HEAD
     [SerializeField] protected Sprite shooterSprite;
     // 添加原来在 Building 中的属性
     [SerializeField] protected int health;
@@ -18,6 +19,23 @@ public class Shooter : MonoBehaviour
     [SerializeField] protected int humanCapacity = 1;
     [SerializeField] protected UnityEngine.UI.Slider healthSlider;
 
+=======
+    public float Cooldown => fireCooldown; 
+    public void ResetList()
+    {
+        enemiesInRange = new List<Transform>();
+    }
+    public Turret cardToUse
+    {
+        set
+        {
+            cardData = value;
+            SetUp();
+        }
+        private get => cardData;
+    }
+    
+>>>>>>> Kramer
     private void Start()
     {
         SetUp();
