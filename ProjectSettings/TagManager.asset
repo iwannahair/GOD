@@ -8,6 +8,9 @@ TagManager:
   - Human
   - Createhuman
   - GoldenTree
+  - BigSplash
+  - Splash
+  - BigEnemy
   layers:
   - Default
   - TransparentFX

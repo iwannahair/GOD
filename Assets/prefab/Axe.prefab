@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 847332772708608863}
   - component: {fileID: 6638963752504305557}
   - component: {fileID: 3010887445054052696}
+  - component: {fileID: 252023634459155420}
   - component: {fileID: 7585812835732182908}
   m_Layer: 11
   m_Name: Axe
@@ -81,7 +82,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.3974198, y: -0.13509494}
+    - - {x: 3.4813807, y: 0.18059407}
+      - {x: 1.50391, y: 0.31250846}
+      - {x: 1.4646611, y: -0.14350012}
+      - {x: 3.2896066, y: -0.6701463}
+      - {x: 3.8127518, y: -1.1031771}
       - {x: 5.287217, y: -0.58412194}
       - {x: 4.532264, y: 0.16763878}
   m_UseDelaunayMesh: 0
@@ -102,6 +107,18 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5346976804582347850}
   timer: 0
   tickNumber: 50
+--- !u!114 &252023634459155420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293181214676931160}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809e9ad8cbaaf2a448575356c575b269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &7585812835732182908
 AudioSource:
   m_ObjectHideFlags: 0
