@@ -10,8 +10,8 @@ public class CreateHumanSpawner : MonoBehaviour
     [SerializeField] private GameObject createHumanPrefab; // createhuman预制体，用于实例化
     [SerializeField] public float spawnRadius; // 生成半径，决定createhuman的生成范围
     [SerializeField] public float influenceRadius; // createhuman的影响半径，超出此范围的人类将被移除跟踪
-    [SerializeField] public int maxHumansToSpawn=10 ; // 最大生成人类数量，设为5，限制单个createhuman可生成的最大人类数
-    [SerializeField] public int minHumansToSpawn=5 ; // 最小生成人类数量，设为2，确保至少生成的人类数
+    [SerializeField] public int maxHumansToSpawn=50; // 最大生成人类数量，设为5，限制单个createhuman可生成的最大人类数
+    [SerializeField] public int minHumansToSpawn=10 ; // 最小生成人类数量，设为2，确保至少生成的人类数
     private int targetHumansToSpawn; // 本次实际要生成的human数量，在minHumansToSpawn和maxHumansToSpawn之间随机
     
     private GameObject createHumanInstance; // 当前生成的createhuman实例引用

@@ -13,7 +13,7 @@ public class MinimapUI : MonoBehaviour
     
     [Header("地图范围设置")]
     [SerializeField] private float viewRadius = 50f; // 小地图显示半径（以玩家为中心）
-    [SerializeField] private Vector2 minimapSize = new Vector2(200, 200); // 小地图UI尺寸
+    [SerializeField] private Vector2 minimapSize = new Vector2(400, 200); // 小地图UI尺寸
     
     [Header("更新设置")]
     [SerializeField] private float updateInterval = 0.1f; // 更新间隔（秒）
@@ -148,20 +148,26 @@ public class MinimapUI : MonoBehaviour
         
         foreach (CreateHumanSpawner spawner in spawners)
         {
-            GameObject icon = Instantiate(spawnerIconPrefab, minimapContainer);
-            spawnerIcons.Add(icon);
-            
-            // 优先使用CreateHuman的实际位置，如果没有则使用Spawner位置
-            Vector3 actualPosition = spawner.transform.position;
+            // 获取实际的CreateHuman实例位置
             Transform createHumanTransform = spawner.GetCreateHumanTransform();
             if (createHumanTransform != null)
             {
-                actualPosition = createHumanTransform.position;
+                GameObject icon = Instantiate(spawnerIconPrefab, minimapContainer);
+                spawnerIcons.Add(icon);
+                
+                // 使用CreateHuman实例的实际位置
+                Vector3 actualPosition = createHumanTransform.position;
+                
+                // 设置生成点图标位置
+                Vector2 minimapPos = WorldToMinimapPosition(actualPosition);
+                icon.GetComponent<RectTransform>().anchoredPosition = minimapPos;
+                
+                /*if (showDebugInfo)
+                {
+                    Debug.Log($"创建生成点图标 - CreateHuman位置: {actualPosition}, 小地图位置: {minimapPos}");
+                }*/
             }
-            
-            // 设置生成点图标位置
-            Vector2 minimapPos = WorldToMinimapPosition(actualPosition);
-            icon.GetComponent<RectTransform>().anchoredPosition = minimapPos;
+            // 如果CreateHuman还未生成，则不显示图标
         }
     }
     
@@ -252,10 +258,10 @@ public class MinimapUI : MonoBehaviour
             (relativePosition.y / viewRadius) * (minimapSize.y * 0.5f)
         );
         
-        if (showDebugInfo)
+       /* if (showDebugInfo)
         {
             Debug.Log($"世界坐标: {worldPosition}, 相对位置: {relativePosition}, 小地图坐标: {minimapPosition}");
-        }
+        }*/
         
         return minimapPosition;
     }
@@ -296,10 +302,10 @@ public class MinimapUI : MonoBehaviour
                 goldenTreeIcon.GetComponent<RectTransform>().anchoredPosition = clampedPos;
                 goldenTreeIcon.SetActive(true);
                 
-                if (showDebugInfo)
+                /*if (showDebugInfo)
                 {
                     Debug.Log($"黄金树超出范围，显示在边界: {clampedPos}");
-                }
+                }*/
             }
         }
     }

@@ -1069,6 +1069,10 @@ PrefabInstance:
       propertyPath: completionPanel
       value: 
       objectReference: {fileID: 2089564836}
+    - target: {fileID: -1224038883420978758, guid: e336a07b125d1184ebe3bb1dc561b10b, type: 3}
+      propertyPath: targetHumanCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2856847528764110168, guid: e336a07b125d1184ebe3bb1dc561b10b, type: 3}
       propertyPath: m_Name
       value: Tree
@@ -7438,12 +7442,16 @@ PrefabInstance:
       value: CreateHumanSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 9072110143412059353, guid: 8147199425dc46d4d863c72a9936668a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072110143412059353, guid: 8147199425dc46d4d863c72a9936668a, type: 3}
       propertyPath: spawnRadius
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9072110143412059353, guid: 8147199425dc46d4d863c72a9936668a, type: 3}
       propertyPath: influenceRadius
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9072110143412059353, guid: 8147199425dc46d4d863c72a9936668a, type: 3}
       propertyPath: maxHumansToSpawn
