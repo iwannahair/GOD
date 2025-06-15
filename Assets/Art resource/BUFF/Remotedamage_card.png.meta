@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8bdd1968c438494478889ba40f0e61c2
+guid: aa9a79a59c2a4b143b716b42f350f88e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5707956121084240032
-    second: attackpower_0
+      213: -1710406723800135930
+    second: Remotedamage_card_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attackpower_0
+      name: Remotedamage_card_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 44
-        height: 39
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06fd141662449c0b0800000000000000
-      internalID: -5707956121084240032
+      spriteID: 6070476952a6348e0800000000000000
+      internalID: -1710406723800135930
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      attackpower_0: -5707956121084240032
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
