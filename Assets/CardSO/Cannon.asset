@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 338b659a3c86b9c49bc41fe1fa065331, type: 3}
+  m_Name: Cannon
+  m_EditorClassIdentifier: 
+  cardName: "\u5927\u70AE"
+  cardSprite: {fileID: 8780733191442322644, guid: f5f86d0d405d5794fa2a56b8c57a01b4, type: 3}
+  cardDescription: "\u70AE\u5F39\u5BF9\u8DDD\u79BB\u6700\u8FDC\u7684\u654C\u4EBA\uFF0C\u9020\u6210\u8303\u56F4\u4F24\u5BB3\uFF0C\u5E76\u5BF9\u5176\u6301\u7EED\u653B\u51FB\uFF0C\u76F4\u5230\u5176\u6B7B\u4EA1"
+  cardBuildingPrefab: {fileID: 5493402919369935574, guid: 7ed2a5506d364b94eaeb1480bacf4e16, type: 3}
+  attributeType: 0
+  cardType: 1
+  cardCost: 2
+  followersCapacity: 3
+  healthPoints: 420
+  width: 3
+  height: 3
+  wholeCardSprite: {fileID: -35565928513045272, guid: 1dec05239d202e64a8b12586e2f3b8cb, type: 3}
+  attackRange: 9
+  attackCooldown: 0.8
+  damageRadius: 1.5
+  damage: 8

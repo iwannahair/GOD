@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Human
+  - Createhuman
+  - GoldenTree
+  - BigSplash
+  - Splash
+  - BigEnemy
   layers:
   - Default
   - TransparentFX
@@ -12,16 +18,16 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - NPC
+  - Building
+  - Enemy
+  - Projectile
+  - UIIndicator
+  - BuildingTriggerColliderHolder
+  - BuildingFriend
+  - EnemyTriggerColliderHolder
   - 
   - 
   - 
@@ -41,6 +47,21 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: EffectOnMap
+    uniqueID: 1742747285
+    locked: 0
+  - name: Building
+    uniqueID: 840053339
+    locked: 0
+  - name: NPC
+    uniqueID: 2451481357
+    locked: 0
+  - name: Player
+    uniqueID: 3261506673
+    locked: 0
+  - name: WorldUI
+    uniqueID: 2913459885
     locked: 0
   m_RenderingLayers:
   - Default

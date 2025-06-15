@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ad359aba4b4e24887dce12d011d401, type: 3}
+  m_Name: GoldenTree
+  m_EditorClassIdentifier: 
+  cardName: "\u9EC4\u91D1\u6811"
+  cardSprite: {fileID: 680487427978065198, guid: 1cc10261e2a6b804a91ec490d2ccc4ff, type: 3}
+  cardDescription: "\u6BCF\u8BDE\u751F\u4E00\u4E2A\u4EBA\uFF0C\u4EBA\u53E3\u589E\u957F\u901F\u5EA6\u589E\u52A06%"
+  cardBuildingPrefab: {fileID: 2856847528764110168, guid: bafa8fada10f78646be28a54226eec13, type: 3}
+  attributeType: 1
+  cardCost: 8
+  followersCapacity: 8
+  healthPoints: 700
+  width: 1
+  height: 1
+  wholeCardSprite: {fileID: -1683611080944828196, guid: 696903fa85af7be4884fa347d6d94df5, type: 3}
+  speedUpSpawnFollower: 6

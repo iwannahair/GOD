@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ad359aba4b4e24887dce12d011d401, type: 3}
+  m_Name: HugeTree
+  m_EditorClassIdentifier: 
+  cardName: "\u5DE8\u6811"
+  cardSprite: {fileID: -7033038588179515593, guid: f9679c0f43b0bc5468f8d4ab9d814099, type: 3}
+  cardDescription: "\u6BCF\u8BDE\u751F\u4E00\u4E2A\u4EBA\uFF0C\u4EBA\u53E3\u589E\u957F\u901F\u5EA6\u589E\u52A04%"
+  cardBuildingPrefab: {fileID: 2856847528764110168, guid: bafa8fada10f78646be28a54226eec13, type: 3}
+  attributeType: 1
+  cardCost: 6
+  followersCapacity: 6
+  healthPoints: 500
+  width: 1
+  height: 1
+  wholeCardSprite: {fileID: 1115807838406632081, guid: 546e3d21bda47e84f8c73838c968788d, type: 3}
+  speedUpSpawnFollower: 4
