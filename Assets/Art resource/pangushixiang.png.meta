@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bbb1d1350e7fa2a4895d39103f888c39
+guid: a69e601120101f54692467537705f652
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3368570074607482414
-    second: Meleedamage_card_0
+      213: 6907152569980581171
+    second: pangushixiang_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Meleedamage_card_0
+      name: pangushixiang_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 44
-        height: 39
+        width: 58
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e267df9a2a09fbe20800000000000000
-      internalID: 3368570074607482414
+      spriteID: 3357e1faaa22bdf50800000000000000
+      internalID: 6907152569980581171
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Meleedamage_card_0: 3368570074607482414
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
