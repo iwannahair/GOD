@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Remotedamage_card_0: -1710406723800135930
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

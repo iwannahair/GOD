@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Meleedamage_card_0: 3368570074607482414
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
