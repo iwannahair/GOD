@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a69e601120101f54692467537705f652
+guid: adbea06d9a2901a43b14b2af21e49816
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6907152569980581171
-    second: pangushixiang_0
+      213: 1161600608917869231
+    second: Attackspeed_card_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pangushixiang_0
+      name: Attackspeed_card_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 58
-        height: 120
+        width: 227
+        height: 325
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3357e1faaa22bdf50800000000000000
-      internalID: 6907152569980581171
+      spriteID: fa25d617995de1010800000000000000
+      internalID: 1161600608917869231
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pangushixiang_0: 6907152569980581171
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
