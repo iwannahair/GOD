@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 847332772708608863}
   - component: {fileID: 6638963752504305557}
   - component: {fileID: 3010887445054052696}
-  - component: {fileID: 252023634459155420}
   - component: {fileID: 7585812835732182908}
   m_Layer: 11
   m_Name: Axe
@@ -107,18 +106,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5346976804582347850}
   timer: 0
   tickNumber: 50
---- !u!114 &252023634459155420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2293181214676931160}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809e9ad8cbaaf2a448575356c575b269, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &7585812835732182908
 AudioSource:
   m_ObjectHideFlags: 0

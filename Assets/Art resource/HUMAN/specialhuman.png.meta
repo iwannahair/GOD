@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a69e601120101f54692467537705f652
+guid: 3116ed9f1602ef849a0fba9fda0dd1c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6907152569980581171
-    second: pangushixiang_0
+      213: 5226548286806692407
+    second: specialhuman_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pangushixiang_0
+      name: specialhuman_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 58
-        height: 120
+        width: 56
+        height: 97
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3357e1faaa22bdf50800000000000000
-      internalID: 6907152569980581171
+      spriteID: 7321a84b9fd688840800000000000000
+      internalID: 5226548286806692407
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pangushixiang_0: 6907152569980581171
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

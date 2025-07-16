@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a69e601120101f54692467537705f652
+guid: a596a369fe1dd6f45b64f6223a71ce7b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6907152569980581171
-    second: pangushixiang_0
+      213: -7969251145702672034
+    second: icon_humanspawner_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pangushixiang_0
+      name: icon_humanspawner_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 58
-        height: 120
+        width: 13
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3357e1faaa22bdf50800000000000000
-      internalID: 6907152569980581171
+      spriteID: e59748e4e48876190800000000000000
+      internalID: -7969251145702672034
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pangushixiang_0: 6907152569980581171
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
