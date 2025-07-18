@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     [Header("角色设置")]
     public GameObject playerPrefab;  // 保留Prefab引用但不使用
     public Transform playerSpawnPoint;  // 保留生成点但不使用
-    private int playerHealth=100, playerDamage=100, playerAttackSpeed=100, spawnBigChanceInver = 90;
+    private int playerHealth=100, playerDamage=100,playerProjectileDamage=10, playerAttackSpeed=100, spawnBigChanceInver = 90;
     [SerializeField] private TMP_Text playerDamageText, playerHealthText,  playerAttackSpeedText, popText;
     [SerializeField] private GameObject popTextGameObject;
-    public event Action OnPlayerHealthChanged, OnPlayerDamageChanged, OnPlayerAttackSpeedChanged;
+    public event Action OnPlayerHealthChanged, OnPlayerDamageChanged, OnPlayerAttackSpeedChanged ,OnPlayerProjectileDamageChanged;
     private bool _endGame = false;
     
     #region PlayerThreeAtributesSetter/Getter
