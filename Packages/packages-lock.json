@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.justinpbarnett.unity-mcp": {
+      "version": "https://github.com/justinpbarnett/unity-mcp.git?path=/UnityMcpBridge",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "6906c24290c7a981b39e9cd09cff937d3414ac7c"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
@@ -161,6 +170,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.ide.trae": {
+      "version": "https://github.com/dennyguotf/com.unity.ide.trae.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
+      "hash": "0231d4b833feb294da5fc8fa7e04df85bd73773f"
+    },
     "com.unity.ide.visualstudio": {
       "version": "2.0.22",
       "depth": 0,
@@ -197,6 +215,13 @@
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.4",
       "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
