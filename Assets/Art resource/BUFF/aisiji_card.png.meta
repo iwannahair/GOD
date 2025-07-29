@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      aisiji_card_0: 8542081993285170686
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

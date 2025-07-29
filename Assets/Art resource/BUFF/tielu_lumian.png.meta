@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tielu_lumian_0: 2098162177991467118
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
