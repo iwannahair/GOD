@@ -11,6 +11,7 @@ TagManager:
   - BigSplash
   - Splash
   - BigEnemy
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX
