@@ -128,18 +128,34 @@ public class ResourceDrop : MonoBehaviour
     /// </summary>
     private void CollectResource()
     {
+        Debug.Log("ResourceDrop.CollectResource被调用");
+        
         if (isCollected)
+        {
+            Debug.Log("资源已经被收集过，忽略此次收集");
             return;
+        }
             
         isCollected = true;
+        Debug.Log($"准备添加资源到ResourceManager，类型={resourceType}，数量={resourceValue}");
         
-        // 添加到玩家资源
-        ResourceManager.Instance.AddResource(resourceType, resourceValue);
+        // 检查ResourceManager实例
+        if (ResourceManager.Instance != null)
+        {
+            // 添加到玩家资源
+            ResourceManager.Instance.AddResource(resourceType, resourceValue);
+            Debug.Log("已调用ResourceManager.AddResource");
+        }
+        else
+        {
+            Debug.LogError("ResourceManager.Instance为null，无法添加资源！");
+        }
         
         // 播放收集特效
         PlayCollectEffect();
         
         // 销毁资源对象
+        Debug.Log("销毁资源对象");
         Destroy(gameObject);
     }
     

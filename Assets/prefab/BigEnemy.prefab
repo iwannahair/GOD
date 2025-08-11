@@ -121,13 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5084f61e7519c742acebfc03d462694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 8
   stoppingDistance: 0.5
   smoothTime: 0.3
-  targetTag: GoldenTree
+  targetTag: Player
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 128
 --- !u!50 &3036356755616958645
 Rigidbody2D:
   serializedVersion: 5

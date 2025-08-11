@@ -18,13 +18,13 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float smoothTime = 0.3f;
 
     [Header("目标设置")]
-    [Tooltip("黄金树的标签")]
-    [SerializeField] private string targetTag = "GoldenTree";
+    [Tooltip("目标标签")]
+    [SerializeField] private string targetTag = "Player";
     
-    [Tooltip("黄金树的层级")]
+    [Tooltip("目标的层级")]
     [SerializeField] private LayerMask targetLayer = -1;
 
-    private Transform targetTree;
+    private Transform targetTransform;
     private Rigidbody2D rb;
     private Vector2 currentVelocity;
     private bool hasTarget = false;
@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        FindGoldenTree();
+        FindTarget();
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!hasTarget)
         {
-            FindGoldenTree();
+            FindTarget();
             return;
         }
 
@@ -53,20 +53,20 @@ public class EnemyMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// 查找场景中的黄金树
+    /// 查找场景中的目标（玩家）
     /// </summary>
-    private void FindGoldenTree()
+    private void FindTarget()
     {
-        GameObject treeObject = GameObject.FindGameObjectWithTag(targetTag);
-        if (treeObject != null)
+        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
+        if (targetObject != null)
         {
-            targetTree = treeObject.transform;
+            targetTransform = targetObject.transform;
             hasTarget = true;
-            Debug.Log($"找到目标黄金树: {treeObject.name}");
+            Debug.Log($"找到目标: {targetObject.name}");
         }
         else
         {
-            Debug.LogWarning("未找到黄金树！请确保场景中有标签为\"GoldenTree\"的对象。");
+            Debug.LogWarning($"未找到目标！请确保场景中有标签为\"{targetTag}\"的对象。");
         }
     }
 
@@ -75,10 +75,10 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void MoveTowardsTarget()
     {
-        if (targetTree == null) return;
+        if (targetTransform == null) return;
 
         // 计算到目标的距离
-        Vector2 direction = (Vector2)(targetTree.position - transform.position);
+        Vector2 direction = (Vector2)(targetTransform.position - transform.position);
         float distance = direction.magnitude;
 
         // 如果距离大于停止距离，继续移动
@@ -135,7 +135,7 @@ public class EnemyMovement : MonoBehaviour
     /// <param name="newTarget">新的目标Transform</param>
     public void SetTarget(Transform newTarget)
     {
-        targetTree = newTarget;
+        targetTransform = newTarget;
         hasTarget = (newTarget != null);
     }
 
@@ -154,8 +154,8 @@ public class EnemyMovement : MonoBehaviour
     /// <returns>到目标的距离</returns>
     public float GetDistanceToTarget()
     {
-        if (targetTree == null) return float.MaxValue;
-        return Vector2.Distance(transform.position, targetTree.position);
+        if (targetTransform == null) return float.MaxValue;
+        return Vector2.Distance(transform.position, targetTransform.position);
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ public class EnemyMovement : MonoBehaviour
     /// <returns>是否到达目标</returns>
     public bool HasReachedTarget()
     {
-        if (targetTree == null) return false;
+        if (targetTransform == null) return false;
         return GetDistanceToTarget() <= stoppingDistance;
     }
 

@@ -72,7 +72,13 @@ public class ResourceManager : MonoBehaviour
     /// <param name="amount">数量</param>
     public void AddResource(ResourceDrop.ResourceType type, int amount)
     {
-        if (amount <= 0) return;
+        Debug.Log($"ResourceManager.AddResource: 类型={type}, 数量={amount}");
+        
+        if (amount <= 0)
+        {
+            Debug.LogWarning("添加的资源数量小于等于0，忽略此次添加");
+            return;
+        }
         
         if (resources.ContainsKey(type))
         {
@@ -83,7 +89,18 @@ public class ResourceManager : MonoBehaviour
             resources[type] = amount;
         }
         
-        OnResourceChanged?.Invoke(type, resources[type]);
+        Debug.Log($"准备触发OnResourceChanged事件，类型={type}, 新数量={resources[type]}");
+        
+        if (OnResourceChanged != null)
+        {
+            OnResourceChanged.Invoke(type, resources[type]);
+            Debug.Log("OnResourceChanged事件已触发");
+        }
+        else
+        {
+            Debug.LogError("OnResourceChanged事件为null，无法触发事件！");
+        }
+        
         Debug.Log($"获得 {amount} 个 {type}，当前总数: {resources[type]}");
     }
     

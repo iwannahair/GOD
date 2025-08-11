@@ -95,7 +95,16 @@ public class CollectionProgressManager : MonoBehaviour
         if (ResourceManager.Instance != null)
         {
             ResourceManager.Instance.OnResourceChanged += OnResourceCollected;
+            Debug.Log("已成功订阅ResourceManager.OnResourceChanged事件");
         }
+        else
+        {
+            Debug.LogError("ResourceManager.Instance为null，无法订阅事件！");
+        }
+        
+        // 调试信息
+        Debug.Log("CollectionProgressManager启动，progressText是否为null: " + (progressText == null));
+        Debug.Log("progressSlider是否为null: " + (progressSlider == null));
         
         // 设置按钮点击事件
         SetupButtonEvents();
@@ -185,6 +194,8 @@ public class CollectionProgressManager : MonoBehaviour
     /// <param name="newAmount">新的资源数量</param>
     private void OnResourceCollected(ResourceDrop.ResourceType resourceType, int newAmount)
     {
+        Debug.Log($"收集到资源：{resourceType}，数量：{newAmount}");
+        
         // 每次收集任何类型的资源都增加进度
         AddProgress(1);
     }
@@ -195,29 +206,40 @@ public class CollectionProgressManager : MonoBehaviour
     /// <param name="amount">增加的数量</param>
     public void AddProgress(int amount)
     {
-        if (amount <= 0) return;
+        Debug.Log($"尝试增加进度：{amount}，当前进度：{currentCollectionCount}/{maxCollectionCount}");
+        
+        if (amount <= 0)
+        {
+            Debug.LogWarning("增加的进度数量小于等于0，忽略此次更新");
+            return;
+        }
         
         currentCollectionCount += amount;
+        Debug.Log($"进度增加后：{currentCollectionCount}");
         
         // 限制最大值
         if (currentCollectionCount > maxCollectionCount)
         {
             currentCollectionCount = maxCollectionCount;
+            Debug.Log($"进度超过最大值，已限制为：{maxCollectionCount}");
         }
         
         // 更新UI
+        Debug.Log("开始更新UI...");
         UpdateProgressUI();
         
         // 触发进度变化事件
+        Debug.Log("触发OnProgressChanged事件");
         OnProgressChanged?.Invoke(currentCollectionCount, maxCollectionCount);
         
         // 检查是否达到满进度
         if (currentCollectionCount >= maxCollectionCount)
         {
+            Debug.Log("进度已满，调用OnProgressReachedMax");
             OnProgressReachedMax();
         }
         
-        Debug.Log($"收集进度: {currentCollectionCount}/{maxCollectionCount}");
+        Debug.Log($"收集进度更新完成: {currentCollectionCount}/{maxCollectionCount}");
     }
     
     /// <summary>
@@ -228,7 +250,13 @@ public class CollectionProgressManager : MonoBehaviour
         // 更新进度条
         if (progressSlider != null)
         {
+            float oldValue = progressSlider.value;
             progressSlider.value = currentCollectionCount;
+            Debug.Log($"进度条值从 {oldValue} 更新为 {progressSlider.value}，最大值：{progressSlider.maxValue}");
+        }
+        else
+        {
+            Debug.LogError("progressSlider为null，无法更新进度条！");
         }
         
         // 更新进度文本
@@ -243,6 +271,12 @@ public class CollectionProgressManager : MonoBehaviour
         if (progressText != null)
         {
             progressText.text = $"{currentCollectionCount}/{maxCollectionCount}";
+            Debug.Log($"更新进度文本：{currentCollectionCount}/{maxCollectionCount}");
+        }
+        else
+        {
+            // 如果progressText为null，仍然记录进度变化
+            Debug.Log($"进度已更新（但progressText为null）：{currentCollectionCount}/{maxCollectionCount}");
         }
     }
     
