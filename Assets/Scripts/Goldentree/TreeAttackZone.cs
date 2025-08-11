@@ -40,6 +40,7 @@ public class TreeAttackZone : MonoBehaviour
     private bool isPlayerInRange = false;
     private Collider2D playerCollider;
     private float baseAttackRadius; // 保存初始攻击范围
+    private CircleCollider2D circleCollider; // 神树的圆形碰撞器组件
 
 
 
@@ -48,6 +49,18 @@ public class TreeAttackZone : MonoBehaviour
         attackTimer = attackInterval;
         // 保存初始攻击范围
         baseAttackRadius = attackRadius;
+        
+        // 获取CircleCollider2D组件
+        circleCollider = GetComponent<CircleCollider2D>();
+        if (circleCollider == null)
+        {
+            Debug.LogWarning("TreeAttackZone: 未找到CircleCollider2D组件，将自动添加");
+            circleCollider = gameObject.AddComponent<CircleCollider2D>();
+            circleCollider.isTrigger = true; // 设置为触发器
+        }
+        
+        // 初始化碰撞器半径与攻击范围一致
+        UpdateColliderRadius();
         
         // 确保投射物发射点已设置
         if (projectileSpawnPoint == null)
@@ -107,6 +120,8 @@ public class TreeAttackZone : MonoBehaviour
             if (Mathf.Abs(attackRadius - baseAttackRadius) > 0.01f)
             {
                 attackRadius = baseAttackRadius;
+                // 同步更新碰撞器半径
+                UpdateColliderRadius();
                 Debug.Log($"TreeAttackZone: 攻击和检测范围已重置为基础值 {attackRadius:F2}");
             }
             return;
@@ -123,6 +138,8 @@ public class TreeAttackZone : MonoBehaviour
         if (Mathf.Abs(attackRadius - newAttackRadius) > 0.01f) // 避免频繁的微小更新
         {
             attackRadius = newAttackRadius;
+            // 同步更新碰撞器半径
+            UpdateColliderRadius();
             Debug.Log($"TreeAttackZone: 攻击和检测范围已更新为 {attackRadius:F2}，与下标最大的prefab大小相同");
         }
     }
@@ -255,30 +272,9 @@ public class TreeAttackZone : MonoBehaviour
     /// </summary>
     void OnDrawGizmosSelected()
     {
-        // 绘制攻击范围
+        // 绘制攻击和检测范围（现在是同一个范围）
         Gizmos.color = isPlayerInRange ? Color.green : Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-        
-        // 使用蓝色线条绘制玩家检测范围（与攻击范围相同，但稍微偏移一点以便区分）
-        Gizmos.color = Color.blue;
-        // 使用虚线效果（通过绘制多个短线段实现）
-        int segments = 60; // 分段数量
-        float angleStep = 360f / segments;
-        Vector3 prevPoint = transform.position + new Vector3(Mathf.Cos(0) * attackRadius, Mathf.Sin(0) * attackRadius, 0);
-        
-        for (int i = 1; i <= segments; i++)
-        {
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 nextPoint = transform.position + new Vector3(Mathf.Cos(angle) * attackRadius, Mathf.Sin(angle) * attackRadius, 0);
-            
-            // 每隔一段绘制线条，形成虚线效果
-            if (i % 2 == 0)
-            {
-                Gizmos.DrawLine(prevPoint, nextPoint);
-            }
-            
-            prevPoint = nextPoint;
-        }
     }
 
     /// <summary>
@@ -292,5 +288,27 @@ public class TreeAttackZone : MonoBehaviour
 
         // 确保攻击间隔不会是负值
         if (attackInterval < 0) attackInterval = 0;
+        
+        // 在编辑器中也同步更新碰撞器半径
+        if (Application.isEditor && !Application.isPlaying)
+        {
+            CircleCollider2D editorCollider = GetComponent<CircleCollider2D>();
+            if (editorCollider != null)
+            {
+                editorCollider.radius = attackRadius;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 更新碰撞器半径，使其与攻击范围保持一致
+    /// </summary>
+    private void UpdateColliderRadius()
+    {
+        if (circleCollider != null)
+        {
+            circleCollider.radius = attackRadius;
+            Debug.Log($"TreeAttackZone: 碰撞器半径已更新为 {attackRadius:F2}");
+        }
     }
 }
