@@ -190,7 +190,6 @@ GameObject:
   - component: {fileID: 1890192822073712752}
   - component: {fileID: -6888254623239656612}
   - component: {fileID: 6546101437214599505}
-  - component: {fileID: -1224038883420978758}
   m_Layer: 9
   m_Name: Tree
   m_TagString: GoldenTree
@@ -430,35 +429,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.03638954}
   m_Radius: 0.75638944
---- !u!114 &-1224038883420978758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856847528764110168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1a540777792a714c8ff490b461c192c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  absorptionSpeed: 5
-  statsForGod: {fileID: 0}
-  targetHumanCount: 10
-  onHumanAbsorbed:
-    m_PersistentCalls:
-      m_Calls: []
-  onCompletionPanelButtonClicked:
-    m_PersistentCalls:
-      m_Calls: []
-  completionPanel: {fileID: 0}
-  continueButton: {fileID: 0}
-  restartButton: {fileID: 0}
-  quitButton: {fileID: 0}
-  axePrefab: {fileID: 2293181214676931160, guid: bcc220368ff96b448aba0c6649d7113e, type: 3}
-  rotationSpeed: 1
-  rotationRadius: 0.01
-  angleOffsetPerAxe: 30
 --- !u!1 &3373100575978024643
 GameObject:
   m_ObjectHideFlags: 0
