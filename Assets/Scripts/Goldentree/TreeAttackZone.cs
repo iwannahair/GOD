@@ -9,9 +9,7 @@ using System.Linq;
 public class TreeAttackZone : MonoBehaviour
 {
     [Header("范围设置")]
-    [Tooltip("玩家检测范围半径")]
-    public float playerDetectionRadius = 10f;
-    [Tooltip("敌人攻击范围半径")]
+    [Tooltip("攻击范围半径(同时也是玩家检测范围)")]
     public float attackRadius = 8f;
 
     [Header("攻击设置")]
@@ -92,7 +90,8 @@ public class TreeAttackZone : MonoBehaviour
 
     /// <summary>
     /// 根据PrefabManager中已实例化预制体的最大索引值动态更新攻击范围
-    /// 攻击范围 = 基础范围 + (已实例化预制体的最大索引值 * 缩放系数)
+    /// 攻击范围 = 下标最大的prefab大小
+    /// 此范围同时用于玩家检测和敌人攻击
     /// </summary>
     private void UpdateAttackRadius()
     {
@@ -102,16 +101,29 @@ public class TreeAttackZone : MonoBehaviour
         // 获取当前已实例化预制体的数量（即最大索引值）
         int maxIndex = prefabManager.GetPrefabCount();
         
-        // 根据已实例化预制体数量调整攻击范围
-        // 每个已实例化的预制体增加1.5倍基础范围的攻击距离
-        float radiusMultiplier = 1.0f + (maxIndex * 0.5f);
-        float newAttackRadius = baseAttackRadius * radiusMultiplier;
+        if (maxIndex <= 0)
+        {
+            // 如果没有预制体，使用基础攻击范围
+            if (Mathf.Abs(attackRadius - baseAttackRadius) > 0.01f)
+            {
+                attackRadius = baseAttackRadius;
+                Debug.Log($"TreeAttackZone: 攻击和检测范围已重置为基础值 {attackRadius:F2}");
+            }
+            return;
+        }
+        
+        // 计算最大prefab的大小：下标+1
+        // 在PrefabManager中，prefab大小 = 下标 + 1
+        float maxPrefabSize = maxIndex; // 最大下标值就是prefab数量-1，所以这里直接使用maxIndex
+        
+        // 设置攻击范围等于最大prefab的大小
+        float newAttackRadius = maxPrefabSize * baseAttackRadius;
         
         // 更新攻击范围
         if (Mathf.Abs(attackRadius - newAttackRadius) > 0.01f) // 避免频繁的微小更新
         {
             attackRadius = newAttackRadius;
-            Debug.Log($"TreeAttackZone: 攻击范围已更新为 {attackRadius:F2}，基于 {maxIndex} 个已实例化预制体");
+            Debug.Log($"TreeAttackZone: 攻击和检测范围已更新为 {attackRadius:F2}，与下标最大的prefab大小相同");
         }
     }
 
@@ -239,17 +251,34 @@ public class TreeAttackZone : MonoBehaviour
     }
 
     /// <summary>
-    /// 在编辑器中绘制Gizmos，用于可视化检测和攻击范围。
+    /// 在编辑器中绘制Gizmos，用于可视化攻击和检测范围。
     /// </summary>
     void OnDrawGizmosSelected()
     {
-        // 绘制玩家检测范围
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
-
-        // 绘制敌人攻击范围
-        Gizmos.color = Color.red;
+        // 绘制攻击范围
+        Gizmos.color = isPlayerInRange ? Color.green : Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+        
+        // 使用蓝色线条绘制玩家检测范围（与攻击范围相同，但稍微偏移一点以便区分）
+        Gizmos.color = Color.blue;
+        // 使用虚线效果（通过绘制多个短线段实现）
+        int segments = 60; // 分段数量
+        float angleStep = 360f / segments;
+        Vector3 prevPoint = transform.position + new Vector3(Mathf.Cos(0) * attackRadius, Mathf.Sin(0) * attackRadius, 0);
+        
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = i * angleStep * Mathf.Deg2Rad;
+            Vector3 nextPoint = transform.position + new Vector3(Mathf.Cos(angle) * attackRadius, Mathf.Sin(angle) * attackRadius, 0);
+            
+            // 每隔一段绘制线条，形成虚线效果
+            if (i % 2 == 0)
+            {
+                Gizmos.DrawLine(prevPoint, nextPoint);
+            }
+            
+            prevPoint = nextPoint;
+        }
     }
 
     /// <summary>
@@ -259,7 +288,6 @@ public class TreeAttackZone : MonoBehaviour
     void OnValidate()
     {
         // 确保半径不会是负值
-        if (playerDetectionRadius < 0) playerDetectionRadius = 0;
         if (attackRadius < 0) attackRadius = 0;
 
         // 确保攻击间隔不会是负值

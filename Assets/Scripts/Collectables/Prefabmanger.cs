@@ -53,27 +53,47 @@ public class PrefabManager : MonoBehaviour
     
     /// <summary>
     /// 添加预制体到列表并立即实例化
-    /// 根据预制体在列表中的位置设置大小：第一个位置大小为1，第二个位置大小为2，以此类推
+    /// 第一个prefab大小为1，后续prefab大小根据下标递增
+    /// 后生成的prefab渲染层级始终在前一个prefab的下面
     /// </summary>
     /// <param name="prefab">要添加并实例化的预制体</param>
     public void AddPrefabAndSpawn(GameObject prefab)
     {
         if (prefab != null)
         {
-            // 添加到列表末尾，这样可以根据位置正确设置递增大小
+            // 添加到列表末尾
             prefabList.Add(prefab);
             
             // 立即实例化
             Vector3 position = spawnPoint != null ? spawnPoint.position : transform.position;
             GameObject instance = Instantiate(prefab, position, Quaternion.identity);
             
-            // 根据预制体在列表中的位置计算大小
-            // 获取刚添加的预制体在列表中的索引位置
-            int prefabIndex = prefabList.Count - 1; // 最后一个元素的索引
-            float scale = (float)(prefabIndex + 1); // 索引0对应大小1，索引1对应大小2，以此类推
+            // 计算大小：第一个prefab大小为1，后续prefab大小根据下标递增
+            int prefabIndex = prefabList.Count - 1; // 获取当前添加的prefab在列表中的索引
+            float scale = (float)(prefabIndex + 1); // 下标0 -> 大小1, 下标1 -> 大小2, 下标2 -> 大小3...
             instance.transform.localScale = new Vector3(scale, scale, scale);
             
-            Debug.Log($"已将预制体 {prefab.name} 添加到列表位置 {prefabIndex} 并实例化，大小: {scale}，当前列表数量: {prefabList.Count}");
+            // 设置渲染层级，确保后生成的prefab在前一个prefab的下面
+            SpriteRenderer renderer = instance.GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                // 如果是第一个实例，使用默认排序顺序
+                // 如果不是第一个实例，则将排序顺序设置为比上一个实例低1，确保在下面渲染
+                if (lastSpawnedInstance != null)
+                {
+                    SpriteRenderer lastRenderer = lastSpawnedInstance.GetComponent<SpriteRenderer>();
+                    if (lastRenderer != null)
+                    {
+                        renderer.sortingOrder = lastRenderer.sortingOrder - 1;
+                    }
+                }
+                Debug.Log($"已设置预制体渲染层级: {renderer.sortingOrder}");
+            }
+            
+            // 更新上一个生成的实例引用
+            lastSpawnedInstance = instance;
+            
+            Debug.Log($"已将预制体 {prefab.name} 添加到列表并实例化，下标: {prefabIndex}，大小: {scale}，当前列表数量: {prefabList.Count}");
         }
         else
         {
@@ -116,25 +136,27 @@ public class PrefabManager : MonoBehaviour
         return prefabList.Count;
     }
 
+    // 记录上一个生成的预制体实例，用于设置渲染层级关系
+    private GameObject lastSpawnedInstance;
+    
     /// <summary>
     /// 实例化预制体
+    /// 从下标0开始实例化，下标0的prefab大小为1，下标每增加1，prefab大小加1
+    /// 后生成的prefab渲染层级始终在前一个prefab的下面
     /// </summary>
     public void SpawnPrefab()
     {
-        // 检查预制体列表是否为空以及索引是否有效
+        // 检查预制体列表是否为空
         if (prefabList.Count == 0)
-        {            Debug.LogWarning("预制体列表为空，无法生成预制体。");
+        {
+            Debug.LogWarning("预制体列表为空，无法生成预制体。");
             return;
         }
 
-        // 确保索引在列表范围内
-        if (currentIndex >= prefabList.Count)
-        {
-            Debug.Log("已生成所有预制体，重置索引。");
-            currentIndex = 0; // 重置索引或停止生成
-        }
-
-        // 获取当前要生成的预制体
+        // 强制从下标0开始生成，解决第一个prefab下标为6的问题
+        currentIndex = 0;
+        
+        // 获取当前要生成的预制体（从下标0开始）
         GameObject prefabToSpawn = prefabList[currentIndex];
 
         if (prefabToSpawn != null)
@@ -145,11 +167,31 @@ public class PrefabManager : MonoBehaviour
             // 实例化预制体
             GameObject instance = Instantiate(prefabToSpawn, position, Quaternion.identity);
 
-            // 根据索引计算大小，第0个为2，后续递增1
-            float scale = 1.0f + currentIndex;
+            // 根据下标计算大小：下标0对应大小1，下标1对应大小2，以此类推
+            float scale = (float)(currentIndex + 1); // 下标0 -> 大小1, 下标1 -> 大小2, 下标2 -> 大小3...
             instance.transform.localScale = new Vector3(scale, scale, scale);
+            
+            // 设置渲染层级，确保后生成的prefab在前一个prefab的下面
+            SpriteRenderer renderer = instance.GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                // 如果是第一个实例，使用默认排序顺序
+                // 如果不是第一个实例，则将排序顺序设置为比上一个实例低1，确保在下面渲染
+                if (lastSpawnedInstance != null)
+                {
+                    SpriteRenderer lastRenderer = lastSpawnedInstance.GetComponent<SpriteRenderer>();
+                    if (lastRenderer != null)
+                    {
+                        renderer.sortingOrder = lastRenderer.sortingOrder - 1;
+                    }
+                }
+                Debug.Log($"已设置预制体渲染层级: {renderer.sortingOrder}");
+            }
+            
+            // 更新上一个生成的实例引用
+            lastSpawnedInstance = instance;
 
-            Debug.Log($"已生成预制体: {prefabToSpawn.name}，大小调整为: {scale}");
+            Debug.Log($"已生成预制体: {prefabToSpawn.name}，下标: {currentIndex}，大小: {scale}");
 
             // 更新索引，准备生成下一个预制体
             currentIndex++;
@@ -157,6 +199,8 @@ public class PrefabManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"索引 {currentIndex} 处的预制体为空。");
+            // 跳过空的预制体，继续下一个
+            currentIndex++;
         }
     }
 }
