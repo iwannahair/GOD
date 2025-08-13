@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tielu_card_0: -7881588737478034467
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
