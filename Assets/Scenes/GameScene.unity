@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRadius: 6.65
-  attackDamage: 100
+  attackDamage: 10
   attackInterval: 0.5
   projectilePrefab: {fileID: 5830139164859072865, guid: 5ac5ff25a2a8acc4cb76d0eb78f563cd, type: 3}
   projectileSpawnPoint: {fileID: 897029908}
@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9630942e0a0fd40abeae19a3b47e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCollectionCount: 1
+  maxCollectionCount: 5
   currentCollectionCount: 0
   progressSlider: {fileID: 2016508187}
   progressText: {fileID: 0}
@@ -2806,7 +2806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a44e640317e8c34c9b9afdb0595fcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 15
 --- !u!114 &2058856281
 MonoBehaviour:
   m_ObjectHideFlags: 0

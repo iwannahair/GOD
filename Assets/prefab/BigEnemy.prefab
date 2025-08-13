@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397712e20eb93aa43a9e68296f1d6b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20
   deathEffect: {fileID: 0}
   resourceDropPrefab: {fileID: 5359575789530531528, guid: 1a21fb4d914b4ca4abf934e3b7347540, type: 3}
   resourceDropChance: 1
