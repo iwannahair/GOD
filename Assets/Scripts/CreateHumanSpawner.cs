@@ -21,23 +21,23 @@ public class CreateHumanSpawner : MonoBehaviour
     private bool canGenerateMore = true; // 是否还能生成更多人类，达到目标数量后设为false
     private int createHumanSpawnCount = 0; // createhuman的生成次数计数器，限制只生成一次
 
-    private Transform goldenTreeTransform; // 新增：用于存储黄金树的Transform
+    private Transform playerTransform; // 用于存储玩家的Transform
 
     /// <summary>
     /// 初始化方法：设置目标生成数量并生成CreateHuman
     /// </summary>
     private void Start()
     {
-        // 查找黄金树对象并获取其Transform
-        GameObject goldenTreeObject = GameObject.FindWithTag("GoldenTree"); // 假设黄金树的标签是 "GoldenTree"
-        if (goldenTreeObject != null)
+        // 查找玩家对象并获取其Transform
+        GameObject playerObject = GameObject.FindWithTag("Player"); // 假设玩家的标签是 "Player"
+        if (playerObject != null)
         {
-            goldenTreeTransform = goldenTreeObject.transform;
+            playerTransform = playerObject.transform;
         }
         else
         {
-            Debug.LogError("未找到标签为 'GoldenTree' 的黄金树对象！请确保场景中存在黄金树且标签正确。");
-            // 如果找不到黄金树，可能需要禁用此脚本或采取其他处理
+            Debug.LogError("未找到标签为 'Player' 的玩家对象！请确保场景中存在玩家且标签正确。");
+            // 如果找不到玩家，可能需要禁用此脚本或采取其他处理
             enabled = false; // 禁用脚本以避免进一步错误
             return;
         }
@@ -110,7 +110,7 @@ public class CreateHumanSpawner : MonoBehaviour
     /// </summary>
     private void SpawnCreateHuman()
 {
-    if (createHumanPrefab == null || !canGenerateMore || createHumanSpawnCount >= 1 || goldenTreeTransform == null) return;
+    if (createHumanPrefab == null || !canGenerateMore || createHumanSpawnCount >= 1 || playerTransform == null) return;
 
     // 确保生成的人类之间的距离在5到10像素之间
     float minDistance = 5f;
@@ -120,7 +120,7 @@ public class CreateHumanSpawner : MonoBehaviour
     while (!isValidPosition) {
         float randomDistance = Random.Range(20f, 140f);
         Vector2 randomCircle = Random.insideUnitCircle.normalized * randomDistance;
-        spawnPos = goldenTreeTransform.position + new Vector3(randomCircle.x, randomCircle.y, 0);
+        spawnPos = playerTransform.position + new Vector3(randomCircle.x, randomCircle.y, 0);
         isValidPosition = true;
         foreach (var human in spawnedHumans) {
             if (Vector3.Distance(spawnPos, human.transform.position) < minDistance || Vector3.Distance(spawnPos, human.transform.position) > maxDistance) {

@@ -9,32 +9,15 @@ public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Slider progressSlider; // 进度条滑块组件
     [SerializeField] private TextMeshProUGUI progressText; // 进度文本组件（可选）
-    [SerializeField] private GoldenTree goldenTree; // 黄金树引用
+    [SerializeField] private int targetCount = 10; // 目标数量
+    
+    private int currentCount = 0; // 当前数量
 
     private void Start()
     {
-        // 尝试在场景中查找GoldenTree
-        if (goldenTree == null)
-        {
-            goldenTree = FindObjectOfType<GoldenTree>();
-        }
-
-        if (goldenTree == null)
-        {
-            Debug.LogError("场景中没有找到GoldenTree！请确保GoldenTree已实例化到场景中。");
-            return;
-        }
-
-        // 初始化进度条 - 使用公共属性TargetHumanCount
-        UpdateProgressBar(0, goldenTree.TargetHumanCount);
-
-        // 订阅黄金树的人类吸收事件
-        goldenTree.onHumanAbsorbed.AddListener(UpdateProgressBar);
-
-        // 订阅黄金树的完成面板按钮点击事件
-        goldenTree.onCompletionPanelButtonClicked.AddListener(ResetProgressBarDisplay);
-
-        Debug.Log("进度条已成功连接到GoldenTree");
+        // 初始化进度条
+        UpdateProgressBar(0, targetCount);
+        Debug.Log("进度条已初始化");
     }
 
     /// <summary>
@@ -62,9 +45,19 @@ public class ProgressBarUI : MonoBehaviour
     /// <summary>
     /// 重置进度条显示
     /// </summary>
-    private void ResetProgressBarDisplay()
+    public void ResetProgressBarDisplay()
     {
         Debug.Log("重置进度条显示");
-        UpdateProgressBar(0, goldenTree.TargetHumanCount);
+        currentCount = 0;
+        UpdateProgressBar(currentCount, targetCount);
+    }
+    
+    /// <summary>
+    /// 增加当前进度
+    /// </summary>
+    public void IncrementProgress()
+    {
+        currentCount++;
+        UpdateProgressBar(currentCount, targetCount);
     }
 }

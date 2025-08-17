@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         OnPlayerAttackSpeedChanged+= UpdateAttackSpeedUI;
     }
     [Header("UI References")]
-    [SerializeField] private MinimapUI minimapUI; // 小地图UI引用
+    // [SerializeField] private MinimapUI minimapUI; // 小地图UI引用（已移除）
     
     private void Start()
     {
@@ -214,15 +214,8 @@ public class GameManager : MonoBehaviour
         playerTran = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnInitialEnemies();
         
-        // 初始化小地图
-        if (minimapUI != null)
-        {
-            // 移除SetMapBounds调用，新的小地图系统使用以玩家为中心的显示方式
-            // minimapUI.SetMapBounds(50f, 50f); // 不再需要
-            
-            // 可选：设置小地图显示半径
-            minimapUI.SetViewRadius(50f);
-        }
+        // 初始化小地图（已移除）
+        // 小地图相关功能已移除
     }
     
     #region HandleSpawn

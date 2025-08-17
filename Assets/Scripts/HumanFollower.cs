@@ -137,13 +137,9 @@ public class HumanFollower : MonoBehaviour
 
             lastInQueue = this;
             
-            // 检查是否有活跃的斧子效果，如果有，为这个新跟随的人类也添加斧子
-            GoldenTree goldenTree = FindObjectOfType<GoldenTree>();
-            if (goldenTree != null && goldenTree.AxesRotating)
-            {
-                goldenTree.AddAxeToHuman(this);
-                Debug.Log("新跟随的人类继承了斧子旋转效果");
-            }
+            // 检查是否有活跃的斧子效果（已移除GoldenTree相关功能）
+            // 可以在这里添加其他斧子管理逻辑
+            Debug.Log("新人类开始跟随玩家");
         }
     }
     
