@@ -183,7 +183,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.88, y: -0.71, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4999224075728246530}
@@ -286,7 +286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 45
   healthSlider: {fileID: 8196438952429117939}
-  splashPrefab: {fileID: 2989786913977902598, guid: 5f8b5b5ecae065c43bb517babb693485, type: 3}
 --- !u!114 &-1017583900402245540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,8 +348,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.32
+  m_Offset: {x: -0.008925647, y: 0}
+  m_Radius: 0.32892564
 --- !u!95 &6564969727044520569
 Animator:
   serializedVersion: 7
@@ -581,7 +580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4722505030666949982
 Transform:
   m_ObjectHideFlags: 0

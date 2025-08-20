@@ -106,6 +106,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int enemyIncreasePerWave = 1;
     [SerializeField] private float waveIntervalIncreasePerWave = 0.3f;
     
+    // 新增敌人生成控制变量
+    [Header("敌人生成控制")]
+    [SerializeField] private int maxEnemiesOnField = 5; // 场上最多普通敌人数量
+    [SerializeField] private int maxBigEnemiesOnField = 1; // 场上最多大敌人数量
+    [SerializeField] private bool allEnemiesDead = false; // 所有敌人是否已死亡
+    
     private int SpawnWave
     {
         get => spawnWave;
@@ -205,8 +211,6 @@ public class GameManager : MonoBehaviour
         OnPlayerDamageChanged += UpdateAttackDamageUI;
         OnPlayerAttackSpeedChanged+= UpdateAttackSpeedUI;
     }
-    [Header("UI References")]
-    // [SerializeField] private MinimapUI minimapUI; // 小地图UI引用（已移除）
     
     private void Start()
     {
@@ -284,18 +288,28 @@ public class GameManager : MonoBehaviour
         enemy.SetActive(false);
         bigEnemyPool.Enqueue(enemy);
     }
+    /// <summary>
+    /// 生成初始敌人，固定生成5个Enemy和1个BigEnemy
+    /// </summary>
     void SpawnInitialEnemies()
     {
-        for(int i = 0; i < initialEnemyCount; i++)
+        // 生成5个普通敌人
+        for(int i = 0; i < maxEnemiesOnField; i++)
         {
             Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
             GetEnemy(spawnPos);
-            if (Random.Range(0,100)>90)
-            {
-                GetBigEnemy(spawnPos);
-            }
         }
+        
+        // 生成1个大敌人
+        for(int i = 0; i < maxBigEnemiesOnField; i++)
+        {
+            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
+                              Random.insideUnitCircle.normalized * spawnRadius;
+            GetBigEnemy(spawnPos);
+        }
+        
+        allEnemiesDead = false; // 重置死亡标记
     }
 
     [SerializeField] private float endGameTimeToWait = 3f;
@@ -304,10 +318,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text endGame_HumanSpawned, endGame_HumanKilled, endGame_TotalEnemyKilled, endGame_BigEnemyKilled, endGame_SmallEnemyKilled, endGame_BuildingBuilt;
     void Update()
     {
-        if(Time.time >= nextWaveTime&&!_endGame)
+        if(!_endGame)
         {
-            SpawnEnemyWave();
-            nextWaveTime = Time.time + waveInterval;
+            CheckAndRespawnEnemies(); // 检查并重新生成敌人
         }
         
         InputPauseGame();
@@ -378,25 +391,73 @@ public class GameManager : MonoBehaviour
     
 
     
-    void SpawnEnemyWave()
+    /// <summary>
+    /// 检查并重新生成敌人，当所有敌人死亡时重新生成5个Enemy和1个BigEnemy
+    /// </summary>
+    void CheckAndRespawnEnemies()
     {
-        for(int i = 0; i < enemiesPerWave; i++)
+        // 检查所有敌人是否已死亡
+        if (AreAllEnemiesDead() && !allEnemiesDead)
         {
-            Vector2 spawnPos = (Vector2)transform.position + 
+            allEnemiesDead = true; // 标记所有敌人已死亡
+            
+            // 等待一小段时间后重新生成敌人
+            StartCoroutine(RespawnEnemiesAfterDelay());
+        }
+    }
+    
+    /// <summary>
+    /// 延迟重新生成敌人的协程
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RespawnEnemiesAfterDelay()
+    {
+        yield return new WaitForSeconds(2f); // 等待2秒
+        
+        // 生成5个普通敌人
+        for(int i = 0; i < maxEnemiesOnField; i++)
+        {
+            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
                               Random.insideUnitCircle.normalized * spawnRadius;
             GetEnemy(spawnPos);
-            if (Random.Range(0,100)>spawnBigChanceInver)
-            {
-                GetBigEnemy(spawnPos);
-            }
         }
-
-        SpawnWave++;
-        waveInterval += waveIntervalIncreasePerWave;
-        enemiesPerWave += enemyIncreasePerWave;
-        spawnBigChanceInver--;
+        
+        // 生成1个大敌人
+        for(int i = 0; i < maxBigEnemiesOnField; i++)
+        {
+            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
+                              Random.insideUnitCircle.normalized * spawnRadius;
+            GetBigEnemy(spawnPos);
+        }
+        
+        allEnemiesDead = false; // 重置死亡标记
+        SpawnWave++; // 增加波次计数
     }
 
+    /// <summary>
+    /// 获取当前场上敌人数量
+    /// </summary>
+    /// <returns>当前场上敌人总数</returns>
+    private int GetCurrentEnemyCount()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bigEnemies = GameObject.FindGameObjectsWithTag("BigEnemy");
+        return enemies.Length + bigEnemies.Length;
+    }
+    
+    /// <summary>
+    /// 检测所有敌人是否已死亡
+    /// </summary>
+    /// <returns>如果所有敌人都死亡返回true，否则返回false</returns>
+    private bool AreAllEnemiesDead()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bigEnemies = GameObject.FindGameObjectsWithTag("BigEnemy");
+        
+        // 如果场上没有任何敌人，则认为所有敌人都死亡了
+        return enemies.Length == 0 && bigEnemies.Length == 0;
+    }
+    
     public void OnEnemyKilled()
     {
         enemiesKilled++;

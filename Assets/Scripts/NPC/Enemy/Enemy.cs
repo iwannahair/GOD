@@ -10,6 +10,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Slider healthSlider;
     public Action<Enemy> OnDeath;
     protected Action OnHit;
+    
+    /// <summary>
+    /// 获取当前生命值
+    /// </summary>
+    public int CurrentHealth => health;
 
     void Awake()
     {
