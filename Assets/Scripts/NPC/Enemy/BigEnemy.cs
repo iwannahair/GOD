@@ -7,6 +7,7 @@ public class BigEnemy : Enemy
     [Header("BigEnemy设置")]
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject replacementPrefab; // 死亡时替换的预制体
+    [Tooltip("生命值衰减速率（每秒）")]
     [SerializeField] private float healthDecayRate = 10f; // 生命值衰减速率（每秒）
     
     private bool isHealthDecaying = false; // 是否正在衰减生命值
