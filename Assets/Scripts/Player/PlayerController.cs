@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.Rendering.Universal;
 public class PlayerController : MonoBehaviour
 {
     [Header("移动设置")]
@@ -10,9 +10,8 @@ public class PlayerController : MonoBehaviour
     [Header("碰撞设置")]
     
     [Header("光照设置")]
-    public Light playerLight; // 玩家光照组件
-    public float lightIntensity = 1.0f; // 光照强度
-    public Color lightColor = Color.white; // 光照颜色
+    public Light2D playerLight; // 玩家光照组件（优先从玩家子对象获取）
+
 
     [Header("父对象控制设置")]
     public GameObject parentObject; // 需要控制移动的父对象
@@ -51,6 +50,22 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.LogWarning("未分配父对象！请在Inspector中分配需要控制的父对象。");
+        }
+
+        // 如果未在 Inspector 手动赋值，自动从玩家的子对象层级中查找 Light2D（包含未激活的子对象）
+        if (playerLight == null)
+        {
+            playerLight = GetComponentInChildren<Light2D>(true);
+            if (playerLight == null)
+            {
+                Debug.LogWarning("未在玩家子对象中找到 Light2D 组件，请确认玩家层级中存在子灯光。");
+            }
+        }
+        
+        // 初始状态：不在 left_0 区域时，确保玩家子对象上的 Light2D 关闭
+        if (playerLight != null)
+        {
+            playerLight.enabled = false;
         }
     }
 
@@ -195,8 +210,6 @@ public class PlayerController : MonoBehaviour
         if (playerLight != null)
         {
             playerLight.enabled = true;
-            playerLight.intensity = lightIntensity;
-            playerLight.color = lightColor;
             Debug.Log("玩家进入left_0区域，启用光照效果");
         }
         else
