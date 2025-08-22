@@ -42,15 +42,15 @@ public class PlayerController : MonoBehaviour
         if (parentObject != null)
         {
             parentRb = parentObject.GetComponent<Rigidbody2D>();
-            if (parentRb == null)
+           /* if (parentRb == null)
             {
                 Debug.LogWarning("父对象没有Rigidbody2D组件！");
-            }
+            }*/
         }
-        else
+        /*else
         {
             Debug.LogWarning("未分配父对象！请在Inspector中分配需要控制的父对象。");
-        }
+        }*/
 
         // 如果未在 Inspector 手动赋值，自动从玩家的子对象层级中查找 Light2D（包含未激活的子对象）
         if (playerLight == null)

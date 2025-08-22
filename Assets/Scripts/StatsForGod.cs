@@ -24,16 +24,21 @@ public class StatsForGod : MonoBehaviour
     [Tooltip("当玩家与这些标签的敌人碰撞时，将减少生命值")]
     public string[] enemyTagsToDecreaseHealth = new string[] { "Enemy", "BigEnemy" };
     
+    /// <summary>
+    /// 初始化单例模式，确保StatsForGod在场景切换时不被销毁
+    /// </summary>
     private void Awake()
     {
-        // 设置单例
+        // 单例模式实现
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // 防止场景切换时销毁
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // 销毁重复的StatsForGod GameObject
+            return;
         }
     }
     

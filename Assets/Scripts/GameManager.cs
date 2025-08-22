@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [Header("角色设置")]
     public GameObject playerPrefab;  // 保留Prefab引用但不使用
-    public Transform playerSpawnPoint;  // 保留生成点但不使用
+
     private int playerHealth=100, playerDamage=100, playerAttackSpeed=100, spawnBigChanceInver = 90;
     [SerializeField] private TMP_Text playerDamageText, playerHealthText,  playerAttackSpeedText, popText;
     [SerializeField] private GameObject popTextGameObject;
@@ -94,35 +94,17 @@ public class GameManager : MonoBehaviour
 
     
     
-    [Header("敌人设置")] 
-    public GameObject enemyPrefab;
-    public GameObject bigEnemyPrefab;
-    public int initialEnemyCount = 10;
-    public int enemiesPerWave = 5;
-    public float spawnRadius = 10f;
-    public float waveInterval = 5f;
-    [SerializeField] private TMP_Text spawnWaveText;
-    private int spawnWave;
-    [SerializeField] private int enemyIncreasePerWave = 1;
-    [SerializeField] private float waveIntervalIncreasePerWave = 0.3f;
+    [Header("敌人生成器引用")]
+    [SerializeField] private EnemySpawner enemySpawner; // 敌人生成器引用
+    [SerializeField] private TMP_Text spawnWaveText; // 波次显示文本
     
-    // 新增敌人生成控制变量
-    [Header("敌人生成控制")]
-    [SerializeField] private int maxEnemiesOnField = 5; // 场上最多普通敌人数量
-    [SerializeField] private int maxBigEnemiesOnField = 1; // 场上最多大敌人数量
-    [SerializeField] private bool allEnemiesDead = false; // 所有敌人是否已死亡
-    
-    private int SpawnWave
+    /// <summary>
+    /// 当前波次属性，通过EnemySpawner获取并更新UI
+    /// </summary>
+    public int CurrentWave
     {
-        get => spawnWave;
-        set
-        {
-            spawnWave = value;
-            spawnWaveText.text = spawnWave.ToString();
-        }
+        get => enemySpawner != null ? enemySpawner.CurrentWave : 0;
     }
-    
-    private float nextWaveTime;
 
     [Header("人类设置")]
     public GameObject humanFollowerPrefab;
@@ -196,16 +178,24 @@ public class GameManager : MonoBehaviour
     public Transform PlayerTran => playerTran;
     public void SetPlayerTran(Transform playerTran) => this.playerTran = playerTran;
     public Transform HumanFollowerTail{get=>humanFollowerTail;set=>humanFollowerTail=value;}
+    /// <summary>
+    /// 初始化单例模式，确保GameManager在场景切换时不被销毁
+    /// </summary>
     private void Awake()
     {
+        // 单例模式实现
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // 防止场景切换时销毁
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject); // 销毁重复的GameManager GameObject
+            return;
         }
+        
+        // 注册UI更新事件
         OnFollowerUIChange+= UpdateCurrentFollowerNumberUI;
         OnPlayerHealthChanged += UpdateHealthUI;
         OnPlayerDamageChanged += UpdateAttackDamageUI;
@@ -215,101 +205,162 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // 移除了SpawnPlayer()调用
-        playerTran = GameObject.FindGameObjectWithTag("Player").transform;
-        SpawnInitialEnemies();
+        // 查找玩家对象并获取其Transform组件
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTran = playerObject.transform;
+            InitializeEnemySpawner(); // 初始化敌人生成器
+        }
+        else
+        {
+            Debug.LogError("未找到带有'Player'标签的游戏对象！请确保玩家对象已正确设置标签。");
+        }
+        
+        // 订阅敌人生成器事件
+        SubscribeToEnemySpawnerEvents();
         
         // 初始化小地图（已移除）
         // 小地图相关功能已移除
     }
     
-    #region HandleSpawn
-
-    [Header("Pool Settings")] 
-    private Queue<GameObject> enemyPool = new Queue<GameObject>();
-    private Queue<GameObject> bigEnemyPool = new Queue<GameObject>();
-    public Queue<GameObject> splashPool = new Queue<GameObject>();
-    [SerializeField] protected GameObject splashPrefab;
-    public GameObject GetSplash(Vector2 _position)
+    /// <summary>
+    /// 订阅敌人生成器的事件
+    /// </summary>
+    private void SubscribeToEnemySpawnerEvents()
     {
-        if (splashPool.Count == 0)
-        {
-            GameObject newSplash = Instantiate(splashPrefab,_position, Quaternion.identity);
-            newSplash.SetActive(false);
-            splashPool.Enqueue(newSplash);
-        }
-
-        GameObject splash = splashPool.Dequeue();
-        splash.transform.position = _position;
-        splash.SetActive(true);
-        return splash;
+        EnemySpawner.OnWaveChanged += UpdateWaveUI;
     }
+    
+    /// <summary>
+    /// 取消订阅敌人生成器的事件，防止内存泄漏
+    /// </summary>
+    private void UnsubscribeFromEnemySpawnerEvents()
+    {
+        EnemySpawner.OnWaveChanged -= UpdateWaveUI;
+    }
+    
+    /// <summary>
+    /// 更新波次UI显示
+    /// </summary>
+    /// <param name="wave">当前波次</param>
+    private void UpdateWaveUI(int wave)
+    {
+        if (spawnWaveText != null)
+        {
+            spawnWaveText.text = wave.ToString();
+        }
+    }
+    
+    /// <summary>
+    /// 对象销毁时取消事件订阅
+    /// </summary>
+    private void OnDestroy()
+    {
+        UnsubscribeFromEnemySpawnerEvents();
+    }
+    
+    #region EnemySpawner集成
+    
+    /// <summary>
+    /// 获取溅射效果，委托给EnemySpawner处理
+    /// </summary>
+    /// <param name="position">生成位置</param>
+    /// <returns>溅射效果GameObject</returns>
+    public GameObject GetSplash(Vector2 position)
+    {
+        if (enemySpawner != null)
+        {
+            return enemySpawner.GetSplash(position);
+        }
+        Debug.LogWarning("EnemySpawner引用为空，无法获取溅射效果");
+        return null;
+    }
+    
+    /// <summary>
+    /// 返回溅射效果到对象池，委托给EnemySpawner处理
+    /// </summary>
+    /// <param name="splash">溅射效果GameObject</param>
     public void ReturnSplash(GameObject splash)
     {
-        splash.SetActive(false);
-        splashPool.Enqueue(splash);
-    }
-    //when spawnEnemy
-    private GameObject GetEnemy(Vector2 _position)
-    {
-        if (enemyPool.Count == 0)
+        if (enemySpawner != null)
         {
-            GameObject newEnemy = Instantiate(enemyPrefab,_position, Quaternion.identity);
-            newEnemy.SetActive(false);
-            enemyPool.Enqueue(newEnemy);
+            enemySpawner.ReturnSplash(splash);
         }
-
-        GameObject enemy = enemyPool.Dequeue();
-        enemy.transform.position = _position;
-        enemy.SetActive(true);
-        return enemy;
-    }
-    private GameObject GetBigEnemy(Vector2 _position)
-    {
-        if (bigEnemyPool.Count == 0)
+        else
         {
-            GameObject newEnemy = Instantiate(bigEnemyPrefab, _position, Quaternion.identity);
-            newEnemy.SetActive(false);
-            bigEnemyPool.Enqueue(newEnemy);
+            Debug.LogWarning("EnemySpawner引用为空，无法返回溅射效果");
         }
-
-        GameObject enemy = bigEnemyPool.Dequeue();
-        enemy.transform.position = _position;
-        enemy.SetActive(true);
-        return enemy;
     }
-    //when enemy killed
+    
+    /// <summary>
+    /// 返回普通敌人到对象池，委托给EnemySpawner处理
+    /// </summary>
+    /// <param name="enemy">敌人GameObject</param>
     public void ReturnEnemy(GameObject enemy)
     {
-        enemy.SetActive(false);
-        enemyPool.Enqueue(enemy);
+        if (enemySpawner != null)
+        {
+            enemySpawner.ReturnEnemy(enemy);
+        }
+        else
+        {
+            Debug.LogWarning("EnemySpawner引用为空，无法返回敌人");
+        }
     }
+    
+    /// <summary>
+    /// 返回大敌人到对象池，委托给EnemySpawner处理
+    /// </summary>
+    /// <param name="enemy">大敌人GameObject</param>
     public void ReturnBigEnemy(GameObject enemy)
     {
-        enemy.SetActive(false);
-        bigEnemyPool.Enqueue(enemy);
+        if (enemySpawner != null)
+        {
+            enemySpawner.ReturnBigEnemy(enemy);
+        }
+        else
+        {
+            Debug.LogWarning("EnemySpawner引用为空，无法返回大敌人");
+        }
     }
     /// <summary>
-    /// 生成初始敌人，固定生成5个Enemy和1个BigEnemy
+    /// 初始化敌人生成器并生成初始敌人
     /// </summary>
-    void SpawnInitialEnemies()
+    private void InitializeEnemySpawner()
     {
-        // 生成5个普通敌人
-        for(int i = 0; i < maxEnemiesOnField; i++)
+        // 检查玩家对象是否存在
+        if (playerTran == null)
         {
-            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
-                              Random.insideUnitCircle.normalized * spawnRadius;
-            GetEnemy(spawnPos);
+            Debug.LogWarning("玩家对象不存在，无法初始化敌人生成器");
+            return;
         }
         
-        // 生成1个大敌人
-        for(int i = 0; i < maxBigEnemiesOnField; i++)
+        // 如果没有手动分配EnemySpawner，尝试查找或创建
+        if (enemySpawner == null)
         {
-            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
-                              Random.insideUnitCircle.normalized * spawnRadius;
-            GetBigEnemy(spawnPos);
+            enemySpawner = FindObjectOfType<EnemySpawner>();
+            if (enemySpawner == null)
+            {
+                // 创建新的EnemySpawner GameObject
+                GameObject spawnerObject = new GameObject("EnemySpawner");
+                enemySpawner = spawnerObject.AddComponent<EnemySpawner>();
+                Debug.Log("自动创建了EnemySpawner组件");
+                // 初始化新创建的敌人生成器
+                enemySpawner.Initialize(playerTran);
+            }
+            else
+            {
+                // 找到已存在的EnemySpawner，更新玩家引用
+                Debug.Log("找到已存在的EnemySpawner，正在更新玩家引用");
+                enemySpawner.RefreshPlayerReference();
+            }
         }
-        
-        allEnemiesDead = false; // 重置死亡标记
+        else
+        {
+            // 手动分配的EnemySpawner，直接初始化
+            enemySpawner.Initialize(playerTran);
+        }
     }
 
     [SerializeField] private float endGameTimeToWait = 3f;
@@ -318,9 +369,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text endGame_HumanSpawned, endGame_HumanKilled, endGame_TotalEnemyKilled, endGame_BigEnemyKilled, endGame_SmallEnemyKilled, endGame_BuildingBuilt;
     void Update()
     {
-        if(!_endGame)
+        // 设置敌人生成器的游戏状态
+        if (enemySpawner != null)
         {
-            CheckAndRespawnEnemies(); // 检查并重新生成敌人
+            enemySpawner.SetGameActive(!_endGame);
         }
         
         InputPauseGame();
@@ -392,74 +444,38 @@ public class GameManager : MonoBehaviour
 
     
     /// <summary>
-    /// 检查并重新生成敌人，当所有敌人死亡时重新生成5个Enemy和1个BigEnemy
-    /// </summary>
-    void CheckAndRespawnEnemies()
-    {
-        // 检查所有敌人是否已死亡
-        if (AreAllEnemiesDead() && !allEnemiesDead)
-        {
-            allEnemiesDead = true; // 标记所有敌人已死亡
-            
-            // 等待一小段时间后重新生成敌人
-            StartCoroutine(RespawnEnemiesAfterDelay());
-        }
-    }
-    
-    /// <summary>
-    /// 延迟重新生成敌人的协程
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator RespawnEnemiesAfterDelay()
-    {
-        yield return new WaitForSeconds(2f); // 等待2秒
-        
-        // 生成5个普通敌人
-        for(int i = 0; i < maxEnemiesOnField; i++)
-        {
-            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
-                              Random.insideUnitCircle.normalized * spawnRadius;
-            GetEnemy(spawnPos);
-        }
-        
-        // 生成1个大敌人
-        for(int i = 0; i < maxBigEnemiesOnField; i++)
-        {
-            Vector2 spawnPos = (Vector2)playerSpawnPoint.position + 
-                              Random.insideUnitCircle.normalized * spawnRadius;
-            GetBigEnemy(spawnPos);
-        }
-        
-        allEnemiesDead = false; // 重置死亡标记
-        SpawnWave++; // 增加波次计数
-    }
-
-    /// <summary>
-    /// 获取当前场上敌人数量
+    /// 获取当前场上敌人数量，委托给EnemySpawner处理
     /// </summary>
     /// <returns>当前场上敌人总数</returns>
-    private int GetCurrentEnemyCount()
+    public int GetCurrentEnemyCount()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] bigEnemies = GameObject.FindGameObjectsWithTag("BigEnemy");
-        return enemies.Length + bigEnemies.Length;
+        if (enemySpawner != null)
+        {
+            return enemySpawner.GetCurrentEnemyCount();
+        }
+        return 0;
     }
     
     /// <summary>
-    /// 检测所有敌人是否已死亡
+    /// 检测所有敌人是否已死亡，委托给EnemySpawner处理
     /// </summary>
     /// <returns>如果所有敌人都死亡返回true，否则返回false</returns>
-    private bool AreAllEnemiesDead()
+    public bool AreAllEnemiesDead()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] bigEnemies = GameObject.FindGameObjectsWithTag("BigEnemy");
-        
-        // 如果场上没有任何敌人，则认为所有敌人都死亡了
-        return enemies.Length == 0 && bigEnemies.Length == 0;
+        if (enemySpawner != null)
+        {
+            return enemySpawner.AreAllEnemiesDead();
+        }
+        return true;
     }
     
     public void OnEnemyKilled()
     {
+        if (enemySpawner != null)
+        {
+            enemySpawner.OnEnemyKilled();
+        }
+        
         enemiesKilled++;
         totalEnemiesKilled++;
         if(enemiesKilled >= KILLS_TO_SPAWN_FOLLOWER)

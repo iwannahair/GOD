@@ -11,7 +11,19 @@ public class BigEnemyAI : EnemyAI
     [Tooltip("投射物发射点")]
     [SerializeField] private Transform firePoint;
     [Tooltip("发射频率（秒）")]
-    [SerializeField] private float fireRate = 2f;
+    [SerializeField] private float ProjectileFireInterval = 2f;
+    // 新增：每次发射的投射物数量（可在 Inspector 配置），默认 1
+    [Tooltip("每次发射的投射物数量（至少为1）")]
+    [SerializeField, Min(1)] private int ProjectilesPerShot = 1;
+    // 新增：扇形散射与连发（Burst）配置
+    [Tooltip("扇形散射的总角度（度），0 表示不散射（所有子弹同一方向）")]
+    [SerializeField, Min(0f)] private float spreadAngleDegrees = 0f;
+    
+    [Header("连发设置")]
+    [Tooltip("每轮连发的发射次数（至少为1）")]
+    [SerializeField, Min(1)] private int burstCount = 1;
+    [Tooltip("每次连发之间的时间间隔（秒），0 表示瞬时连发")]
+    [SerializeField, Min(0f)] private float burstInterval = 0.1f;
     
     private bool isTriggered = false; // 是否已被触发
     private bool canMove = true; // 是否可以移动
@@ -22,6 +34,11 @@ public class BigEnemyAI : EnemyAI
     {
         animator = animator ? animator : GetComponent<Animator>();
         bigEnemy = GetComponent<BigEnemy>();
+        // 保护性校验，避免运行时配置被设置为非法值
+        if (ProjectilesPerShot < 1) ProjectilesPerShot = 1;
+        if (spreadAngleDegrees < 0f) spreadAngleDegrees = 0f;
+        if (burstCount < 1) burstCount = 1;
+        if (burstInterval < 0f) burstInterval = 0f;
     }
 
     private void FixedUpdate()
@@ -107,13 +124,22 @@ public class BigEnemyAI : EnemyAI
     {
         while (true)
         {
-            FireProjectile();
-            yield return new WaitForSeconds(fireRate);
+            // 连发：一轮中按照 burstCount 次发射，每次间隔 burstInterval 秒
+            for (int b = 0; b < burstCount; b++)
+            {
+                FireProjectile();
+                if (b < burstCount - 1)
+                {
+                    yield return new WaitForSeconds(burstInterval);
+                }
+            }
+            // 轮与轮之间的间隔
+            yield return new WaitForSeconds(ProjectileFireInterval);
         }
     }
 
     /// <summary>
-    /// 发射单个投射物，目标为距离玩家最近的Enemy
+    /// 发射投射物（数量可配置 + 扇形散射），目标为距离玩家最近的Enemy
     /// </summary>
     private void FireProjectile()
     {
@@ -136,16 +162,28 @@ public class BigEnemyAI : EnemyAI
             return;
         }
         
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        // 计算扇形发射的角度分布：当数量为1时角度偏移为0；大于1时在 [-spread/2, spread/2] 等分
+        int count = Mathf.Max(1, ProjectilesPerShot);
+        float spread = Mathf.Max(0f, spreadAngleDegrees);
+        float startAngle = count > 1 ? -spread * 0.5f : 0f;
+        float step = count > 1 ? (spread / (count - 1)) : 0f;
         
-        // 设置投射物的所有者和目标，以避免自我碰撞
-        BigEnemyProjectile projectileScript = projectile.GetComponent<BigEnemyProjectile>();
-        if (projectileScript != null)
+        for (int i = 0; i < count; i++)
         {
-            projectileScript.SetOwner(gameObject); // 将此 BigEnemy 设置为所有者
-            projectileScript.SetTarget(nearestEnemyToPlayer); // 设置目标
+            float angleOffset = (count == 1) ? 0f : (startAngle + step * i);
+            // 2D 下围绕 Z 轴旋转，若为 3D 项目可改为 Vector3.up/Vector3.right 等轴向
+            Quaternion shotRotation = Quaternion.AngleAxis(angleOffset, Vector3.forward) * firePoint.rotation;
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, shotRotation);
+            
+            // 设置投射物的所有者和目标，以避免自我碰撞
+            BigEnemyProjectile projectileScript = projectile.GetComponent<BigEnemyProjectile>();
+            if (projectileScript != null)
+            {
+                projectileScript.SetOwner(gameObject); // 将此 BigEnemy 设置为所有者
+                projectileScript.SetTarget(nearestEnemyToPlayer); // 设置目标
+            }
         }
-        Debug.Log($"成功发射投射物，目标：{nearestEnemyToPlayer.name}！");
+        Debug.Log($"成功发射投射物 x{count}（spread={spread}°）");
     }
     
     /// <summary>

@@ -8,7 +8,7 @@ public class BigEnemy : Enemy
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject replacementPrefab; // 死亡时替换的预制体
     [Tooltip("生命值衰减速率（每秒）")]
-    [SerializeField] private float healthDecayRate = 10f; // 生命值衰减速率（每秒）
+    [SerializeField] private float BigenemyBleedRate = 10f; // 生命值衰减速率（每秒）
     
     private bool isHealthDecaying = false; // 是否正在衰减生命值
     private Coroutine healthDecayCoroutine; // 生命值衰减协程
@@ -44,7 +44,7 @@ public class BigEnemy : Enemy
         while (isHealthDecaying)
         {
             yield return new WaitForSeconds(1f); // 每秒衰减一次
-            TakeDamage(Mathf.RoundToInt(healthDecayRate));
+            TakeDamage(Mathf.RoundToInt(BigenemyBleedRate));
         }
     }
     

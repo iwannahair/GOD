@@ -559,6 +559,7 @@ GameObject:
   - component: {fileID: 995984202}
   - component: {fileID: 995984201}
   - component: {fileID: 995984200}
+  - component: {fileID: 995984203}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -640,6 +641,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995984203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995984199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1093778450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,12 +1428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainImageDisplay: {fileID: 177231689}
   carouselImages:
-  - {fileID: 1104713835160371466, guid: c9fba55c0c80bb5459f2a6f9fe543c90, type: 3}
-  - {fileID: 684800916906648542, guid: 24310f38d252d1246bb8521648352a34, type: 3}
-  - {fileID: 4871824575876247642, guid: 651ed0862b54c9347aa55efa7e77e856, type: 3}
-  - {fileID: 7584467376710826024, guid: 19c95127d3da58d4a993f8411535680d, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8978415831353791159, guid: 5b277e4bda932e44ba17e0f0a7e642e2, type: 3}
+  - {fileID: -4740023049662964543, guid: 6746cf3ebba2f3443b083b3415ccc58f, type: 3}
   leftButton: {fileID: 2116869624}
   rightButton: {fileID: 342026568}
   closeButton: {fileID: 1862223249}

@@ -198,7 +198,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.14180267, y: -0.017186776}
+  m_Offset: {x: 0.12036209, y: -0.017186776}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -208,7 +208,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.046819896, y: 0.39562646}
+  m_Size: {x: 0.08970108, y: 0.39562646}
   m_EdgeRadius: 0
 --- !u!114 &1445999029782932124
 MonoBehaviour:
@@ -457,11 +457,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfabcd51895fd240a5bcf07e4b53dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 300
+  EnemyHP: 200
   healthSlider: {fileID: 2747060264882158149}
   animator: {fileID: 5869972111946535722}
   replacementPrefab: {fileID: 447498691599248343, guid: e9ebc2b19af42324f8e7af7782b1c25b, type: 3}
-  healthDecayRate: 10
+  BigenemyBleedRate: 20
 --- !u!114 &3438659732121817984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,13 +474,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c007c78129e44ea4e2dba292d68bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   attackCooldown: 2
   damage: 22
   animator: {fileID: 5869972111946535722}
   projectilePrefab: {fileID: 2058885898302655224, guid: b6bb400e51ef67a4687d552a4cb5021a, type: 3}
   firePoint: {fileID: 88409728409640061}
-  fireRate: 1
+  ProjectileFireInterval: 1
+  ProjectilesPerShot: 1
+  spreadAngleDegrees: 0
+  burstCount: 1
+  burstInterval: 0.1
 --- !u!50 &2176543154615682328
 Rigidbody2D:
   serializedVersion: 5

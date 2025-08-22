@@ -7,9 +7,9 @@ public class BigEnemyProjectile : MonoBehaviour
 {
     [Header("投射物设置")]
     [Tooltip("投射物速度")]
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float ProjectileSpeed = 10f;
     [Tooltip("投射物伤害")]
-    [SerializeField] private int damage = 20;
+    [SerializeField] private int ProjectileDamage = 20;
     [Tooltip("投射物生命周期（秒）")]
     [SerializeField] private float lifetime = 5f;
 
@@ -39,7 +39,7 @@ public class BigEnemyProjectile : MonoBehaviour
             // 设置默认方向（向右飞行）
             if (rb != null)
             {
-                rb.linearVelocity = transform.right * speed;
+                rb.linearVelocity = transform.right * ProjectileSpeed;
             }
         }
     }
@@ -102,7 +102,7 @@ public class BigEnemyProjectile : MonoBehaviour
         // 设置刚体的速度，使其朝目标移动
         if (rb != null)
         {
-            rb.linearVelocity = direction * speed;
+            rb.linearVelocity = direction * ProjectileSpeed;
         }
     }
 
@@ -126,7 +126,7 @@ public class BigEnemyProjectile : MonoBehaviour
             if (enemy != null)
             {
                 // 对敌人造成伤害
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(ProjectileDamage);
             }
             
             // 销毁投射物
